@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <title>黑白名单新增</title>
+    <link href="css/style.css" rel="stylesheet"/>
+    <link href="css/response.css" rel="stylesheet"/>
+</head>
+<body class="bg">
+<div class="content">
+    <div class="header">
+        <div class="header-nei">
+            <a href="inputList.html" class="back-up"><i class="iconfont icon-xiangzuo"></i></a>
+            <h2 class="header-title">黑白名单新增</h2>
+            <a href="nav.html" class="back-top"><i class="iconfont icon-daohang"></i></a>
+        </div>
+    </div>
+    <!--head/-->
+    <div class="head-height">&nbsp;</div>
+    <!--录入校验在style.js  搜order-btn-->
+    <div class="login-reg" style="padding-top:16px;">
+        <div class="log-reg-list sw_pad">
+            <p>手机号码：</p>
+            <input type="text" class="log-reg-text2 msisdn" placeholder="手机号码"     />
+        </div>
+        <div class="log-reg-list sw_pad" id="msisdnType">
+            <p>名单类型：</p>
+            <select>
+                <option value="" selected>请选择</option>
+                <option value="0">黑名单</option>
+                <option value="1">A</option>
+            </select>
+        </div>
+        <div class="log-reg-list sw_pad">
+            <p>备注：</p>
+            <input type="text" class="log-reg-text2 remark" placeholder="备注"     />
+        </div>
+        <div class="log-reg-sub">
+            <a href="javascript:;" class="log-reg-btn order-btn">确定</a>
+        </div>
+    </div>
+</div>
+<!--content/-->
+<div class="bg100"></div>
+<!--错误提示-->
+<div class="tip-errors-bg">
+    <div class="tip-tip-box-nei">
+        <strong><i class="iconfont icon-shanchu"></i><em class="errors">错误提示</em></strong>
+    </div>
+    <!--tip-tip-box/-->
+</div>
+<!--tip-success-bg/-->
+<!--正确提示-->
+<div class="tip-success-bg">
+    <div class="tip-tip-box-nei">
+        <strong><i class="iconfont icon-smile" style="color:#0F0;"></i><em class="success">正确提示</em></strong>
+    </div>
+    <!--tip-tip-box/-->
+</div>
+<!--tip-success-bg/-->
+<script src="js/jquery.min.js"></script>
+<script src="js/style.js"></script>
+<script src="js/doT.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        var black_while = sessionStorage.getItem('black_while');
+        if(black_while != null){
+            $(".msisdn").val(black_while);
+        }
+        //定单校验
+        $(".order-btn").on('click',function() {
+            var msisdn = $(".msisdn").val();
+            var remark = $(".remark").val();
+            var msisdnType = $("#msisdnType  option:selected").val();
+            var orderObj = {
+                msisdn: msisdn,
+                remark: remark,
+                msisdnType: msisdnType,
+                wbnLevel: ""
+            };
+                $.ajax({
+                    url : '/icos/blacklist/createBlackList',
+                    type : 'post',
+                    dataType : 'json',
+                    contentType: 'application/json',
+                    async: false,
+                    data : JSON.stringify(orderObj),
+                    headers : {
+                        "Authorization":sessionStorage.getItem('id'),
+                    },
+                    success : function(data){
+                       // console.log(black_while);
+                        if(data.data == true){
+                            success();
+                            $(".success").text(data.message);
+                            if(black_while != null){
+                                sessionStorage.removeItem('black_while');
+                                setTimeout(function(){
+                                    location.href = "audit_info.html"
+                                },1000)
+                            }else{
+                                setTimeout(function(){
+                                    location.href = "inputList.html"
+                                },1000)
+                            }
+                        }else{
+                            errors();
+                            $(".errors").text(data.message);
+                        }
+                        if(data.statusCode == '401'){
+                            location.href = "index.html"
+                        }
+                    },
+                    error : function(err){
+                        location.href = "index.html"
+                    }
+                });
+        })
+    })
+
+</script>
+</body>
+</html>

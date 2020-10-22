@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>智能通信运营管理平台</title>
+    <link rel="stylesheet" href="../../css/style.css"/>
+    <link rel="stylesheet" href="../../css/layui.css"/>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/jquery-3.0.0.min.js"></script>
+    <script src="../../js/vue.min.js"></script>
+</head>
+<!--[if IE 9]>
+<style>
+    #leftMenu_Box{
+        width: 15.08%;
+        height: 979px;
+        float: left;
+        background: #040b29 !important;
+        position: relative;
+        box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.5);
+    }
+</style>
+<![endif]-->
+<style>
+    .sw_row tr td div {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-right: 10px;
+        box-sizing: border-box;
+    }
+
+    .layui-form-select dl {
+        top: -60px !important;
+    }
+
+    #leftMenu_Box .leftMenu ul li div.prop a.prop1 {
+        background-color: #1890FF !important;
+        color: #fff !important;
+    }
+
+    /*#page {*/
+        /*padding: 57px 0 40px 0;*/
+    /*}*/
+
+    /*.sw_row tr td {*/
+        /*padding: 18px 0 18px 0;*/
+    /*}*/
+
+    .shade_con {
+        width: 695px;
+        height: 450px;
+    }
+
+    .shade_con .temp {
+        width: 94%;
+        height: 80%;
+    }
+
+    #text2 {
+        width: 610px;
+        height: 100px;
+        border: 1px solid #e2e2e2;
+        box-sizing: border-box;
+        padding: 7px;
+        margin-top: 10px;
+    }
+
+    .sw_row tr td:nth-child(2) div {
+        width: 640px;
+    }
+
+    @media screen and (max-width: 1600px) {
+        .sw_row tr td:nth-child(2) div {
+            width: 485px;
+        }
+    }
+</style>
+<body>
+<div id="proMang">
+    <div class="top"><img src="../../img/logo.png" alt="" class="logo">
+        <ul>
+            <li class="top-a-box" data-value="210"><a href="../workbench/order_fail.html"><span
+                    class="iconfont icon-diannao" style="font-size: 22px;"></span>
+                工作台
+            </a></li>
+            <li class="top-a-box " data-value="211"><a href="../user_manage/user_manage.html">
+                <span class="iconfont icon-yonghu" style="font-size: 22px;"></span>
+                用户管理
+            </a></li>
+            <li class="top-a-box " data-value="212"><a href="../order_manage/order_manage.html"><span
+                    class="iconfont icon-dingdanguanli" style="font-size: 22px;"></span>
+                订单管理
+            </a></li>
+            <li class="top-a-box addClass" data-value="213"><a href="./take_orders.html"><span
+                    class="iconfont icon-iconfonticon-shebei" style="font-size: 22px;"></span>
+                资源配置
+            </a></li>
+        </ul>
+        <div class="sign">
+            <span class="ren"></span> <span class="type"></span>
+            <img src="../../img/退出.png" alt=""  onclick="sign()">
+        </div>
+    </div>
+</div>
+<div class="main-box">
+    <!-- 左侧菜单 -->
+    <div id="leftMenu_Box" class="resource">
+        <div class="leftMenu">
+            <ul>
+                <li class="left_a dn " data-value="21313"><a href="javascript:void(0);" class="leftNav"  onclick="aa(event)">
+                    <span class="iconfont icon-iconfonticon-baobia"></span>
+                    接单模板配置
+                    <i class="iconfont icon-iconfontfold"></i></a>
+
+                    <div class="prop dns">
+                        <a href="./take_orders.html" data-value="2131310" class="prop7 left_a dn">接单模板</a>
+                        <a href="./signature_manage.html" data-value="2131311" class="prop8 left_a dn">签名管理</a>
+                        <a href="./template_manage.html" data-value="2131312" class="prop9 left_a dn">模板管理</a>
+                        <a href="./gateway.html" data-value="2131313" class="prop10 left_a dn">网关签名</a>
+                                            <a href="./shortChain.html" data-value="2131314" class="prop18 left_a dn sw_url">智能短链</a>
+
+                    </div>
+                </li>
+                <li class="left_a  dn" data-value="21315">
+                    <a href="./test_send.html" class="leftNav" >
+                        <span class="iconfont icon-fasong"></span>
+                        测试发送
+                    </a>
+                </li>
+                <li class="left_a dn addclass_one" data-value="21310"><a href="javascript:void(0);" class="leftNav"  onclick="aa(event)">
+                    <span  class="iconfont icon-diannao-shuju" ></span>
+                    基础数据配置
+                    <i class="iconfont icon-icon11"></i> </a>
+                    <div class="prop dbs">
+                        <a href="javascript:void(0);" data-value="2131010" class="prop1 left_a dn">敏感词部署</a>
+                        <a href="./rate_limiting.html" data-value="2131011" class="prop2 left_a dn">下单限速</a>
+                        <a href="./risk_list.html" data-value="2131012" class="prop3 left_a dn">危险词</a>
+                        <a href="./home_location.html" data-value="2131013" class="prop24 left_a dn">归属地维护</a>
+                        <a href="./home_protect.html" data-value="2131013" class="prop25 left_a dn">归属地保护</a>
+                    </div>
+                </li>
+                <li class="left_a dn " data-value="21311"><a href="javascript:void(0);" class="leftNav"  onclick="aa(event)">
+                    <span class="iconfont icon-peizhishujuyuan"></span>
+                    网关配置
+                    <i class="iconfont icon-iconfontfold"></i></a>
+
+                    <div class="prop dns">
+                        <a href="./definition_gate.html" data-value="2131110" class="prop4 left_a dn">定义网关</a>
+                        <a href="./route_manage.html" data-value="2131111" class="prop5 left_a dn">配置路由</a>
+                        <a href="./route_list.html" data-value="2131112" class="prop6 left_a dn">通路选择</a>
+                        <a href="./gateway_send.html" data-value="2131113" class="prop16 left_a dn">网关发送</a>
+                        <a href="./user_data.html" data-value="2131114" class="prop17 left_a dn">用户数据统计</a>
+                    </div>
+                </li>
+                <!--<li class="left_a  " data-value="21312">-->
+                    <!--<a href="javascript:void(0);" class="leftNav" style="padding: 20px;">-->
+                        <!--<span class="iconfont icon-guanli"></span>-->
+                    <!--通路配置-->
+                    <!--</a>-->
+                <!--</li>-->
+
+                <li class="left_a dn " data-value="21314"><a href="javascript:void(0);" class="leftNav" onclick="aa(event)">
+                    <span class="iconfont icon-moban"></span>
+                    被叫配置
+                    <i class="iconfont icon-iconfontfold"></i></a>
+
+                    <div class="prop dns">
+                        <a href="./list_set.html" data-value="2131410" class="prop11 left_a dn">黑名单</a>
+                        <a href="./vip_list.html" data-value="2131411" class="prop12 left_a dn">VIP白名单</a>
+                        <a href="./unsubscribe.html" data-value="2131412" class="prop13 left_a dn">退订名单</a>
+                    </div>
+                </li>
+                <li class="left_a dn " data-value="21316"><a href="javascript:void(0);" class="leftNav"  onclick="aa(event)">
+                    <span class="iconfont icon-peizhishujuyuan"></span>
+                    风险控制
+                    <i class="iconfont icon-iconfontfold"></i></a>
+                    <div class="prop dns">
+                        <a href="./risk_rule.html" data-value="2131610" class="prop21 left_a dn">风控规则</a>
+                        <a href="./risk_result.html" data-value="2131611" class="prop22 left_a dn">风控结果</a>
+                        <a href="./report_take.html" data-value="2131612" class="prop23 left_a dn">告警订阅</a>
+                    </div>
+                </li>
+            </ul>
+            <div class="group" onclick="flexible(event)"><span class="iconfont icon-xiangzuo"style="color: rgb(255, 255, 255); font-size: 13px;"></span></div>
+        </div>
+    </div>
+    <div id="rightTable">
+        <v-auditing-send></v-auditing-send>
+    </div>
+</div>
+
+<div id="shade">
+    <v-template></v-template>
+</div>
+<script type="text/x-template" id="auditing-template">
+    <div>
+        <div class="table_tou">
+            <h6 class="fl">敏感词管理</h6>
+            <div class="fr sw_padd" >
+            <span class="sw_num"
+                  v-cloak >{{totalCount}}</span>&nbsp; &nbsp;<span style="color:#738495">条记录</span>
+            <span class="Gradual" @click="shade()">
+              <span class="iconfont icon-jiekuanshenqing">&nbsp;新增</span>
+            </span>
+            <span class="Gradual" @click="importFile()">
+            <span class="iconfont icon-export">&nbsp;导出</span>
+          </span>
+            </div>
+        </div>
+        <div class="table_nav">
+            <form class="layui-form layui-form-pane" action="" >
+                <div class="layui-inline" style="margin-top: 10px;">
+                    <label class="padR_25">内容分类</label>
+                    <div class="layui-input-inline" style="width: auto;">
+                        <input type="radio" lay-filter="bizType" name="bizType" value="1" title="营销">
+                        <input type="radio" lay-filter="bizType" name="bizType" value="2" title="行业通知">
+                        <input type="radio" lay-filter="bizType" name="bizType" value="3" title="验证码">
+                        <input type="radio" lay-filter="bizType" name="bizType" value="5" title="五大类（教育、金融、房贷、房产、移民）">
+                        <input type="radio" lay-filter="bizType" name="bizType" value="4" title="挂机模版">
+                        <input type="radio" lay-filter="bizType" name="bizType" value="55" title="自己输入">
+                    </div>
+                </div>
+                <div class="layui-inline dn conceal">
+                    <div class="layui-input-inline">
+                        <input
+                                type="text"
+                                name="param"
+                                placeholder="请输入"
+                                class="layui-input phone"
+                                />
+                    </div>
+                </div>
+                <div class="layui-input-inline" style="position: absolute; right: 20px;bottom: 15px;z-index: 111;">
+                    <button class="sw_btn1" lay-submit="" lay-filter="demo2">
+                        查询
+                    </button>
+                </div>
+                <br>
+                <div class="layui-inline" style="width:49%">
+                    <label class="padR_25">接单动作</label>
+                    <div class="layui-input-inline" style="width:auto !important">
+                        <input  v-cloak
+                                type="checkbox"
+                                :value="index+1"
+                                name="actionType"
+                                lay-skin="primary"
+                                :title="li"
+                                v-for="(li, index) in content1"
+                                />
+                    </div>
+                </div>
+                <div class="layui-inline" style="width:49%">
+                    <label class="padR_48">状态</label>
+                    <div class="layui-input-inline" style="width:auto !important">
+                        <input type="radio" name="statusInt" value="1" title="可用" checked>
+                        <input type="radio" name="statusInt" value="0" title="不可用" >
+                        <input type="radio" name="statusInt" value="2" title="测试">
+                    </div>
+                </div>
+            </form>
+            <div class="sw_row">
+                <table style="margin-top: 15px;">
+                    <tr>
+                        <th style="width:108px">表达式ID</th>
+                        <th style="width:572px">表达式</th>
+                        <th style="width:180px">内容分类</th>
+                        <th style="width:192px">接单动作</th>
+                        <th style="width:145px">状态</th>
+                        <th style="width:127px">使用方式</th>
+                        <th style="width:130px;text-align: center;">操作</th>
+                    </tr>
+                    <tr  v-cloak v-for="(li, index) in allData">
+                        <td>{{li.expressionId}}</td>
+                        <td>
+                            <div :title="li.expression">{{li.expression}}</div>
+                        </td>
+                        <td>{{li.bizTypeName}}</td>
+                        <td>{{li.actionType}}</td>
+                        <td>{{li.statusInt}}</td>
+                        <td>{{li.useType}}</td>
+                        <td style="text-align: center;">
+                            <div style="width:100%;text-align: center;">
+                                <span class="sw_btn2" @click="amend(li.expressionId)">修改</span>
+                                <span class="sw_btn3" @click="del(li.expressionId)">删除</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="sw_pad8" v-show="mapShow == true">暂无数据</div>
+            </div>
+            <div id="page"></div>
+
+        </div>
+</script>
+<script type="text/x-template" id="shade-template">
+    <div>
+        <div class="shade_con">
+            <div class="tongji">
+                <h3 v-if="code == 0">新增敏感词</h3>
+                <h3 v-if="code == 1">修改敏感词</h3>
+                <span class="iconfont icon-shanchu" @click="shanchu()"></span>
+            </div>
+            <div class="temp">
+                <form class="layui-form layui-form-pane" action="" style="border: none;">
+                    <em style="padding-left: 0px;"> <span style="color:#FE2121;font-weight:600;">*</span>  表达式</em><br>
+                    <textarea name="expression"  v-model="info.expression" id="text2" placeholder="请输入"></textarea>
+                    <div class="layui-inline" >
+                        <label class=""> <span style="color:#FE2121;font-weight:600;">*</span> 内容分类</label><br />
+                        <div class="layui-input-inline" style="width:300px">
+                            <select name="bizType" id="eventLevel">
+                                <option value="">请选择</option>
+                                <option  v-cloak
+                                        v-for="(li, index) in content"
+                                        :value="li.bizTypeId"
+                                        >{{li.bizTypeName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline" >
+                        <label class=""> <span style="color:#FE2121;font-weight:600;"  >*</span> 接单动作</label><br />
+                        <div class="layui-input-inline" style="width:300px">
+                            <select name="actionType" id="eventLevelTwo">
+                                <option value="-1">请选择</option>
+                                <option  v-cloak
+                                        v-for="(li, index) in content1"
+                                        :value="index + 1"
+                                        >{{li}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class=""> <span style="color:#FE2121;font-weight:600;">*</span> 账户状态</label><br />
+                        <div class="layui-input-inline" style="width:300px">
+                            <select name="statusInt" id="eventLevelThree" >
+                                <option value="-1">请选择</option>
+                                <option  v-cloak
+                                        v-for="(li, index) in content2"
+                                        :value="index"
+                                        >{{li}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class=""> <span style="color:#FE2121;font-weight:600;" >*</span> 使用方式</label><br />
+                        <div class="layui-input-inline" style="width:300px">
+                            <select name="useType" id="eventLevelHour">
+                                <option value="1">接单</option>
+                                <option value="2">补发</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-input-inline">
+                        <button class="sw_btn1" style="margin: 37px 0 0 260px;" lay-submit="" lay-filter="demo6" v-if="code == 0">
+                            确认新增
+                        </button>
+                        <span class="sw_btn1" style="margin:37px 0 0 260px;" lay-submit="" lay-filter="demo7" v-if="code == 1">确认修改</span>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</script>
+<script src="../../layui.all.js"></script>
+<script src="../../module/sensitive_word.js"></script>
+<script>
+    //头部
+//    var operaAI = new Vue({
+//        el: "#proMang",
+//        data: {
+//            topCurrent: 3
+//        }
+//    });
+//    //   //左侧菜单组件实例化
+//    var leftMenu = new Vue({
+//        el: "#leftMenu_Box",
+//        data: {
+//            current: 0,
+//        }
+//    });
+    resource()
+    //   //左侧菜单组件实例化
+    var rightTable = new Vue({
+        el: "#rightTable"
+    });
+    var shade = new Vue({
+        el: "#shade"
+    });
+    $(function () {
+        //     $('#proMang .top ul li a').mousemove(function(){
+        //         $(this).addClass('addClass').parent().siblings().find('a').removeClass('addClass')
+        //   }
+        $(document).ready(function(){
+            $('#leftMenu_Box').css('background', '#040b29');
+            $('#proMang .top').css('background', '#fff')
+        });
+    });
+</script>
+</body>
+</html>

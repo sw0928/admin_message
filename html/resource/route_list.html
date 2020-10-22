@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>智能通信运营管理平台</title>
+    <link rel="stylesheet" href="../../css/style.css"/>
+    <link rel="stylesheet" href="../../css/layui.css"/>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/jquery-3.0.0.min.js"></script>
+    <script src="../../js/vue.min.js"></script>
+</head>
+<!--[if IE 9]>
+<style>
+    #leftMenu_Box{
+        width: 15.08%;
+        height: 979px;
+        float: left;
+        background: #040b29 !important;
+        position: relative;
+        box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.5);
+    }
+</style>
+<![endif]-->
+<style>
+
+    /*#page{*/
+        /*padding: 27px 0 16px 0;*/
+    /*}*/
+    #leftMenu_Box .leftMenu ul li div.prop a.prop6{
+        background-color: #1890FF !important;
+        color: #fff !important;
+    }
+    /*.sw_row tr td{*/
+        /*padding: 14px 0;*/
+    /*}*/
+    .shade_con3{
+        width: 970px;
+        height:auto;
+    }
+    .shade_con1{
+        width: 1000px;
+        height: 485px;
+    }
+    .shade_con3 .temp,.shade_con1 .temp{
+        height: auto;
+        width: auto;
+        border: none;
+        margin: 10px 0px 0 20px;
+    }
+    .lable{
+        font-size: 15px !important;
+        padding: 12px 0 !important;
+    }
+    
+    .sw_row tr td div{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-right: 10px;
+        box-sizing: border-box;
+    }
+    .sw_row tr td:nth-child(2) div{
+        max-width: 120px;
+    }
+    .sw_row tr td:nth-child(5) div{
+        max-width: 160px;
+    }
+    .sw_row tr td:nth-child(6) div{
+        max-width: 160px;
+    }
+    #text2,#text3{
+        width: 912px;
+        height: 80px;
+        border: 1px solid #e2e2e2;
+        box-sizing: border-box;
+        padding: 7px;
+    }
+    /*.layui-form-select dl{*/
+        /*top: -40px !important;*/
+    /*}*/
+    /*#shade3 .shade_con3 .layui-inline label{
+        padding: 12px 0;
+    }*/
+    @media screen and (max-width: 1600px) {
+        
+        /*.shade_con3 .temp{
+            overflow-y: auto;
+            height: 470px;
+        }*/
+    }
+</style>
+<body>
+<div id="proMang">
+    <div class="top"><img src="../../img/logo.png" alt="" class="logo">
+        <ul>
+            <li class="top-a-box" data-value="210"><a href="../workbench/order_fail.html"><span
+                    class="iconfont icon-diannao" style="font-size: 22px;"></span>
+                工作台
+            </a></li>
+            <li class="top-a-box " data-value="211"><a href="../user_manage/user_manage.html">
+                <span class="iconfont icon-yonghu" style="font-size: 22px;"></span>
+                用户管理
+            </a></li>
+            <li class="top-a-box " data-value="212"><a href="../order_manage/order_manage.html"><span
+                    class="iconfont icon-dingdanguanli" style="font-size: 22px;"></span>
+                订单管理
+            </a></li>
+            <li class="top-a-box addClass" data-value="213"><a href="./take_orders.html"><span
+                    class="iconfont icon-iconfonticon-shebei" style="font-size: 22px;"></span>
+                资源配置
+            </a></li>
+        </ul>
+        <div class="sign">
+            <span class="ren"></span> <span class="type"></span>
+            <img src="../../img/退出.png" alt=""  onclick="sign()">
+        </div>
+    </div>
+</div>
+<div class="main-box">
+    <!-- 左侧菜单 -->
+    <div id="leftMenu_Box" class="resource">
+        <div class="leftMenu">
+            <ul>
+                <li class="left_a dn " data-value="21313"><a href="javascript:void(0);" class="leftNav" onclick="aa(event)">
+                    <span class="iconfont icon-iconfonticon-baobia"></span>
+                    接单模板配置
+                    <i class="iconfont icon-iconfontfold"></i></a>
+
+                    <div class="prop dns">
+                        <a href="./take_orders.html" data-value="2131310" class="prop7 left_a dn">接单模板</a>
+                        <a href="./signature_manage.html" data-value="2131311" class="prop8 left_a dn">签名管理</a>
+                        <a href="./template_manage.html" data-value="2131312" class="prop9 left_a dn">模板管理</a>
+                        <a href="./gateway.html" data-value="2131313" class="prop10 left_a dn">网关签名</a>
+                        <a href="./shortChain.html" data-value="2131314" class="prop18 left_a dn sw_url">智能短链</a>
+                    </div>
+                </li>
+                <li class="left_a dn " data-value="21315">
+                    <a href="./test_send.html" class="leftNav" >
+                        <span class="iconfont icon-fasong"></span>
+                        测试发送
+                    </a>
+                </li>
+                <li class="left_a dn" data-value="21310"><a href="javascript:void(0);" class="leftNav" onclick="aa(event)">
+                    <span  class="iconfont icon-diannao-shuju" ></span>
+                    基础数据配置
+                    <i class="iconfont icon-iconfontfold"></i> </a>
+                    <div class="prop dns">
+                        <a href="./sensitive_word.html" data-value="2131010" class="prop1 left_a dn">敏感词部署</a>
+                        <a href="./rate_limiting.html" data-value="2131011" class="prop2 left_a dn">下单限速</a>
+                        <a href="./risk_list.html" data-value="2131012" class="prop3 left_a dn">危险词</a>
+                        <a href="./home_location.html" data-value="2131013" class="prop24 left_a dn">归属地维护</a>
+                        <a href="./home_protect.html" data-value="2131013" class="prop25 left_a dn">归属地保护</a>
+                    </div>
+                </li>
+                <li class="left_a dn addclass_one" data-value="21311"><a href="javascript:void(0);" class="leftNav" onclick="aa(event)">
+                    <span class="iconfont icon-peizhishujuyuan"></span>
+                    网关配置
+                    <i class="iconfont icon-icon11"></i></a>
+
+                    <div class="prop dbs">
+                        <a href="./definition_gate.html" data-value="2131110" class="prop4 left_a dn">定义网关</a>
+                        <a href="./route_manage.html" data-value="2131111" class="prop5 left_a dn">配置路由</a>
+                        <a href="javascript:void(0);" data-value="2131112" class="prop6 left_a dn">通路选择</a>
+                        <a href="./gateway_send.html" data-value="2131113" class="prop16 left_a dn">网关发送</a>
+                        <a href="./user_data.html" data-value="2131114" class="prop17 left_a dn">用户数据统计</a>
+                    </div>
+                </li>
+                <!--<li class="left_a  " data-value="21312">-->
+                    <!--<a href="javascript:void(0);" class="leftNav" style="padding: 20px;">-->
+                        <!--<span class="iconfont icon-guanli"></span>-->
+                        <!--通路配置-->
+                    <!--</a>-->
+                <!--</li>-->
+                <li class="left_a dn " data-value="21314"><a href="javascript:void(0);" class="leftNav"  onclick="aa(event)">
+                    <span class="iconfont icon-moban"></span>
+                    被叫配置
+                    <i class="iconfont icon-iconfontfold"></i></a>
+
+                    <div class="prop dns">
+                        <a href="./list_set.html" data-value="2131410" class="prop11 left_a dn">黑名单</a>
+                        <a href="./vip_list.html" data-value="2131411" class="prop12 left_a dn">VIP白名单</a>
+                        <a href="./unsubscribe.html" data-value="2131412" class="prop13 left_a dn">退订名单</a>
+                    </div>
+                </li>
+                <li class="left_a dn " data-value="21316"><a href="javascript:void(0);" class="leftNav"  onclick="aa(event)">
+                    <span class="iconfont icon-peizhishujuyuan"></span>
+                    风险控制
+                    <i class="iconfont icon-iconfontfold"></i></a>
+                    <div class="prop dns">
+                        <a href="./risk_rule.html" data-value="2131610" class="prop21 left_a dn">风控规则</a>
+                        <a href="./risk_result.html" data-value="2131611" class="prop22 left_a dn">风控结果</a>
+                        <a href="./report_take.html" data-value="2131612" class="prop23 left_a dn">告警订阅</a>
+                    </div>
+                </li>
+            </ul>
+            <div class="group" onclick="flexible(event)"><span class="iconfont icon-xiangzuo"style="color: rgb(255, 255, 255); font-size: 13px;"></span></div>
+        </div>
+    </div>
+    <div id="rightTable">
+        <v-order-fail></v-order-fail>
+    </div>
+</div>
+<div id="shade3">
+    <v-rate></v-rate>
+</div>
+<!--<div id="shade1" >-->
+    <!--<v-import></v-import>-->
+<!--</div>-->
+<script type="text/x-template" id="order-template">
+    <div>
+        <div class="table_tou">
+            <h6 class="fl">通路选择列表</h6>
+            <div class="fr sw_padd">
+            <span class="sw_num"
+                  v-cloak>{{totalCount}}</span
+                    >&nbsp; &nbsp;<span style="color:#738495">条记录</span>
+            <span class="Gradual" @click="shade()">
+              <span
+                      class="iconfont icon-jiekuanshenqing"
+                      >&nbsp;新增</span
+                      >
+            </span>
+            </div>
+        </div>
+        <div class="table_nav">
+            <form class="layui-form layui-form-pane" action="">
+                <div class="layui-inline dropdown unlike5">
+                    <label class="">用户名</label><br />
+                    <input type="text" class="dropdown-selected"
+                           name="userId" autocomplete="off" placeholder="请输入">
+                    <ul class="dns">
+                        <li v-cloak v-for="(li, index) in userData">
+                            <a href="javaScript:" :data="li.userId">{{li.loginName}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="layui-inline dropdown1 unlike6">
+                    <label class="">规则用户</label><br />
+                    <input type="text" class="dropdown-selected1"
+                           name="asUserId" autocomplete="off" placeholder="请输入">
+                    <ul class="dns">
+                        <li v-cloak v-for="(li, index) in userData">
+                            <a href="javaScript:" :data="li.userId">{{li.loginName}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="layui-inline dropdown2 unlike7">
+                    <label class="">被叫归属</label><br />
+                    <input type="text" class="dropdown-selected2"
+                           name="locationId" autocomplete="off" placeholder="请输入">
+                    <ul class="dns">
+                        <li v-cloak v-for="(li, index) in content2">
+                            <a href="javaScript:" :data="li.locationId">{{li.locationDec}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="layui-inline dropdown2 unlike8">
+                    <label class="">路由</label><br />
+                    <input type="text" class="dropdown-selected2"
+                           name="routeName" autocomplete="off" placeholder="请输入">
+                    <ul class="dns">
+                        <li v-cloak v-for="(li, index) in content3">
+                            <a href="javaScript:" :data="li.routeId">{{li.routeName}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="layui-inline">
+                    <label class="">关键字</label><br />
+                    <div class="layui-input-inline">
+                        <input
+                                type="text"
+                                name="keyword"
+                                placeholder="请输入"
+                                class="layui-input"
+                                />
+                    </div>
+                </div>
+                <div class="layui-inline" >
+                    <label class="">内容分类</label><br />
+                    <div class="layui-input-inline">
+                        <select name="bizType" >
+                            <option value="">请选择</option>
+                            <option
+                                    v-for="(li, index) in content"
+                                    :value="li.bizTypeId"
+                                    >{{li.bizTypeName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline" >
+                    <label class="">被叫类型</label><br />
+                    <div class="layui-input-inline">
+                        <select name="msisdnType" >
+                            <option value="">请选择</option>
+                            <option value="1">vip</option>
+                            <option value="2">白名单</option>
+                            <option value="3">黑名单</option>
+                            <option value="4">普通</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline" >
+                    <label class="">运营商</label><br />
+                    <div class="layui-input-inline">
+                        <select name="operator" >
+                            <option value="">请选择</option>
+                            <option value="2">中国移动</option>
+                            <option value="4">中国联通</option>
+                            <option value="8">中国电信</option>
+                            <option value="16">国际</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-input-inline">
+                    <button class="sw_btn1" lay-submit="" lay-filter="demo" >
+                        查询
+                    </button>
+                </div>
+            </form>
+            <div class="sw_row">
+                <table style="margin-top: 15px;min-width: 1500px;">
+                    <tr>
+                        <th style="width:63px">ID</th>
+                        <th style="width:126px">用户</th>
+                        <th style="width:162px">签名</th>
+                        <th style="width:67px">优先级</th>
+                        <th style="width:100px">被叫类型</th>
+                        <th style="width:90px">运营商</th>
+                        <th style="width:77px">内容分类</th>
+                        <th style="width:90px">短信内容</th>
+                        <th style="width:120px">匹配表达式</th>
+                        <th style="width:85px">路由</th>
+                        <th style="width:59px">网关</th>
+                        <th style="width:90px">规则用户</th>
+                        <th style="width:110px">被叫归属</th>
+                        <th style="width:150px;text-align: center;">操作</th>
+                    </tr>
+                    <tr v-cloak v-for="(li, index) in allData">
+                        <td>{{li.routeRuleId}}</td>
+                        <td>{{li.loginName}}</td>
+                        <td>{{li.signName}}</td>
+                        <td>{{li.priority}}</td>
+                        <td>
+                            <span v-if="li.msisdnType == 1">vip</span>
+                            <span v-if="li.msisdnType == 2">白名单</span>
+                            <span v-if="li.msisdnType == 3">黑名单</span>
+                            <span v-if="li.msisdnType == 4">普通</span>
+                        </td>
+                        <td>
+                            <span v-if="li.operator == 2">中国移动</span>
+                            <span v-if="li.operator == 4">中国联通</span>
+                            <span v-if="li.operator == 8">中国电信</span>
+                            <span v-if="li.operator == 16">国际</span>
+                        </td>
+                        <td>
+                    <span v-cloak v-for="(item, index) in content" >
+                        <i v-if="li.bizType == item.bizTypeId">{{item.bizTypeName}}</i>
+                    </span>
+                        </td>
+                        <td>{{li.msgContent}}</td>
+                        <td>{{li.expression}}</td>
+                        <td>
+                            <div>{{li.routeName}}</div>
+                        </td>
+                        <td>
+                            <div>{{li.ismgName}}</div>
+                        </td>
+                        <td>{{li.asuser}}</td>
+                        <td>
+                           <span> {{li.province | numTo}}</span> <span> {{li.proPper | numTo}}</span>
+                        </td>
+                        <td style="text-align: center;">
+                            <span class="sw_btn2 " @click="amend(li.routeRuleId)">修改</span>
+                            <span class="sw_btn3" @click="del(li.routeRuleId)">删除</span>
+                        </td>
+                    </tr>
+                </table>
+                <div class="sw_pad8" v-show="showNo == true">暂无数据</div>
+            </div>
+            <div id="page"></div>
+            <div id="shade2">
+                <div class="tips2">
+                    <div class="weizhi">
+                        <img src="../../img/warming.png" alt="">
+                    </div>
+                    <div class="tc" v-cloak>
+                        您确认删除该模板为：{{delName}}？
+                    </div>
+                    <div class="tc">
+                        <button class="sw_btnsuss" @click="sw_btnsuss()">确认</button>
+                        <button class="sw_btnwrong marl_15" @click="sw_btnwrong()">取消</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</script>
+<script type="text/x-template" id="rate-template">
+    <div class="shade_con3">
+        <div class="tongji">
+            <h3 v-if="code == 0">新增通路</h3>
+            <h3 v-if="code == 1">修改通路</h3>
+            <span class="iconfont icon-shanchu" @click="shanchu()"></span>
+        </div>
+        <div class="temp">
+            <form class="layui-form layui-form-pane" action="">
+                <div class="layui-inline dropdown1 unlike" style="width:299px">
+                    <label class=""><span style="color:#FE2121;font-weight:600;">*</span> 用户名</label><br />
+                    <input type="text" class="dropdown-selected1"
+                           :data="Info.userId" name="userId" autocomplete="off" placeholder="请输入">
+                    <ul class="dns">
+                        <li  v-cloak v-for="(li, index) in userData1">
+                            <a href="javaScript:" :data="li.userId">{{li.loginName}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="layui-inline">
+                    <label class="">被叫类型</label><br />
+                    <div class="layui-input-inline" style="width:300px">
+                        <select name="msisdnType" id="eventLevelTwo">
+                            <option value="">请选择</option>
+                            <option value="1">VIP</option>
+                            <option value="2">白名单</option>
+                            <option value="3">黑名单</option>
+                            <option value="4">普通</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="">运营商</label><br />
+                    <div class="layui-input-inline" style="width:300px">
+                        <select name="operator" id="eventLevelThree">
+                            <option value="0">请选择</option>
+                            <option value="2">中国移动</option>
+                            <option value="4">中国联通</option>
+                            <option value="8">中国电信</option>
+                            <option value="16">国际</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class=""><span style="color:#FE2121;font-weight:600;">*</span> 优先级</label><br />
+                    <div class="layui-input-inline" style="width:300px">
+                        <input
+                                type="text"
+                                name="priority"
+                                v-model="Info.priority"
+                                placeholder="请输入"
+                                class="layui-input"
+                                />
+                    </div>
+                </div>
+                <div class="layui-inline" >
+                    <label class="">内容分类</label><br />
+                    <div class="layui-input-inline" style="width:300px">
+                        <select name="bizType" id="eventLevel">
+                            <option value="">请选择</option>
+                            <option  v-cloak
+                                    v-for="(li, index) in content"
+                                    :value="li.bizTypeId"
+                                    >{{li.bizTypeName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="">签名</label><br />
+                    <div class="layui-input-inline" style="width:300px">
+                        <input
+                                type="text"
+                                name="signvalue"
+                                v-model="Info.signName"
+                                placeholder="请输入"
+                                class="layui-input"
+                                />
+                    </div>
+                </div>
+                <div class="layui-inline dropdown1 unlike1" style="width:299px">
+                    <label class="">跟随用户</label><br />
+                    <input type="text" class="dropdown-selected1"
+                           :data="Info.asuserId" name="asUserId" autocomplete="off" placeholder="请输入">
+                    <ul class="dns">
+                        <li  v-cloak v-for="(li, index) in userData1">
+                            <a href="javaScript:" :data="li.userId">{{li.loginName}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="layui-inline dropdown1 unlike2" style="width:299px">
+                    <label class="">路由</label><br />
+                    <input type="text" class="dropdown-selected1"
+                           :data="Info.routeId" name="routeId" autocomplete="off" placeholder="请输入">
+                    <ul class="dns"  v-cloak>
+                        <li v-for="(li, index) in content2">
+                            <a href="javaScript:" :data="li.routeId">{{li.routeName}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="layui-inline dropdown1 unlike3" style="width:299px">
+                    <label class="">网关</label><br />
+                    <input type="text" class="dropdown-selected1"
+                           :data="Info.ismgId" name="ismgId" autocomplete="off" placeholder="请输入">
+                    <ul class="dns"  v-cloak>
+                        <li v-for="(li, index) in content3">
+                            <a href="javaScript:" :data="li.ismgId">{{li.ismgName}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="layui-inline dropdown1 unlike4" style="width:299px">
+                    <label class="">被叫归属</label><br />
+                    <input type="text" class="dropdown-selected1"
+                           :data="Info.locationid" name="locationId" autocomplete="off" placeholder="请输入">
+                    <ul class="dns">
+                        <li v-for="(li, index) in content1">
+                            <a href="javaScript:" :data="li.locationId">{{li.locationDec}}</a>
+                        </li>
+                    </ul>
+                </div><br>
+                <em style="margin: 10px 0px 10px;display: inline-block;">短信内容:</em>
+                <textarea name="msgContent" v-model="Info.msgContent" id="text2" placeholder="请输入"></textarea>
+                <em style="margin: 10px 0px 10px;display: inline-block;">匹配表达式:</em>
+                <textarea name="expression" v-model="Info.expression" id="text3" placeholder="请输入"></textarea>
+                <div class="layui-input-inline" style="    width: 98%;text-align: center;">
+                    <button class="sw_btn1"  lay-submit="" lay-filter="demo6" v-if="code == 0">
+                        新增
+                    </button>
+                <span class="sw_btn1 " v-if="code == 1" lay-submit="" lay-filter="demo8">
+                  修改
+                </span>
+                    <span class="sw_btnwrong marl_15" @click="sw_btnwrong()">关闭</span>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</script>
+<script src="../../layui.all.js"></script>
+<script src="../../module/route_list.js"></script>
+<script>
+    //头部
+//    var operaAI = new Vue({
+//        el: "#proMang",
+//        data: {
+//            topCurrent: 3
+//        }
+//    });
+//    //   //左侧菜单组件实例化
+//    var leftMenu = new Vue({
+//        el: "#leftMenu_Box",
+//        data: {
+//            current: 1
+//        }
+//    });
+    resource()
+    //   //左侧菜单组件实例化
+    var rightTable = new Vue({
+        el: "#rightTable"
+    });
+    //
+    var shade3 = new Vue({
+        el: "#shade3"
+    });
+    //
+//    var shade1 = new Vue({
+//        el: "#shade1"
+//    });
+    $(function () {
+        //     $('#proMang .top ul li a').mousemove(function(){
+        //         $(this).addClass('addClass').parent().siblings().find('a').removeClass('addClass')
+        //   })
+        $(document).ready(function(){
+            $('#leftMenu_Box').css('background', '#040b29');
+            $('#proMang .top').css('background', '#fff')
+        });
+        total($(".unlike5 ul li"),$(".unlike5 .dropdown-selected"),$(".unlike5 ul"),$(".unlike5"));
+        total($(".unlike6 ul li"),$(".unlike6 .dropdown-selected1"),$(".unlike6 ul"),$(".unlike6"));
+        total($(".unlike7 ul li"),$(".unlike7 .dropdown-selected2"),$(".unlike7 ul"),$(".unlike7"));
+        total($(".unlike8 ul li"),$(".unlike8 .dropdown-selected2"),$(".unlike8 ul"),$(".unlike8"));
+        total($(".unlike ul li"),$(".unlike .dropdown-selected1"),$(".unlike ul"),$(".unlike"));
+        total($(".unlike1 ul li"),$(".unlike1 .dropdown-selected1"),$(".unlike1 ul"),$(".unlike1"));
+        total($(".unlike2 ul li"),$(".unlike2 .dropdown-selected1"),$(".unlike2 ul"),$(".unlike2"));
+        total($(".unlike3 ul li"),$(".unlike3 .dropdown-selected1"),$(".unlike3 ul"),$(".unlike3"));
+        total($(".unlike4 ul li"),$(".unlike4 .dropdown-selected1"),$(".unlike4 ul"),$(".unlike4"));
+//
+//        $(document).ready(function(){
+//
+//            setTimeout( function(){
+//                var height = $('#rightTable').get(0).scrollHeight;
+//                // console.log(height)
+//                $('#leftMenu_Box').css('height',height)
+//            }, 100 );
+//        });
+    });
+</script>
+</body>
+</html>

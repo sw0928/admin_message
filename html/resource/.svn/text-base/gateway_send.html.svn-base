@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>智能通信运营管理平台</title>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../css/layui.css" />
+		<script src="../../js/api.js"></script>
+		<script src="../../js/jquery-3.0.0.min.js"></script>
+		<script src="../laydate/laydate.js"></script>
+		<script src="../../js/vue.min.js"></script>
+	</head>
+	<!--[if IE 9]>
+<style>
+    #leftMenu_Box{
+        width: 15.08%;
+        height: 979px;
+        float: left;
+        background: #040b29 !important;
+        position: relative;
+        box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.5);
+    }
+</style>
+<![endif]-->
+	<style>
+		/*#page {*/
+		/*padding: 50px 0 47px 0;*/
+		/*}*/
+		
+		#page1,
+		#page2 {
+			text-align: center;
+			padding: 10px 0 28px;
+		}
+		
+		#leftMenu_Box .leftMenu ul li div.prop a.prop16 {
+			background-color: #1890FF !important;
+			color: #fff !important;
+		}
+		
+		.sw_row tr td div {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			padding-right: 10px;
+			box-sizing: border-box;
+		}
+		/*.sw_row tr td:nth-child(2) div {*/
+		/*width: 88px;*/
+		/*}*/
+		/*.sw_row tr td:nth-child(7) div {*/
+		/*width: 75px;*/
+		/*}*/
+		/*.sw_row tr td:nth-child(4) div {*/
+		/*width: 80px;*/
+		/*}*/
+		/*.sw_row tr td:nth-child(7) div {*/
+		/*width: 170px;*/
+		/*white-space: nowrap;*/
+		/*padding-right: 10px;*/
+		/*box-sizing: border-box;*/
+		/*}*/
+		/*.sw_row tr td {*/
+		/*padding: 18px 0 18px 0;*/
+		/*}*/
+		
+		.shade_con {
+			width: 1000px;
+			height: 540px;
+		}
+		
+		.shade_con3 {
+			width: 1017px;
+			height: auto;
+		}
+		
+		.shade_con3 .temp {
+			height: 490px;
+			overflow-y: auto;
+			width: 980px;
+			;
+		}
+		
+		.shade_con .temp {
+			width: 980px;
+			height: 450px;
+			margin: 12px 18px 0 20px;
+			padding-top: 10px;
+			overflow-y: auto;
+		}
+		
+		#text3 {
+			width: 925px;
+			height: 100px;
+			margin: 10px 18px 0 15px;
+			border: 1px solid #e2e2e2;
+			box-sizing: border-box;
+			padding: 7px;
+		}
+		
+		#text4 {
+			width: 922px;
+			height: 67px;
+			margin: 0px 18px 0 18px;
+			border: 1px solid #e2e2e2;
+			box-sizing: border-box;
+			padding: 7px;
+		}
+		
+		.shade_con1 {
+			width: 388px;
+			height: 377px;
+		}
+		
+		.shade_con1 .temp {
+			width: auto;
+			height: auto;
+			margin: 12px 22px 0 22px;
+		}
+		
+		
+		.layui-form-checkbox[lay-skin="primary"] span {
+			font-size: 12px;
+			padding-right: 0px;
+			color: #494949;
+		}
+		/*table tr th {*/
+		/*box-sizing: border-box;*/
+		/*padding: 16px 0;*/
+		/*border-bottom: 1px solid #e1e7ec;*/
+		/*}*/
+		
+		.sw_row tr td:nth-child(9) {
+			padding: 8px 0;
+		}
+		
+		.shade_con1 .layui-form-select dl {
+			top: -70px !important;
+		}
+		
+		.table_tou {
+			padding-left: 22px;
+		}
+		
+		.table_tou h6 {
+			font-size: 15px;
+			color: rgba(143, 156, 170, 1);
+			cursor: pointer;
+			padding: 0px;	
+			margin: 8px 25px 0px 0px;
+			padding-bottom: 6px;
+		}
+		
+		.addClass2 {
+			border-bottom: 2px solid #3C84D2;
+			font-size: 20px !important;
+			color: #000 !important;
+		}
+	</style>
+
+	<body>
+		<div id="proMang">
+			<div class="top"><img src="../../img/logo.png" alt="" class="logo">
+				<ul>
+					<li class="top-a-box" data-value="210">
+						<a href="../workbench/order_fail.html"><span class="iconfont icon-diannao" style="font-size: 22px;"></span> 工作台
+						</a>
+					</li>
+					<li class="top-a-box " data-value="211">
+						<a href="../user_manage/user_manage.html">
+							<span class="iconfont icon-yonghu" style="font-size: 22px;"></span> 用户管理
+						</a>
+					</li>
+					<li class="top-a-box " data-value="212">
+						<a href="../order_manage/order_manage.html"><span class="iconfont icon-dingdanguanli" style="font-size: 22px;"></span> 订单管理
+						</a>
+					</li>
+					<li class="top-a-box addClass" data-value="213">
+						<a href="./take_orders.html"><span class="iconfont icon-iconfonticon-shebei" style="font-size: 22px;"></span> 资源配置
+						</a>
+					</li>
+				</ul>
+				<div class="sign">
+					<span class="ren"></span> <span class="type"></span>
+					<img src="../../img/退出.png" alt="" onclick="sign()">
+				</div>
+			</div>
+		</div>
+		<div class="main-box">
+			<!-- 左侧菜单 -->
+			<div id="leftMenu_Box" class="resource">
+				<div class="leftMenu">
+					<ul>
+						<li class="left_a  dn" data-value="21313">
+							<a href="javascript:void(0);" class="leftNav"  onclick="aa(event)">
+								<span class="iconfont icon-iconfonticon-baobia"></span> 接单模板配置
+								<i class="iconfont icon-iconfontfold"></i></a>
+
+							<div class="prop dns">
+								<a href="./take_orders.html" data-value="2131310" class="prop7 left_a dn">接单模板</a>
+								<a href="./signature_manage.html" data-value="2131311" class="prop8 left_a dn">签名管理</a>
+								<a href="./template_manage.html" data-value="2131312" class="prop9 left_a dn">模板管理</a>
+								<a href="./gateway.html" data-value="2131313" class="prop10 left_a dn">网关签名</a>
+								<a href="./shortChain.html" data-value="2131314" class="prop18 left_a dn sw_url">智能短链</a>
+							</div>
+						</li>
+						<li class="left_a dn " data-value="21315">
+							<a href="./test_send.html" class="leftNav" >
+								<span class="iconfont icon-fasong"></span> 测试发送
+							</a>
+						</li>
+						<li class="left_a dn" data-value="21310">
+							<a href="javascript:void(0);" class="leftNav"  onclick="aa(event)">
+								<span class="iconfont icon-diannao-shuju"></span> 基础数据配置
+								<i class="iconfont icon-iconfontfold"></i> </a>
+							<div class="prop dns">
+								<a href="./sensitive_word.html" data-value="2131010" class="prop1 left_a dn">敏感词部署</a>
+								<a href="./rate_limiting.html" data-value="2131011" class="prop2 left_a dn">下单限速</a>
+								<a href="./risk_list.html" data-value="2131012" class="prop3 left_a dn">危险词</a>
+								<a href="./home_location.html" data-value="2131013" class="prop24 left_a dn">归属地维护</a>
+								<a href="./home_protect.html" data-value="2131013" class="prop25 left_a dn">归属地保护</a>
+							</div>
+						</li>
+						<li class="left_a  addclass_one dn" data-value="21311">
+							<a href="javascript:void(0);" class="leftNav"  onclick="aa(event)">
+								<span class="iconfont icon-peizhishujuyuan"></span> 网关配置
+								<i class="iconfont icon-icon11"></i></a>
+
+							<div class="prop dbs">
+								<a href="./definition_gate.html" data-value="2131110" class="prop4 left_a dn">定义网关</a>
+								<a href="./route_manage.html" data-value="2131111" class="prop5 left_a dn">配置路由</a>
+								<a href="./route_list.html" data-value="2131112" class="prop6 left_a dn">通路选择</a>
+								<a href="javascript:void(0);" data-value="2131113" class="prop16 left_a dn">网关发送</a>
+								<a href="./user_data.html" data-value="2131114" class="prop17 left_a dn">用户数据统计</a>
+							</div>
+						</li>
+						<!--<li class="left_a  " data-value="21312">-->
+						<!--<a href="javascript:void(0);" class="leftNav" style="padding: 20px;">-->
+						<!--<span class="iconfont icon-guanli"></span>-->
+						<!--通路配置-->
+						<!--</a>-->
+						<!--</li>-->
+
+						<li class="left_a dn " data-value="21314">
+							<a href="javascript:void(0);" class="leftNav"  onclick="aa(event)">
+								<span class="iconfont icon-moban"></span> 被叫配置
+								<i class="iconfont icon-iconfontfold"></i></a>
+
+							<div class="prop dns">
+								<a href="./list_set.html" data-value="2131410" class="prop11 left_a dn">黑名单</a>
+								<a href="./vip_list.html" data-value="2131411" class="prop12 left_a dn">VIP白名单</a>
+								<a href="./unsubscribe.html" data-value="2131412" class="prop13 left_a dn">退订名单</a>
+							</div>
+						</li>
+						<li class="left_a  dn" data-value="21316">
+							<a href="javascript:void(0);" class="leftNav" onclick="aa(event)">
+								<span class="iconfont icon-peizhishujuyuan"></span> 风险控制
+								<i class="iconfont icon-iconfontfold"></i></a>
+							<div class="prop dns">
+								<a href="./risk_rule.html" data-value="2131610" class="prop21 left_a dn">风控规则</a>
+								<a href="./risk_result.html" data-value="2131611" class="prop22 left_a dn">风控结果</a>
+								<a href="./report_take.html" data-value="2131612" class="prop23 left_a dn">告警订阅</a>
+							</div>
+						</li>
+					</ul>
+					<div class="group" onclick="flexible(event)"><span class="iconfont icon-xiangzuo" style="color: rgb(255, 255, 255); font-size: 13px;"></span></div>
+				</div>
+			</div>
+			<div id="rightTable">
+				<v-signature></v-signature>
+			</div>
+		</div>
+		<div id="shade">
+			<v-template-signature></v-template-signature>
+		</div>
+		<script type="text/x-template" id="signature-template">
+			<div>
+				<div class="table_tou">
+					<h6 class="fl addClass2">网关发送情况列表</h6>
+					<h6 class="fl">网关发送情况统计</h6>
+					<div class="fr sw_padd">
+						<span class="sw_num" v-cloak>{{totalCount}}</span>&nbsp; &nbsp;<span style="color:#738495">条记录</span>
+						<span class="Gradual" @click="importFile()" v-if="code == 0">
+						  <span class="iconfont icon-export">&nbsp;导出</span>
+						</span>
+					</div>
+				</div>
+				<div class="table_nav">
+					<form class="layui-form layui-form-pane" action="">
+						<div class="list">
+							<div class="layui-inline">
+								<label class="">开始时间</label><br />
+								<div class="layui-input-inline">
+									<input type="text" name="start_date" class="layui-input" autocomplete="off" id="test" />
+									<img src="../../img/Shape.png" alt="" />
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">结束时间</label><br />
+								<div class="layui-input-inline">
+									<input type="text" name="end_date" class="layui-input" autocomplete="off" id="test1" />
+									<img src="../../img/Shape.png" alt="" />
+								</div>
+							</div>
+							<div class="layui-inline dropdown unlike2" v-if="loginType != '通道管理员'">
+								<label class="">网关名</label><br />
+								<input type="text" class="dropdown-selected1" name="ismg_id" autocomplete="off" placeholder="请输入">
+								<ul class="dns">
+									<li v-for="(li, index) in userData1">
+										<a href="javaScript:" :data="li.ismgId">{{li.ismgName}}</a>
+									</li>
+								</ul>
+							</div>
+							<div class="layui-input-inline">
+								<button  class="sw_btn1" lay-submit="" lay-filter="demo5">
+                        查询
+                    </button>
+							</div>
+						</div>
+            <div class="list1 dn">
+							<div class="layui-inline">
+								<label class="">开始时间</label><br />
+								<div class="layui-input-inline">
+									<input type="text" name="start_date1" class="layui-input" autocomplete="off" id="test2" />
+									<img src="../../img/Shape.png" alt="" />
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">结束时间</label><br />
+								<div class="layui-input-inline">
+									<input type="text" name="end_date1" class="layui-input" autocomplete="off" id="test3" />
+									<img src="../../img/Shape.png" alt="" />
+								</div>
+							</div>
+							<div class="layui-inline dropdown1 unlike1" v-if="loginType != '通道管理员'">
+								<label class="">网关名</label><br />
+								<input type="text" class="dropdown-selected1" name="ismg_id1" autocomplete="off" placeholder="请输入">
+								<ul class="dns">
+									<li v-for="(li, index) in userData1">
+										<a href="javaScript:" :data="li.ismgId">{{li.ismgName}}</a>
+									</li>
+								</ul>
+							</div>
+							<div class="layui-input-inline">
+								<button  class="sw_btn1" lay-submit="" lay-filter="demo12">
+                        查询
+                    </button>
+							</div>
+						</div>
+						
+					</form>
+					<div class="sw_row">
+						<table style="margin-top: 15px;min-width: 1540px;">
+							<tr v-if="code == 0">
+								<th style="width:120px">日期</th>
+								<th style="width:125px">网关</th>
+								<th style="width:100px">总发总量</th>
+								<th style="width:100px">回执成功率</th>
+								<th style="width:100px">回执失败率</th>
+								<th style="width:100px">回执未知量</th>
+								<th style="width:100px">移动回执量</th>
+								<th style="width:100px">联通回执量</th>
+								<th style="width:100px">电信回执量</th>
+								<th style="width:150px">移动回执成功量</th>
+								<th style="width:150px">移动回执失败量</th>
+								<th style="width:150px">联通回执成功量</th>
+								<th style="width:150px">联通回执失败量</th>
+								<th style="width:150px">电信回执成功量</th>
+								<th style="width:150px">电信回执失败量</th>
+								<th style="width:100px">本地占比</th>
+							</tr>
+							<tr v-if="code == 1">
+								<th style="width:125px">网关</th>
+								<th style="width:100px">总发总量</th>
+								<th style="width:100px">回执成功率</th>
+								<th style="width:100px">回执失败率</th>
+								<th style="width:100px">回执未知量</th>
+								<th style="width:100px">移动回执量</th>
+								<th style="width:100px">联通回执量</th>
+								<th style="width:100px">电信回执量</th>
+								<th style="width:150px">移动回执成功量</th>
+								<th style="width:150px">移动回执失败量</th>
+								<th style="width:150px">联通回执成功量</th>
+								<th style="width:150px">联通回执失败量</th>
+								<th style="width:150px">电信回执成功量</th>
+								<th style="width:150px">电信回执失败量</th>
+								<th style="width:100px">本地占比</th>
+							</tr>
+							<tr v-cloak v-for="(li, index) in allData" v-if="code == 0">
+								<td>{{li.vest_date | limitTo}}</td>
+								<td>
+									<div :title="li.ismgName">{{li.ismg_name}}</div>
+								</td>
+								<td>
+									{{li.total}}
+								</td>
+								<td>{{li.succ_rate}}</td>
+								<td>{{li.err_rate}}</td>
+								<td>{{li.unknow}}</td>
+								<td>
+									{{li.cmcc_sent}}
+								</td>
+								<td>{{li.cu_sent}}</td>
+								<td>{{li.ct_sent}}</td>
+								<td>{{li.cmcc_delv}}</td>
+								<td>{{li.cmcc_undelv}}</td>
+								<td>{{li.cu_delv}}</td>
+								<td>{{li.cu_undelv}}</td>
+								<td>{{li.ct_delv}}</td>
+								<td>{{li.ct_undelv}}</td>
+								<td>{{li.local_pct}}</td>
+							</tr>
+							<tr v-cloak v-for="(li, index) in allData" v-if="code == 1">
+								<td>
+									<div :title="li.ismgName">{{li.ismg_name}}</div>
+								</td>
+								<td>
+									{{li.total}}
+								</td>
+								<td>{{li.succ_rate}}</td>
+								<td>{{li.err_rate}}</td>
+								<td>{{li.unknow}}</td>
+								<td>
+									{{li.cmcc_sent}}
+								</td>
+								<td>{{li.cu_sent}}</td>
+								<td>{{li.ct_sent}}</td>
+								<td>{{li.cmcc_delv}}</td>
+								<td>{{li.cmcc_undelv}}</td>
+								<td>{{li.cu_delv}}</td>
+								<td>{{li.cu_undelv}}</td>
+								<td>{{li.ct_delv}}</td>
+								<td>{{li.ct_undelv}}</td>
+								<td>{{li.local_pct}}</td>
+							</tr>
+						</table>
+						<div class="sw_pad8" v-show="showNo == true">暂无数据</div>
+					</div>
+					<div id="page"></div>
+					<div id="shade2">
+						<div class="tips2">
+							<div class="weizhi">
+								<img src="../../img/warming.png" alt="">
+							</div>
+							<div class="tc">
+								您确认删除本条网关吗？
+							</div>
+							<div class="tc">
+								<button class="sw_btnsuss" @click="sw_btnsuss()">确认</button>
+								<button class="sw_btnwrong marl_15" @click="sw_btnwrong()">取消</button>
+							</div>
+						</div>
+						<div class="tips_chid2">
+							<div class="weizhi">
+								<img src="../../img/success.png" alt="">
+							</div>
+							<div class="tc">
+								删除成功！
+							</div>
+							<div class="tc">
+								<button class="sw_btnsuss" @click="sw_qued()">确认</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</script>
+		<script src="../../layui.all.js"></script>
+		<script src="../../module/gateway_send.js"></script>
+		<script>
+			//头部
+			//    var operaAI = new Vue({
+			//        el: "#proMang",
+			//        data: {
+			//            topCurrent: 3
+			//        }
+			//    });
+			//    //   //左侧菜单组件实例化
+			//    var leftMenu = new Vue({
+			//        el: "#leftMenu_Box",
+			//        data: {
+			//            current: 1
+			//        }
+			//    });
+			resource()
+			//
+			var rightTable = new Vue({
+				el: "#rightTable"
+			});
+			//
+			var shade = new Vue({
+				el: "#shade"
+			});
+
+			$(function() {
+
+				laydate.render({
+					elem: "#test", //指定元素
+					// type: 'datetime',
+					value: getDay(0),
+				});
+				laydate.render({
+					elem: "#test1", //指定元素
+					// type: 'datetime',
+					value: getDay(0),
+				});
+				laydate.render({
+					elem: "#test2", //指定元素
+					// type: 'datetime',
+					value: getDay(0),
+				});
+				laydate.render({
+					elem: "#test3", //指定元素
+					// type: 'datetime',
+					value: getDay(0),
+				});
+				$(document).ready(function() {
+					$('#leftMenu_Box').css('background', '#040b29');
+					$('#proMang .top').css('background', '#fff')
+				});
+				//     $('#proMang .top ul li a').mousemove(function(){
+				//         $(this).addClass('addClass').parent().siblings().find('a').removeClass('addClass')
+				//   })
+				total($(".unlike2 ul li"), $(".unlike2 .dropdown-selected1"), $(".unlike2 ul"), $(".unlike2"));
+				total($(".unlike1 ul li"), $(".unlike1 .dropdown-selected1"), $(".unlike1 ul"), $(".unlike1"));
+			});
+		</script>
+	</body>
+
+</html>

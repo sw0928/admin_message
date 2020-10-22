@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+<title>审核发送</title>
+<link href="css/style.css" rel="stylesheet"/>
+<link href="css/response.css" rel="stylesheet"/>
+</head>
+<body class="bg">
+<div class="content">
+	<div class="header">
+		<div class="header-nei">
+			<a href="auditing.html" class="back-up"><i class="iconfont icon-xiangzuo"></i></a>
+			<h2 class="header-title">审核发送</h2>
+            <a href="nav.html" class="back-top"><i class="iconfont icon-daohang"></i></a>
+		</div>
+	</div>
+	<!--head/-->
+	<div class="head-height">&nbsp;</div>
+	<div class="order-info" id="info">
+
+    </div>
+</div>
+<!--content/-->
+<div class="bg100"></div>
+<script src="js/jquery.min.js"></script>
+<script src="js/style.js"></script>
+<script src="js/doT.min.js"></script>
+<script id="infotmpl" type="text/x-dot-template">
+ <table>
+    <tr>
+     <th>任务号</th>
+     <td>{{=it.taskSn}}</td>
+    </tr>
+    <tr>
+     <th>模版ID</th>
+     <td>{{=it.templateId}}</td>
+    </tr>
+    <tr>
+     <th>用户名</th>
+        <td>{{=it.loginName}}</td>
+    </tr>
+    <tr>
+     <th>客户来源</th>
+        {{? it.ismgName == 'null'}}
+        <td>-</td>
+        {{??}}
+        <td>{{=it.ismgName}}</td>
+        {{?}}
+    </tr>
+    <tr>
+     <th>发送时间</th>
+     <td>{{=it.vestDate}}</td>
+    </tr>
+    <tr>
+     <th>被叫号码</th>
+     <td class="colorB">{{=it.receiverMsisdn}}</td>
+    </tr>
+    <tr>
+     <th>合并数量</th>
+        {{? it.num == 'undefined'}}
+        <td>-</td>
+        {{??}}
+        <td>{{=it.num}}</td>
+        {{?}}
+    </tr>
+    <tr>
+     <th>短信内容</th>
+        <td>{{=it.msgContent}}</td>
+    </tr>
+     <tr>
+         <th>是否有营业执照</th>
+         <td>是</td>
+     </tr>
+     <tr>
+         <th>匹配动作</th>
+         <td>{{=it.type}}</td>
+     </tr>
+ </table>
+ <div class="log-reg-sub">
+     <a href="javascript:;" class="log-reg-sw-btn order-btn marR15">放行</a>
+     <a href="javascript:;" class="log-reg-sw-btn order-btn">拒绝</a>
+ </div>
+</script>
+<script>
+  $(function(){
+      var info = JSON.parse(sessionStorage.getItem('infoObj'));
+      var interText = doT.template($("#infotmpl").text());
+      $("#info").html(interText(info));
+      $.ajax({
+          url :"/icos/blacklist/queryBlackList",
+          type : 'post',
+          async: true,
+          dataType : 'json',
+          contentType: 'application/json',
+          data : JSON.stringify({
+              "offset": 1,
+              "pageSize": 10,
+              "phone": info.receiverMsisdn,
+          }),
+          headers : {
+              "Authorization":sessionStorage.getItem('id'),
+          },
+          complete: function (xhr) {
+              $("#load").remove();
+              // 获取相关Http Response header
+              if(xhr.getResponseHeader('Authorization') != null){
+                  sessionStorage.setItem('id', xhr.getResponseHeader('Authorization'));
+              }
+          },
+          success : function(res){
+              if(res.data.data.length == 0){
+                  $('.colorB').css({'color':'#333'})
+              }else if(res.data.data[0].blackLevel != 0 && res.data.data[0].whiteLevel != 0){
+                  $('.colorB').css({'color':'#09f'})
+              }else if(res.data.data[0].blackLevel != 0 && res.data.data[0].whiteLevel == 0){
+                  $('.colorB').css({'color':'#ff2300'})
+              }else if(res.data.data[0].blackLevel == 0 && res.data.data[0].whiteLevel != 0){
+                  $('.colorB').css({'color':'#33ff00'})
+              }
+          },
+          error : function(err){
+              location.href = "index.html";
+              sessionStorage.clear();
+          }
+      });
+      //定单校验
+      $("#info").on('click','.order-btn',function() {
+          var num = 0;
+          var html = $(this).html();
+          if(info.type == "先审后发"){
+              num = 1
+          }else{
+              num = 0
+          }
+          $.ajax({
+              url : '/icos/audit/queryAuditMsgContent',
+              type : 'post',
+              async: false,
+              data :{
+                  'taskSn':info.taskSn,
+                  'way':num
+              },
+              headers : {
+                  "Authorization":sessionStorage.getItem('id'),
+              },
+              success : function(data){
+                  //console.log(data);
+                  var code;
+                  if(html == '放行'){
+                      code = 0
+                  }else{
+                      code = 1
+                  }
+                  var dataT = {
+                      "expression":data.data,
+                      "way":num,
+                      "code":code,
+                  };
+                  sessionStorage.setItem('tempObj', JSON.stringify(dataT));
+                  location.href = "dispatch.html"
+              },
+              error : function(err){
+                  location.href = "index.html";
+                  sessionStorage.clear();
+              }
+          });
+      })
+      $("#info").on('click','.colorB',function() {
+          var msisdn = $(".colorB").text();
+          sessionStorage.setItem('black_while', msisdn);
+          location.href = "createBlack.html"
+      })
+//      $("#info").on('click','.refuse',function() {
+//          var num = 0;
+//          if(info.type == "先审后发"){
+//              num = 1
+//          }else{
+//              num = 0
+//          }
+//          $.ajax({
+//              url : '/icos/audit/queryAuditMsgContent',
+//              type : 'post',
+//              async: false,
+//              data :{
+//                  'taskSn':info.taskSn,
+//                  'way':num
+//              },
+//              headers : {
+//                  "Authorization":sessionStorage.getItem('id'),
+//              },
+//              success : function(data){
+//                  //console.log(data);
+//                  var dataT = {
+//                      "expression":data.data,
+//                      "way":num,
+//                      "code":1,
+//                  };
+//                  sessionStorage.setItem('tempObj', JSON.stringify(dataT));
+//                  location.href = "dispatch.html"
+//              },
+//              error : function(err){
+//                  location.href = "index.html";
+//                  sessionStorage.clear();
+//              }
+//          });
+//      })
+  })
+</script>
+</body>
+</html>

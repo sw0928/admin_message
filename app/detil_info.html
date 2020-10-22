@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+<title>订单详情</title>
+<link href="css/style.css" rel="stylesheet"/>
+<link href="css/response.css" rel="stylesheet"/>
+</head>
+<body class="bg">
+<div class="content">
+	<div class="header">
+		<div class="header-nei">
+			<a href="javascript:;" onclick="javascript:history.back(-1);" class="back-up"><i class="iconfont icon-xiangzuo"></i></a>
+			<h2 class="header-title">订单详情</h2>
+            <a href="nav.html" class="back-top"><i class="iconfont icon-daohang"></i></a>
+		</div>
+	</div>
+	<!--head/-->
+	<div class="head-height">&nbsp;</div>
+	<div class="order-info" id="info">
+
+    </div>
+</div>
+<!--content/-->
+<div class="bg100"></div>
+<script src="js/jquery.min.js"></script>
+<script src="js/style.js"></script>
+<script src="js/doT.min.js"></script>
+<script id="infotmpl" type="text/x-dot-template">
+ <table>
+    <tr>
+     <th>订单号</th>
+     <td>{{=it.orderSn}}</td>
+    </tr>
+    <tr>
+     <th>用户名</th>
+     <td>{{=it.loginName}}</td>
+    </tr>
+    <tr>
+     <th>被叫号码</th>
+     <td>{{=it.receiverMsisdn}}</td>
+    </tr>
+    <tr>
+     <th>归属地</th>
+        {{? it.province == 'null'}}
+        <td>-</td>
+        {{??}}
+        <td>{{=it.province}}</td>
+        {{?}}
+    </tr>
+    <tr>
+     <th>短信内容</th>
+     <td>{{=it.msgContent}}</td>
+    </tr>
+    <tr>
+     <th>发送类型</th>
+     <td>{{=it.typeName}}</td>
+    </tr>
+    <tr>
+     <th>长短信条数</th>
+     <td>{{=it.msgTotal}}</td>
+    </tr>
+    <tr>
+     <th>成功数量</th>
+     <td>{{=it.successAmount}}</td>
+    </tr>
+     <tr>
+         <th>发送时间</th>
+         {{? it.sentTime == 'null'}}
+         <td>-</td>
+         {{??}}
+         <td>{{=it.sentTime}}</td>
+         {{?}}
+     </tr>
+     <tr>
+         <th>回执时间</th>
+         {{? it.receiptTime == 'null'}}
+         <td>-</td>
+         {{??}}
+         <td>{{=it.receiptTime}}</td>
+         {{?}}
+     </tr>
+     <tr>
+         <th>状态报告</th>
+         {{? it.receiptStatusText == 'null'}}
+         <td>-</td>
+         {{??}}
+         <td>{{=it.receiptStatusText}}</td>
+         {{?}}
+     </tr>
+     <tr>
+         <th>状态说明</th>
+         {{? it.receiptStatusCode == 'null'}}
+         <td style="color:#A9A9A9">未知</td>
+         {{?? it.receiptStatusCode == 1}}
+         <td style="color:#9AC938">成功</td>
+         {{?? it.receiptStatusCode == 0}}
+         <td style="color:#FF3939">失败</td>
+         {{?}}
+     </tr>
+     <tr>
+         <th>发送方式</th>
+         {{? it.howSend == 0}}
+         <td>待发</td>
+         {{?? it.howSend == 1}}
+         <td>A</td>
+         {{?? it.howSend == 2}}
+         <td>Z报成功</td>
+         {{?? it.howSend == 3}}
+         <td>Z报失败</td>
+         {{?? it.howSend == 4}}
+         <td>Z报空号</td>
+         {{?? it.howSend == 5}}
+         <td>Z报内容限制</td>
+         {{?}}
+     </tr>
+     <tr>
+         <th>网关</th>
+         <td>{{=it.ismgName}}</td>
+     </tr>
+ </table>
+</script>
+<script>
+  $(function(){
+   var info = JSON.parse(sessionStorage.getItem('infoObj'));
+   var interText = doT.template($("#infotmpl").text());
+   $("#info").html(interText(info));
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>智能通信运营管理平台</title>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../css/layui.css" />
+		<script src="../../js/api.js"></script>
+		<script src="../../js/jquery-3.0.0.min.js"></script>
+		<script src="../laydate/laydate.js"></script>
+		<script src="../../js/vue.min.js"></script>
+
+	</head>
+	<!--[if IE 9]>
+<style>
+    #leftMenu_Box {
+        width: 15.08%;
+        height: 979px;
+        float: left;
+        background: #040b29 !important;
+        position: relative;
+        box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.5);
+    }
+</style>
+<![endif]-->
+	<style>
+		/*#page {*/
+		/*padding: 80px 0 46px 0;*/
+		/*}*/
+		
+		#leftMenu_Box .leftMenu ul li div.prop a.prop20 {
+			background-color: #1890FF !important;
+			color: #fff !important;
+		}
+		/*.sw_row tr td {*/
+		/*padding: 20px 0;*/
+		/*border: none !important;*/
+		/*}*/
+		
+		.sw_row tbody tr:nth-child(1):hover {
+			background: #EBF7FF;
+		}
+		
+		.shade_con {
+			width: 1255px;
+			height: 500px;
+		}
+		
+		.shade_con .temp {
+			width: 96%;
+			height: auto;
+		}
+		
+		.layui-inline .aa {
+			width: 100px;
+			text-align: left;
+		}
+		
+		.fileinput-button {
+			position: relative;
+			display: inline-block;
+			//overflow: hidden;
+		}
+		
+		.fileinput-button input {
+			position: absolute;
+			right: 0px;
+			top: 0px;
+			opacity: 0;
+			-ms-filter: 'alpha(opacity=0)';
+			font-size: 200px;
+		}
+		
+		.Gradual1 {
+			height: 27px;
+			margin-left: -15px;
+		}
+		
+		#text2,
+		#text3 {
+			width: 300px;
+			height: 67px;
+			margin: 10px 18px 0 0px;
+			border: 1px solid #e2e2e2;
+			box-sizing: border-box;
+			padding: 7px;
+		}
+		.layui-tab-card .layui-inline{
+    	margin-bottom: 3px;
+    }
+	</style>
+
+	<body>
+		<div id="proMang">
+			<div class="top"><img src="../../img/logo.png" alt="" class="logo">
+				<ul>
+					<li class="top-a-box" data-value="210">
+						<a href="../workbench/order_fail.html"><span class="iconfont icon-diannao" style="font-size: 22px;"></span> 工作台
+						</a>
+					</li>
+					<li class="top-a-box " data-value="211">
+						<a href="../user_manage/user_manage.html">
+							<span class="iconfont icon-yonghu" style="font-size: 22px;"></span> 用户管理
+						</a>
+					</li>
+					<li class="top-a-box addClass" data-value="212">
+						<a href="./order_manage.html"><span class="iconfont icon-dingdanguanli" style="font-size: 22px;"></span> 订单管理
+						</a>
+					</li>
+					<li class="top-a-box " data-value="213">
+						<a href="../resource/take_orders.html"><span class="iconfont icon-iconfonticon-shebei" style="font-size: 22px;"></span> 资源配置
+						</a>
+					</li>
+				</ul>
+				<div class="sign">
+					<span class="ren"></span> <span class="type"></span>
+					<img src="../../img/退出.png" alt="" onclick="sign()">
+				</div>
+			</div>
+		</div>
+		<div class="main-box">
+			<!-- 左侧菜单 -->
+			<div id="leftMenu_Box" class="order_manage">
+				<div class="leftMenu">
+					<ul>
+						<li class="left_a  dn" data-value="21210">
+							<a href="./order_manage.html" class="leftNav">
+								<span class="iconfont icon-guanli"></span> 订单管理
+							</a>
+						</li>
+						<li class="left_a dn " data-value="21210">
+                    <a href="./order_rule.html" class="leftNav sw_url" >
+                        <span class="iconfont icon-guanli"></span>
+                        订单规则
+                    </a>
+                </li>
+						<li class="left_a  dn" data-value="21211">
+							<a href="./order_list.html" class="leftNav">
+								<span class="iconfont icon-liebiao"></span> 详单列表
+							</a>
+						</li>
+						<li class="left_a dn" data-value="21214">
+							<a href="./order_detail.html" class="leftNav">
+								<span class="iconfont icon-liebiao"></span> 接单明细
+							</a>
+						</li>
+						<li class="left_a dn" data-value="21212">
+							<a href="javascript:void(0);" class="leftNav" onclick="aa(event)">
+								<span class="iconfont icon-diannao-shuju"></span> 客户支持
+								<i class="iconfont icon-iconfontfold"></i> </a>
+
+							<div class="prop dns">
+								<a href="./signature_distribute.html" data-value="2121210" class="prop13 left_a dn">签名分布</a>
+								<a href="./called_distribute.html" data-value="2121211" class="prop22 left_a dn">被叫分布</a>
+								<a href="./client_type.html" data-value="2121212" class="prop33 left_a dn">客户订单类型</a>
+							</div>
+						</li>
+						<li class="left_a addclass_one dn" data-value="21213">
+							<a href="javascript:void(0);" class="leftNav" onclick="aa(event)">
+								<span class="iconfont icon-diannao-shuju"></span> 通道管理
+								<i class="iconfont icon-icon11"></i> </a>
+
+							<div class="prop dbs">
+								<a href="javascript:void(0);" data-value="2121310" class="prop20 left_a  dn">通道信息</a>
+								<!--<a href="./channel_test.html" data-value="2121311" class="prop24 left_a dn">通道测试</a>-->
+								<a href="./status_report_record.html" data-value="2121312" class="prop21 left_a  dn">报告状态记录</a>
+								<a href="./status_report_reset.html" data-value="2121313" class="prop23 left_a  dn">报告状态重推</a>
+								<!--<a href="./channel_test.html" data-value="21211" class="prop21 left_a dn">通道测试</a>-->
+							</div>
+						</li>
+					</ul>
+					<div class="group" onclick="flexible(event)"><span class="iconfont icon-xiangzuo" style="color: rgb(255, 255, 255); font-size: 13px;"></span>
+					</div>
+				</div>
+			</div>
+			<div id="rightTable">
+				<v-order-list></v-order-list>
+			</div>
+		</div>
+		<div id="shade">
+			<v-template></v-template>
+		</div>
+		<script type="text/x-template" id="list-template">
+			<div>
+				<div class="table_tou">
+					<h6 class="fl">通道信息列表</h6>
+
+					<div class="fr sw_padd">
+						<span class="sw_num" v-cloak>{{totalCount}}</span>&nbsp; &nbsp;<span style="color:#738495">条记录</span>
+						<span class="Gradual" @click="shade()">
+                <span class="iconfont icon-jiekuanshenqing">&nbsp;新增</span>
+						</span>
+						<!--<span class="Gradual" @click="importFile()">-->
+						<!--<span class="iconfont icon-export">&nbsp;导出</span>-->
+						<!--</span>-->
+						<!--<span class="Gradual" @click="importFile()">-->
+						<!--<span class="iconfont icon-export" >&nbsp;导入</span>-->
+						<!--</span>-->
+					</div>
+				</div>
+				<div class="table_nav">
+					<form class="layui-form layui-form-pane" action="">
+						<div class="">
+							<div class="layui-inline">
+								<label class="">缴费时间下限</label><br/>
+
+								<div class="layui-input-inline">
+									<input type="text" name="billTimeDown" autocomplete="off" class="layui-input" id="test2" />
+									<img src="../../img/Shape.png" alt="" />
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">缴费时间上限</label><br/>
+
+								<div class="layui-input-inline">
+									<input type="text" name="billTimeUp" autocomplete="off" class="layui-input" id="test3" />
+									<img src="../../img/Shape.png" alt="" />
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">通道名称</label><br/>
+
+								<div class="layui-input-inline">
+									<input type="text" name="channelName" placeholder="请输入" class="layui-input" />
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">落地省份</label><br/>
+
+								<div class="layui-input-inline">
+									<input type="text" name="channelLocalProvince" placeholder="请输入" class="layui-input" />
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">发送号码主端口</label><br/>
+
+								<div class="layui-input-inline">
+									<input type="text" name="channelSmsMainNumber" placeholder="请输入" class="layui-input" />
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">支持运营商</label><br/>
+
+								<div class="layui-input-inline">
+									<select name="channelSupportOperator">
+										<option value="">请选择</option>
+										<option value="中国移动">中国移动</option>
+										<option value="中国联通">中国联通</option>
+										<option value="中国电信">中国电信</option>
+										<option value="三网合一">三网合一</option>
+									</select>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">通道性质</label><br/>
+
+								<div class="layui-input-inline">
+									<select name="channelCharacter">
+										<option value="">请选择</option>
+										<option value="直连通道">直连通道</option>
+										<option value="三方通道">三方通道</option>
+										<option value="转租通道">转租通道</option>
+										<option value="转租回签通道">转租回签通道</option>
+									</select>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">通道状态</label><br/>
+
+								<div class="layui-input-inline">
+									<select name="channelStatus">
+										<option value="">请选择</option>
+										<option value="已开通">已开通</option>
+										<option value="已接入">已接入</option>
+										<option value="运营中">运营中</option>
+										<option value="禁用">禁用</option>
+									</select>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">接入负责人</label><br/>
+
+								<div class="layui-input-inline">
+									<input type="text" name="contactOfAccess" placeholder="请输入" class="layui-input" />
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">余额下限</label><br/>
+
+								<div class="layui-input-inline">
+									<input type="text" name="billBalanceDown" placeholder="请输入" class="layui-input" />
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">余额上限</label><br/>
+
+								<div class="layui-input-inline">
+									<input type="text" name="billBalanceUp" placeholder="请输入" class="layui-input" />
+								</div>
+							</div>
+							<br>
+
+							<div class="layui-inline" style="width: 33%;">
+								<label style="width: 100px;">是否支持回复</label>
+
+								<div class="layui-input-inline" style="width:auto;height: 29px;">
+									<input type="radio" name="receIsSupport" value="" title="空" checked>
+									<input type="radio" name="receIsSupport" value="支持" title="支持">
+									<input type="radio" name="receIsSupport" value="不支持" title="不支持">
+								</div>
+							</div>
+							<div class="layui-inline" style="width: 48%;">
+								<label style="width:100px;">是否报备</label>
+
+								<div class="layui-input-inline" style="width:auto;height: 29px;">
+									<input type="radio" name="signWhether" value="" title="空" checked>
+									<input type="radio" name="signWhether" value="否" title="否">
+									<input type="radio" name="signWhether" value="报备签名" title="报备签名">
+									<input type="radio" name="signWhether" value="报备模板" title="报备模板">
+								</div>
+							</div>
+							<div class="layui-inline" style="width: 33%;">
+								<label style="width: 100px;">是否可发行业通知</label>
+
+								<div class="layui-input-inline" style="width: auto;height: 29px;">
+									<input type="radio" name="limitSendProfession" value="" title="空" checked>
+									<input type="radio" name="limitSendProfession" value="是" title="是">
+									<input type="radio" name="limitSendProfession" value="否" title="否">
+								</div>
+							</div>
+							<div class="layui-inline" style="width: 33%;">
+								<label style="width: 100px;">是否可发验证码</label>
+
+								<div class="layui-input-inline" style="width: auto;height: 29px;">
+									<input type="radio" name="limitSendVerify" value="" title="空" checked>
+									<input type="radio" name="limitSendVerify" value="是" title="是">
+									<input type="radio" name="limitSendVerify" value="否" title="否">
+								</div>
+							</div>
+							<div class="layui-inline" style="width: 33%;">
+								<label style="width: 100px;">是否可发营销内容</label>
+
+								<div class="layui-input-inline" style="width:auto;height: 29px;">
+									<input type="radio" name="limitSendMarketing" value="" title="空" checked>
+									<input type="radio" name="limitSendMarketing" value="是" title="是">
+									<input type="radio" name="limitSendMarketing" value="否" title="否">
+								</div>
+							</div><br>
+							<div class="layui-input-inline" style="position: absolute; right: 20px; bottom: 15px;z-index: 111;">
+								<button class="sw_btn1" lay-submit="" lay-filter="demo12" style="margin: 0px">
+                            查询
+                        </button>
+							</div>
+						</div>
+					</form>
+					<div class="sw_row">
+						<table style="margin-top: 15px;min-width: 1650px;">
+							<thead>
+								<tr>
+									<th>通道名称</th>
+									<th>通道运营商名称</th>
+									<th>通道类型</th>
+									<th>落地省份</th>
+									<th>落地运营商</th>
+									<th>支持运营商</th>
+									<th>发送号码主端口</th>
+									<th>申请公司名称</th>
+									<th>通道性质</th>
+									<th>通道使用者</th>
+									<th>业务代码/SPID</th>
+									<th>通道状态</th>
+									<th>禁用原因</th>
+									<th style="width:130px;text-align: center;">操作</th>
+								</tr>
+							</thead>
+							<tbody v-cloak class="" v-for="(li, index) in allData">
+								<tr>
+									<td style="">{{li.channelName}}</td>
+									<td style="">{{li.channelOperatorName}}</td>
+									<td style="">{{li.channelType}}</td>
+									<td style="">{{li.channelLocalProvince}}</td>
+									<td style="">{{li.channelLocalOperator }}</td>
+									<td style="">{{li.channelSupportOperator }}</td>
+									<td style="">{{li.channelSmsMainNumber }}</td>
+									<td style="">{{li.channelApplyCompany }}</td>
+									<td style="">{{li.channelCharacter }}</td>
+									<td style="">{{li.channelUsers }}</td>
+									<td style="">{{li.channelSpid }}</td>
+									<td style="">{{li.channelStatus }}</td>
+									<td style="">{{li.channelDisReason}}</td>
+									<td style="text-align: center;">
+										<div style="width:100%;text-align: center;">
+											<span class="sw_btn2" @click="amend(li.channelId)">修改</span>
+											<span class="sw_btn3" @click="del(li.channelId)">删除</span>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="sw_pad8" v-show="mapShow == true">暂无数据</div>
+					</div>
+					<div id="page"></div>
+				</div>
+			</div>
+		</script>
+		<script type="text/x-template" id="shade-template">
+			<div>
+				<div class="shade_con">
+					<div class="tongji">
+						<h3 v-if="code == 0">新增通道信息</h3>
+						<h3 v-if="code == 1">修改通道信息</h3>
+						<span class="iconfont icon-shanchu" @click="shanchu()"></span>
+					</div>
+					<div class="temp">
+						<form class="layui-form " action="" style="padding: 0px 0px 0px 20px;">
+							<div class="layui-tab layui-tab-card">
+								<ul class="layui-tab-title">
+									<li class="layui-this sw_cc">基本属性</li>
+									<li>时间</li>
+									<li>联系方式</li>
+									<li>接入方式</li>
+									<li>计费</li>
+									<li>投诉</li>
+									<li>长短信</li>
+									<li>上行</li>
+									<li>签名</li>
+									<li>码号拓展</li>
+									<li>限制</li>
+									<li>其他</li>
+								</ul>
+								<div class="layui-tab-content">
+									<div class="layui-tab-item layui-show sw_ww">
+										<div class="layui-inline">
+											<label class="aa">通道名称</label>
+											<div class="layui-input-inline" style="width:270px">
+												<input type="text" name="channelName" v-model="info.channelName" lay-verify="required" lay-reqtext="通道名称不能为空" placeholder="必填，通道名称至少2个字符，最多25个字符" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">通道运营商名称</label>
+											<div class="layui-input-inline" style="width:270px">
+												<input type="text" name="channelOperatorName" v-model="info.channelOperatorName" placeholder="可选" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">发送号码主端口</label>
+											<div class="layui-input-inline" style="width:270px">
+												<input type="text" name="channelSmsMainNumber" v-model="info.channelSmsMainNumber" lay-verify="required" lay-reqtext="发送号码主端口 不能为空" placeholder="必填" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">申请公司名称</label>
+											<div class="layui-input-inline" style="width:270px">
+												<input type="text" name="channelApplyCompany" v-model="info.channelApplyCompany" lay-verify="required" lay-reqtext="申请公司名称不能为空" placeholder="必填" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">通道使用者</label>
+											<div class="layui-input-inline" style="width:270px">
+												<input type="text" name="channelUsers" v-model="info.channelUsers" lay-verify="required" lay-reqtext="通道使用者不能为空" placeholder="必填" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">业务代码/SPID</label>
+											<div class="layui-input-inline" style="width:270px">
+												<input type="text" name="channelSpid" v-model="info.channelSpid" placeholder="可选" autocomplete="off" class="layui-input">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="layui-form-label aa">通道类型</label>
+											<div class="layui-input-inline" style="width: 900px;">
+												<input type="radio" name="channelType" value="短信" title="短信" checked="">
+												<input type="radio" name="channelType" value="彩信" title="彩信">
+												<input type="radio" name="channelType" value="语音" title="语音">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="layui-form-label aa">落地省份</label>
+											<div class="layui-input-inline" style="width: 1055px;height: auto;">
+												<input type="radio" name="channelLocalProvince" value="山东" title="山东">
+												<input type="radio" name="channelLocalProvince" value="河北" title="河北">
+												<input type="radio" name="channelLocalProvince" value="福建" title="福建">
+												<input type="radio" name="channelLocalProvince" value="四川" title="四川">
+												<input type="radio" name="channelLocalProvince" value="江苏" title="江苏">
+												<input type="radio" name="channelLocalProvince" value="安徽" title="安徽">
+												<input type="radio" name="channelLocalProvince" value="广东" title="广东">
+												<input type="radio" name="channelLocalProvince" value="浙江" title="浙江">
+												<input type="radio" name="channelLocalProvince" value="北京" title="北京">
+												<input type="radio" name="channelLocalProvince" value="上海" title="上海">
+												<input type="radio" name="channelLocalProvince" value="贵州" title="贵州">
+												<input type="radio" name="channelLocalProvince" value="湖南" title="湖南">
+												<input type="radio" name="channelLocalProvince" value="青海" title="青海">
+												<input type="radio" name="channelLocalProvince" value="云南" title="云南">
+												<input type="radio" name="channelLocalProvince" value="甘肃" title="甘肃">
+												<input type="radio" name="channelLocalProvince" value="河南" title="河南">
+												<input type="radio" name="channelLocalProvince" value="宁夏" title="宁夏">
+												<input type="radio" name="channelLocalProvince" value="陕西" title="陕西">
+												<input type="radio" name="channelLocalProvince" value="天津" title="天津">
+												<input type="radio" name="channelLocalProvince" value="新疆" title="新疆">
+												<input type="radio" name="channelLocalProvince" value="重庆" title="重庆">
+												<input type="radio" name="channelLocalProvince" value="江西" title="江西">
+												<input type="radio" name="channelLocalProvince" value="山西" title="山西">
+												<input type="radio" name="channelLocalProvince" value="西藏" title="西藏">
+												<input type="radio" name="channelLocalProvince" value="海南" title="海南">
+												<input type="radio" name="channelLocalProvince" value="湖北" title="湖北">
+												<input type="radio" name="channelLocalProvince" value="吉林" title="吉林">
+												<input type="radio" name="channelLocalProvince" value="辽宁" title="辽宁">
+												<input type="radio" name="channelLocalProvince" value="内蒙古" title="内蒙古">
+												<input type="radio" name="channelLocalProvince" value="广西" title="广西">
+												<input type="radio" name="channelLocalProvince" value="黑龙江" title="黑龙江">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="layui-form-label aa">落地运营商</label>
+											<div class="layui-input-inline" style="width: 900px;">
+												<input type="radio" name="channelLocalOperator" value="中国移动" title="中国移动" checked="">
+												<input type="radio" name="channelLocalOperator" value="中国联通" title="中国联通">
+												<input type="radio" name="channelLocalOperator" value="中国电信" title="中国电信">
+												<input type="radio" name="channelLocalOperator" value="联电" title="联电">
+												<input type="radio" name="channelLocalOperator" value="三方通道" title="三方通道">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="layui-form-label aa">支持运营商</label>
+											<div class="layui-input-inline" style="width: 900px;">
+												<input type="radio" name="channelSupportOperator" value="中国移动" title="中国移动" checked="">
+												<input type="radio" name="channelSupportOperator" value="中国联通" title="中国联通">
+												<input type="radio" name="channelSupportOperator" value="中国电信" title="中国电信">
+												<input type="radio" name="channelSupportOperator" value="联电" title="联电">
+												<input type="radio" name="channelSupportOperator" value="三网" title="三网">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="layui-form-label aa">通道性质</label>
+											<div class="layui-input-inline" style="width: 900px;">
+												<input type="radio" name="channelCharacter" value="直连通道" title="直连通道" checked="">
+												<input type="radio" name="channelCharacter" value="三方通道" title="三方通道">
+												<input type="radio" name="channelCharacter" value="转租通道" title="转租通道">
+												<input type="radio" name="channelCharacter" value="转租回签通道" title="转租回签通道">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="layui-form-label aa">通道状态</label>
+											<div class="layui-input-inline" style="width: 900px;">
+												<input type="radio" name="channelStatus" value="已开通" title="已开通" checked="">
+												<input type="radio" name="channelStatus" value="已接入" title="已接入">
+												<input type="radio" name="channelStatus" value="运营中" title="运营中">
+												<input type="radio" name="channelStatus" value="禁用" title="禁用">
+												<input type="radio" name="channelStatus" value="测试" title="测试">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class=" aa">禁用原因</label>
+											<div class="layui-input-inline" style="width:auto !important;height: auto;display: inline;left: -5px;">
+												<input type="checkbox" name="channelDisReason" lay-skin="primary" value="不需要" title="不需要">
+												<input type="checkbox" name="channelDisReason" lay-skin="primary" value="需要报备签名" title="需要报备签名">
+												<input type="checkbox" name="channelDisReason" lay-skin="primary" value="需要报备模板" title="需要报备模板">
+												<input type="checkbox" name="channelDisReason" lay-skin="primary" value="价格太高" title="价格太高">
+												<input type="checkbox" name="channelDisReason" lay-skin="primary" value="欠费" title="欠费">
+												<input type="checkbox" name="channelDisReason" lay-skin="primary" value="停止合作" title="停止合作">
+												<input type="checkbox" name="channelDisReason" lay-skin="primary" value="到达率不高" title="到达率不高">
+												<input type="checkbox" name="channelDisReason" lay-skin="primary" value="没有回执" title="没有回执">
+												<input type="checkbox" name="channelDisReason" lay-skin="primary" value="限速" title="限速">
+												<input type="checkbox" name="channelDisReason" lay-skin="primary" value="关停" title="关停">
+											</div>
+										</div>
+									</div>
+									<div class="layui-tab-item">
+										<div class="layui-inline">
+											<label class="aa">开通时间</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="text" name="timeToInit" v-model="info.timeToInit" class="layui-input" autocomplete="off" id="test4" />
+												<img src="../../img/Shape.png" alt="" />
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">接入时间</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="text" name="timeToAccess" v-model="info.timeToAccess" class="layui-input" autocomplete="off" id="test5" />
+												<img src="../../img/Shape.png" alt="" />
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="aa">运营时间</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="text" name="timeToWork" v-model="info.timeToWork" placeholder="可选，24小时或者8:00-12:00" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">禁用时间</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="text" name="timeToDisable" v-model="info.timeToDisable" class="layui-input" autocomplete="off" id="test6" />
+												<img src="../../img/Shape.png" alt="" />
+											</div>
+										</div>
+									</div>
+									<div class="layui-tab-item">
+										<div class="layui-inline">
+											<label class="aa">接入负责人</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="text" name="contactOfAccess" v-model="info.contactOfAccess" lay-verify="required" lay-reqtext="接入负责人不能为空" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">通道联系人</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="text" name="contactOfOperator" v-model="info.contactOfOperator" placeholder="可选" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">联系电话</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="text" name="contactMobile" v-model="info.contactMobile" placeholder="可选" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">联系邮箱</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="text" name="contactEmail" v-model="info.contactEmail" placeholder="可选" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">联系QQ</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="text" name="contactQq" v-model="info.contactQq" placeholder="可选" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">联系微信</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="text" name="contactWechat" v-model="info.contactWechat" placeholder="可选" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+									</div>
+									<div class="layui-tab-item">
+										<div class="layui-inline">
+											<label class="layui-form-label aa">协议类型</label>
+											<div class="layui-input-inline" style="width: 970px;line-height: 30px;">
+												<input type="radio" name="interProtocol" value="SMGP34DC" title="SMGP34DC" checked="">
+												<input type="radio" name="interProtocol" value="SGIP4DC" title="SGIP4DC">
+												<input type="radio" name="interProtocol" value="CMPP24DC" title="CMPP24DC">
+												<input type="radio" name="interProtocol" value="CMPP3" title="CMPP3">
+												<input type="radio" name="interProtocol" value="CMPP" title="CMPP">
+												<input type="radio" name="interProtocol" value="SUPERSKYHTTP" title="SUPERSKYHTTP">
+												<input type="radio" name="interProtocol" value="APSDHTTP" title="APSDHTTP">
+												<input type="radio" name="interProtocol" value="CHANNEL-XIAOMI-MSQ-HTTP" title="CHANNEL-XIAOMI-MSQ-HTTP">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="aa">上传协议文件</label>
+											<div class="layui-input-inline" style="width: 300px">
+												<input type="text" v-model="fileName" placeholder="支持doc,pdf格式" class="layui-input" disabled style="background: #ECECEC;" />
+											</div>
+										</div>
+										<div class="layui-inline">
+											<div class="fileinput-button" style="width: 110px;">
+												<!--<span class="Gradual1" >批量导入</span>-->
+												<span class="Gradual1">选择文件</span>
+												<input id="file" type="file" name="interFilename" />
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="aa">网关ip地址</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="text" name="interIp" v-model="info.interIp" lay-verify="required" lay-reqtext="网关ip地址不能为空" placeholder="必填" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">网关连接端口</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="text" name="interPort" v-model="info.interPort" lay-verify="required" lay-reqtext="网关连接端口不能为空" placeholder="必填" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">用户id</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="text" name="interUser" v-model="info.interUser" lay-verify="required" lay-reqtext="用户id不能为空" placeholder="必填" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">密码</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="text" name="interPassword" v-model="info.interPassword" lay-verify="required" lay-reqtext="密码不能为空" placeholder="必填" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+									</div>
+									<div class="layui-tab-item">
+										<div class="layui-inline">
+											<label class="layui-form-label aa">计费方式</label>
+											<div class="layui-input-inline" style="width: 900px;">
+												<input type="radio" name="billMethods" value="提交计费" title="提交计费" checked="">
+												<input type="radio" name="billMethods" value="成功计费" title="成功计费">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="layui-form-label aa">计费类型</label>
+											<div class="layui-input-inline" style="width: 900px;">
+												<input type="radio" name="sw_price" lay-filter="sw_price" value="三网价格" title="三网价格" checked="">
+												<input type="radio" name="sw_price" lay-filter="sw_price" value="其他" title="其他">
+											</div>
+										</div><br>
+										<div class="layui-inline" v-show="!showPrice">
+											<label class="aa">通道价格</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="text" name="billPrice" v-model="info.billPrice" placeholder="可选,数字：单位分，单价只能有一位小数" autocomplete="off" class="layui-input">
+											</div>
+										</div><br>
+										<div class="layui-inline" v-show="showPrice">
+											<label class="aa">移动价格</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="text" name="billCmPrice" v-model="info.billCmPrice" placeholder="可选,数字：单位分，单价只能有一位小数" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline" style="margin-left: 180px;" v-show="showPrice">
+											<label class="aa">联通价格</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="text" name="billCuPrice" v-model="info.billCuPrice" placeholder="可选,数字：单位分，单价只能有一位小数" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline" v-show="showPrice">
+											<label class="aa">电信价格</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="text" name="billCtPrice" v-model="info.billCtPrice" placeholder="可选,数字：单位分，单价只能有一位小数" autocomplete="off" class="layui-input">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="aa">价格说明</label>
+											<div class="layui-input-inline" style="width:300px;height: auto">
+												<textarea name="billDescription" v-model="info.billDescription" lay-verify="required" lay-reqtext="价格说明不能为空" id="text2" placeholder="必填"></textarea>
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="layui-form-label aa">付费方式</label>
+											<div class="layui-input-inline" style="width: 900px;">
+												<input type="radio" name="billType" value="预付费" title="预付费" checked="">
+												<input type="radio" name="billType" value="后付费" title="后付费">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="aa">余额</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="text" name="billBalance" v-model="info.billBalance" placeholder="可选，数字" autocomplete="off" class="layui-input">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="aa">缴费时间</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="text" name="billTime" v-model="info.billTime" class="layui-input" autocomplete="off" id="test7" />
+												<img src="../../img/Shape.png" alt="" />
+											</div>
+										</div><br>
+									</div>
+									<div class="layui-tab-item">
+										<div class="layui-inline">
+											<label class="aa">投诉百万比</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="number" name="complainNumberPerMi" v-model="info.complainNumberPerMi" placeholder="可选,数字" autocomplete="off" class="layui-input">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="aa">投诉个数</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="number" name="complainNumber" v-model="info.complainNumber" placeholder="可选,数字" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+									</div>
+									<div class="layui-tab-item">
+										<div class="layui-inline">
+											<label class="layui-form-label aa">是否支持长短信</label>
+											<div class="layui-input-inline" style="width: 900px;">
+												<input type="radio" name="lmsSupport" value="支持" title="支持" checked="">
+												<input type="radio" name="lmsSupport" value="不支持" title="不支持">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="aa">长短信协议头长度</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="number" name="lmsHeadSize" v-model="info.lmsHeadSize" placeholder="可选,数字" autocomplete="off" class="layui-input">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="layui-form-label aa">长短信是否都签名</label>
+											<div class="layui-input-inline" style="width: 900px;">
+												<input type="radio" name="lmsSignType" value="最后一条" title="最后一条" checked="">
+												<input type="radio" name="lmsSignType" value="全部" title="全部">
+											</div>
+										</div>
+									</div>
+									<div class="layui-tab-item">
+										<div class="layui-inline">
+											<label class="layui-form-label aa">是否支持回复</label>
+											<div class="layui-input-inline" style="width: 900px;">
+												<input type="radio" name="receIsSupport" value="支持" title="支持" checked="">
+												<input type="radio" name="receIsSupport" value="不支持" title="不支持">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="layui-form-label aa">是否支持状态报告</label>
+											<div class="layui-input-inline" style="width: 900px;">
+												<input type="radio" name="receReportSupport" value="支持" title="支持" checked="">
+												<input type="radio" name="receReportSupport" value="不支持" title="不支持">
+											</div>
+										</div>
+									</div>
+									<div class="layui-tab-item">
+										<div class="layui-inline">
+											<label class="layui-form-label aa">通道签名类型</label>
+											<div class="layui-input-inline" style="width: 900px;">
+												<input type="radio" name="signType" value="平台签名" title="平台签名" checked="">
+												<input type="radio" name="signType" value="网关签名" title="网关签名">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="layui-form-label aa">是否抹去通道签名</label>
+											<div class="layui-input-inline" style="width: 900px;">
+												<input type="radio" name="signReplace" value="抹去" title="抹去" checked="">
+												<input type="radio" name="signReplace" value="保留签名" title="保留签名">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="aa">通道签名长度</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="number" name="signSize" v-model="info.signSize" placeholder="可选,数字" autocomplete="off" class="layui-input">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="layui-form-label aa">是否报备</label>
+											<div class="layui-input-inline" style="width: 900px;">
+												<input type="radio" name="signWhether" value="否" title="否" checked="">
+												<input type="radio" name="signWhether" value="报备签名" title="报备签名">
+												<input type="radio" name="signWhether" value="报备模板" title="报备模板">
+											</div>
+										</div>
+									</div>
+									<div class="layui-tab-item">
+										<div class="layui-inline">
+											<label class="aa">子码号长度</label>
+											<div class="layui-input-inline" style="width:300px">
+												<input type="number" name="codeSize" v-model="info.codeSize" placeholder="可选,数字" autocomplete="off" class="layui-input">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="layui-form-label aa">子号码类型</label>
+											<div class="layui-input-inline" style="width: 900px;">
+												<input type="radio" name="codeChildType" value="完全支持" title="完全支持" checked="">
+												<input type="radio" name="codeChildType" value="限制性" title="限制性">
+												<input type="radio" name="codeChildType" value="不支持" title="不支持">
+											</div>
+										</div>
+									</div>
+									<div class="layui-tab-item">
+										<div class="layui-inline">
+											<label class="aa">屏蔽区域</label>
+											<div class="layui-input-inline" style="width:270px">
+												<input type="text" name="limitShieldLocation" v-model="info.limitShieldLocation" placeholder="可选" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">通道发送时间</label>
+											<div class="layui-input-inline" style="width:270px">
+												<input type="text" name="limitSendTime" v-model="info.limitSendTime" placeholder="可选,数字，如：8:00-20:00" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">发送速度</label>
+											<div class="layui-input-inline" style="width:270px">
+												<input type="text" name="limitSendSpeed" v-model="info.limitSendSpeed" lay-verify="required" lay-reqtext="请输入数字" placeholder="必填，单位条每秒，通道发送速度只能是数字，0表示无限制" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">链路数</label>
+											<div class="layui-input-inline" style="width:270px">
+												<input type="number" name="limitLinkNum" v-model="info.limitLinkNum" placeholder="可选,取值范围1-3" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">日告警阈值</label>
+											<div class="layui-input-inline" style="width:270px">
+												<input type="number" name="limitDailyNum" v-model="info.limitDailyNum" placeholder="可选，正整数或0，为0表示不限制" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">月告警阈值</label>
+											<div class="layui-input-inline" style="width:270px">
+												<input type="number" name="limitMonthlyNum" v-model="info.limitMonthlyNum" placeholder="可选，数字" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">通道号码频控限制</label>
+											<div class="layui-input-inline" style="width:270px">
+												<input type="number" name="limitSendFrequency" v-model="info.limitSendFrequency" placeholder="可选" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">内容最大长度</label>
+											<div class="layui-input-inline" style="width:270px">
+												<input type="number" name="limitContentLength" v-model="info.limitContentLength" placeholder="可选,内容最大长度为1-1000" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">关键字限制</label>
+											<div class="layui-input-inline" style="width:270px">
+												<input type="text" name="limitKeyword" v-model="info.limitKeyword" placeholder="可选" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">群发最多号码个数</label>
+											<div class="layui-input-inline" style="width:270px">
+												<input type="number" name="limitMassNumber" v-model="info.limitMassNumber" placeholder="可选,群发最多号码个数1到100" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="aa">黑名单限制</label>
+											<div class="layui-input-inline" style="width:270px">
+												<input type="number" name="limitBlack" v-model="info.limitBlack" placeholder="必填，数字" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="layui-form-label aa">可到达省份</label>
+											<div class="layui-input-inline" style="width: 900px;">
+												<input type="radio" name="limitArriveProv" value="全国" title="全国" checked="">
+												<input type="radio" name="limitArriveProv" value="北京" title="北京">
+												<input type="radio" name="limitArriveProv" value="江苏" title="江苏">
+												<input type="radio" name="limitArriveProv" value="上海" title="上海">
+												<input type="radio" name="limitArriveProv" value="天津" title="天津">
+												<input type="radio" name="limitArriveProv" value="重庆" title="重庆">
+												<input type="radio" name="limitArriveProv" value="新疆" title="新疆">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="layui-form-label aa">是否启用禁发时间</label>
+											<div class="layui-input-inline" style="width: 900px;">
+												<input type="radio" name="limitEnableTime" value="启用" title="启用" checked="">
+												<input type="radio" name="limitEnableTime" value="不启用" title="不启用">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="layui-form-label aa">是否可发行业通知</label>
+											<div class="layui-input-inline" style="width: 900px;">
+												<input type="radio" name="limitSendProfession" value="是" title="是" checked="">
+												<input type="radio" name="limitSendProfession" value="否" title="否">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="layui-form-label aa">是否可发验证码</label>
+											<div class="layui-input-inline" style="width: 900px;">
+												<input type="radio" name="limitSendVerify" value="是" title="是" checked="">
+												<input type="radio" name="limitSendVerify" value="否" title="否">
+											</div>
+										</div><br>
+										<div class="layui-inline">
+											<label class="layui-form-label aa">是否可发营销内容</label>
+											<div class="layui-input-inline" style="width: 900px;">
+												<input type="radio" name="limitSendMarketing" value="是" title="是" checked="">
+												<input type="radio" name="limitSendMarketing" value="否" title="否">
+											</div>
+										</div>
+										<div class="layui-inline">
+											<label class="layui-form-label aa">是否人工审核</label>
+											<div class="layui-input-inline" style="width: 900px;">
+												<input type="radio" name="limitPersonalAudit" value="是" title="是">
+												<input type="radio" name="limitPersonalAudit" value="否" title="否" checked="">
+											</div>
+										</div>
+									</div>
+									<div class="layui-tab-item">
+										<div class="layui-inline">
+											<label class="aa">备注</label>
+											<div class="layui-input-inline" style="width:900px;height: auto">
+												<textarea name="remark" v-model="info.remark" id="text3" placeholder="请输入" style="width: 900px"></textarea>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<div class="layui-input-inline">
+								<button class="sw_btn1" style="margin: 10px 0 10px 540px;" lay-submit="" v-if="code == 0" lay-filter="demo7">
+                            新增
+                        </button>
+								<span class="sw_btn1 " style="margin: 10px 0 10px 540px;" v-if="code == 1" lay-submit="" lay-filter="demo8">
+                          修改
+                        </span>
+								<span class="sw_btnwrong marl_15" @click="shanchu()">关闭</span>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</script>
+		<script src="../../layui.all.js"></script>
+		<script src="../../module/channel_new.js"></script>
+		<script>
+			//头部
+			//			var operaAI = new Vue({
+			//				el: "#proMang",
+			//				data: {
+			//					topCurrent: 2
+			//				}
+			//			});
+			//			//   //左侧菜单组件实例化
+			//			var leftMenu = new Vue({
+			//				el: "#leftMenu_Box",
+			//				data: {
+			//					current: 1
+			//				}
+			//			});
+			order_manage()
+			var rightTable = new Vue({
+				el: "#rightTable"
+			});
+			//
+			var shade = new Vue({
+				el: "#shade"
+			});
+			$(function() {
+				laydate.render({
+					elem: "#test2", //指定元素
+					// type: 'datetime',
+					showBottom: false,
+					value: '',
+				});
+				laydate.render({
+					elem: "#test3", //指定元素
+					//type: 'datetime',
+					showBottom: false,
+					value: '',
+				});
+				laydate.render({
+					elem: "#test4", //指定元素
+					type: 'datetime',
+					value: new Date(),
+				});
+				laydate.render({
+					elem: "#test5", //指定元素
+					type: 'datetime',
+					value: new Date(),
+				});
+				laydate.render({
+					elem: "#test6", //指定元素
+					type: 'datetime',
+					value: new Date(),
+				});
+				laydate.render({
+					elem: "#test7", //指定元素
+					//type: 'datetime',
+					showBottom: false,
+					value: getDay(0),
+				});
+				$(document).ready(function() {
+					//$('#leftMenu_Box').css('background', '#040b29');
+					//$('#proMang .top').css('background', '#fff')
+				});
+				total($(".unlike2 ul li"), $(".unlike2 .dropdown-selected"), $(".unlike2 ul"), $(".unlike2"));
+				total($(".unlike3 ul li"), $(".unlike3 .dropdown-selected1"), $(".unlike3 ul"), $(".unlike3"));
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>智能通信运营管理平台</title>
+    <link rel="stylesheet" href="../../css/style.css"/>
+    <link rel="stylesheet" href="../../css/layui.css"/>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/jquery-3.0.0.min.js"></script>
+    <script src="../laydate/laydate.js"></script>
+    <script src="../../js/kindeditor-all-min.js"></script>
+    <script src="../../js/zh-CN.js"></script>
+    <script src="../../js/vue.min.js"></script>
+</head>
+<!--[if IE 9]>
+<style>
+    #leftMenu_Box{
+        width: 15.08%;
+        height: 979px;
+        float: left;
+        background: #040b29;
+        position: relative;
+        box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.5);
+    }
+</style>
+<![endif]-->
+<style>
+    /*#page {*/
+        /*padding: 62px 0 50px 0;*/
+    /*}*/
+    .shade_con{
+        height: auto;
+        width: 60%;
+        padding-bottom: 20px;
+    }
+    .shade_con1 {
+        width: 1000px;
+        height: auto;
+    }
+    .shade_con1 .temp{
+        height: auto;
+
+    }
+    .sw_row tr td:nth-child(9) {
+        padding: 8px 0;
+    }
+
+    .sw_row tr td div {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+       /* padding-right: 10px;*/
+        box-sizing: border-box;
+    }
+    .sw_row tr td:nth-child(3) div {
+        max-width: 360px;
+    }
+    .sw_row tr td:nth-child(4) div {
+        max-width: 360px;
+    }
+
+    .sw_row tr td:nth-child(8) div{
+        max-width: 540px;
+    }
+    .heightScroll{
+        max-height: 300px;
+    }
+    @media screen and (max-width: 1800px) {
+        .sw_row tr td:nth-child(4) div {
+            max-width: 150px;
+        }
+        .sw_row tr td:nth-child(3) div {
+            max-width: 110px;
+        }
+        .heightScroll{
+            max-height: 160px;
+        }
+        .sw_row tr td:nth-child(8) div {
+            max-width: 150px;
+        }
+        .shade_con1{
+            width: 1020px;
+            max-height: 660px;
+        }
+        .shade_con1 .temp{
+            height: 400px;
+            width: 985px;
+            overflow-y: auto;
+        }
+    }
+    #text2 {
+        width: 912px;
+        height: 67px;
+        margin: 10px 18px 0 0px;
+        border: 1px solid #e2e2e2;
+        box-sizing: border-box;
+        padding: 7px;
+    }
+    .ke-container {
+        margin: 10px 0 0 0px !important;
+    }
+    .ke-statusbar{
+        display: none;
+    }
+    .ke-colorpicker-cell-top{
+        display: none !important;
+    }
+    .addClass4{
+        background: #E1EFFF;
+    }
+</style>
+<body>
+<div id="sw_load">
+    <img  src="../../img/load.gif">
+</div>
+<div id="proMang">
+    <div class="top"><img src="../../img/logo.png" alt="" class="logo">
+        <ul>
+            <li class="top-a-box addClass" data-value="210"><a href="./order_fail.html"><span
+                    class="iconfont icon-diannao" style="font-size: 22px;"></span>
+                工作台
+            </a></li>
+            <li class="top-a-box " data-value="211"><a href="../user_manage/user_manage.html">
+                <span class="iconfont icon-yonghu" style="font-size: 22px;"></span>
+                用户管理
+            </a></li>
+            <li class="top-a-box " data-value="212"><a href="../order_manage/order_manage.html"><span
+                    class="iconfont icon-dingdanguanli" style="font-size: 22px;"></span>
+                订单管理
+            </a></li>
+            <li class="top-a-box " data-value="213"><a href="../resource/take_orders.html"><span
+                    class="iconfont icon-iconfonticon-shebei" style="font-size: 22px;"></span>
+                资源配置
+            </a></li>
+        </ul>
+        <div class="sign">
+            <span class="ren"></span> <span class="type"></span>
+            <img src="../../img/退出.png" alt=""  onclick="sign()">
+        </div>
+    </div>
+</div>
+<div class="main-box">
+    <!-- 左侧菜单 -->
+    <div id="leftMenu_Box" class="work_left">
+        <div class="leftMenu">
+            <ul class="prop">
+                <li class="left_a dn addclass_one " data-value="21010"><a href="javascript:void(0);" ><span
+                        class="iconfont icon-xiadanshibai"></span>
+                    下单失败
+                </a></li>
+                <li class="left_a dn" data-value="21011"><a href="./auditing.html" ><span class="iconfont icon-shenhe"></span>
+                    审核发送
+                </a></li>
+                <li class="left_a dn" data-value="21012"><a href="./detail.html"><span class="iconfont icon-mingxi"></span>
+                    用户发送明细
+                </a></li>
+                <li class="left_a dn" data-value="21013"><a href="./user_count.html" ><span class="iconfont icon-tongji1"></span>
+                    用户发送统计
+                </a></li>
+                <li class="left_a dn" data-value="21014"><a href="./template.html" ><span class="iconfont icon-moban"></span>
+                    模板申请
+                </a></li>
+                <li class="left_a dn" data-value="21015"><a href="./signature.html" ><span class="iconfont icon-moban"></span>
+                    签名申请
+                </a></li>
+                <li class="left_a dn" data-value="21016"><a href="./complain.html"><span class="iconfont icon-daoru1"></span>
+                    投诉导入
+                </a></li>
+                <li class="left_a dn" data-value="21017"><a href="./complain_manage.html" ><span
+                        class="iconfont icon-guanli"></span>
+                    投诉管理
+                </a></li>
+            </ul>
+            <div class="group" onclick="flexible(event)">
+                <span class="iconfont icon-xiangzuo" style="color: rgb(255, 255, 255); font-size: 13px;"></span>
+            </div>
+        </div>
+    </div>
+    <div id="rightTable">
+        <v-order-fail></v-order-fail>
+    </div>
+</div>
+<div id="shade">
+    <v-tong-ji></v-tong-ji>
+</div>
+<div id="shade1"><v-template></v-template></div>
+<script type="text/x-template" id="right-template">
+    <div>
+        <div class="table_tou">
+            <h6 class="fl">下单失败</h6>
+
+            <div class="fr sw_padd">
+            <span class="sw_num"
+                  v-cloak>{{totalCount}}</span
+                    >&nbsp; &nbsp;<span style="color:#738495">条记录</span>
+                 <span class="Gradual" @click="shade()">
+              <span class="iconfont icon-tongji">&nbsp;查询统计</span>
+            </span>
+            <span class="Gradual" @click="importFile()">
+              <span
+                      class="iconfont icon-export"
+                      >&nbsp;导出</span
+                      >
+            </span>
+            </div>
+        </div>
+        <div class="table_nav">
+            <form class="layui-form layui-form-pane" action="">
+                <div class="layui-inline">
+                    <label class="">开始时间</label><br/>
+
+                    <div class="layui-input-inline">
+                        <input type="text" name="startDate" class="layui-input" autocomplete="off" id="test"/>
+                        <img src="../../img/Shape.png" alt=""/>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="">结束时间</label><br/>
+
+                    <div class="layui-input-inline">
+                        <input type="text" name="endDate" class="layui-input" autocomplete="off" id="test1"/>
+                        <img src="../../img/Shape.png" alt=""/>
+                    </div>
+                </div>
+                <div class="layui-inline dropdown unlike2">
+                    <label class="">用户</label><br/>
+                    <input type="text" class="dropdown-selected"
+                           name="userName" autocomplete="off" placeholder="请输入">
+                    <ul class="dns">
+                        <li v-for="(li, index) in userData">
+                            <a href="javaScript:" :data="li.userId">{{li.loginName}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="layui-inline">
+                    <label class="">号码</label><br/>
+
+                    <div class="layui-input-inline">
+                        <input
+                                type="text"
+                                name="phone"
+                                placeholder="请输入"
+                                class="layui-input"
+                                />
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="">错误代码</label><br/>
+
+                    <div class="layui-input-inline">
+                        <input
+                                type="text"
+                                name="errorCode"
+                                placeholder="请输入"
+                                class="layui-input"
+                                />
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="">内容</label><br/>
+
+                    <div class="layui-input-inline" style="width:250px">
+                        <input
+                                type="text"
+                                name="content"
+                                placeholder="请输入"
+                                class="layui-input"
+                                />
+                    </div>
+                </div>
+                <div class="layui-input-inline">
+                    <button class="sw_btn1" lay-submit="" lay-filter="demo">
+                        查询
+                    </button>
+                </div>
+            </form>
+            <div class="sw_row">
+                <table style="margin-top: 15px;width: 100%">
+                    <tr>
+                        <th >用户名</th>
+                        <th >下单时间</th>
+                        <th >下单来源</th>
+                        <th >内容</th>
+                        <th >提交总量</th>
+                        <th >号码</th>
+                        <th >错误代码</th>
+                        <th >错误信息</th>
+                        <th >操作</th>
+                    </tr>
+                    <tr v-cloak v-for="(li, index) in allData">
+                        <td>{{li.loginName}}</td>
+                        <td>{{li.createTime | limitTo}}</td>
+                        <td>
+                            <div :title="li.submitFrom">{{li.submitFrom}}</div>
+                        </td>
+                        <td>
+                            <div :title="li.msgContent">{{li.msgContent}}</div>
+                        </td>
+                        <td>{{li.submitMtTotal}}</td>
+                        <td>{{li.msisdn}}</td>
+                        <td>{{li.errorCode}}</td>
+                        <td>
+                            <div :title="li.errorMsg">{{li.errorMsg}}</div>
+                        </td>
+                        <td  style="width: 85px">
+                            <span class="sw_btn2" @click="mapping(li.loginName,li.msgContent)" v-if="li.errorCode == '102'">申请模板</span>
+                        </td>
+                    </tr>
+
+                </table>
+                <div class="sw_pad8" v-show="mapShow == true">暂无数据</div>
+            </div>
+            <div id="page"></div>
+        </div>
+    </div>
+</script>
+<script type="text/x-template" id="tong-template">
+    <div class="shade_con">
+        <div class="tongji">
+            <h3>查询统计</h3>
+            <span class="iconfont icon-shanchu" @click="shanchu()"></span>
+        </div>
+        <form class="layui-form layui-form-pane" action="" style="margin:10px 20px 0px 22px;border: 1px solid #F0F4F8;background: #FBFBFB">
+            <div class="layui-inline">
+                <label class="">开始时间</label><br/>
+
+                <div class="layui-input-inline">
+                    <input type="text" name="startDate" v-model="data1.startDate" class="layui-input" autocomplete="off" id="test3"/>
+                    <img src="../../img/Shape.png" alt=""/>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="">结束时间</label><br/>
+
+                <div class="layui-input-inline">
+                    <input type="text" name="endDate" v-model="data1.endDate" class="layui-input" autocomplete="off" id="test4"/>
+                    <img src="../../img/Shape.png" alt=""/>
+                </div>
+            </div>
+            <div class="layui-inline dropdown unlike1">
+                <label class="">用户名</label><br />
+                <input type="text" class="dropdown-selected1"
+                       name="userId" autocomplete="off" placeholder="请输入">
+                <ul class="dns">
+                    <li v-for="(li, index) in userData">
+                        <a href="javaScript:" :data="li.userId">{{li.loginName}}</a>
+                    </li>
+                </ul>
+            </div>
+            <!--<div class="layui-inline">-->
+                <!--<label class="">号码</label><br/>-->
+
+                <!--<div class="layui-input-inline">-->
+                    <!--<input-->
+                            <!--type="text"-->
+                            <!--name="msisdn"-->
+                            <!--v-model="data1.msisdn"-->
+                            <!--placeholder="请输入"-->
+                            <!--class="layui-input"-->
+                            <!--/>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="layui-inline">
+                <label class="">错误代码</label><br/>
+
+                <div class="layui-input-inline">
+                    <input
+                            type="text"
+                            name="errorCode"
+                            v-model="data1.errorCode"
+                            placeholder="请输入"
+                            class="layui-input"
+                            />
+                </div>
+            </div>
+            <div class="layui-input-inline">
+                <button class="sw_btn1" lay-submit="" lay-filter="demo4">
+                    查询
+                </button>
+            </div>
+        </form>
+        <div class="table_tou" style="margin:10px 20px -1px 22px;">
+            <h6 class="fl">下单错误代码列表</h6>
+            <div class="fr sw_padd">
+                <span class="Gradual" @click="importFileT()">
+                  <span class="iconfont icon-export" >&nbsp;导出</span>
+                </span>
+            </div>
+        </div>
+        <div class="sw_row heightScroll" style="margin:0 20px 0 22px;padding:0 15px;background: #fff;border: 1px solid #E1E7EC;border-bottom:none;">
+            <table style="margin-top: 15px;width: 100%;">
+                <tr>
+                    <th style="">用户名</th>
+                    <th style="">提交总量</th>
+                    <th style="">错误代码</th>
+                    <th style="">错误信息</th>
+                </tr>
+                <tr  v-for="(li, index) in allData1">
+                    <td>{{li.loginName}}</td>
+                    <td>{{li.submitTotal}}</td>
+                    <td>{{li.errorCode}}</td>
+                    <td>{{li.errorMsg}}</td>
+                </tr>
+            </table>
+            <div class="sw_pad8" v-show="mapShow1 == true">暂无数据</div>
+        </div>
+        <div  style="text-align: center;">
+            <span class="sw_btn1"  @click="shanchu()">
+                关闭
+            </span>
+        </div>
+    </div>
+</script>
+<script type="text/x-template" id="shade-template">
+    <div>
+        <div class="shade_con1">
+            <div class="tongji">
+                <h3 >申请模版</h3>
+                <span class="iconfont icon-shanchu" @click="shanchu()"></span>
+            </div>
+            <div class="temp">
+                <form class="layui-form layui-form-pane" action="">
+                    <p>
+                        * 需要更改的地方请先选中，后点击下发的A按钮选择红色；
+                        需要取消标记的地方请先选中，后点击删除文字格式按钮
+                    </p><br>
+                    <em> <span style="color:#FE2121;font-weight:600;">*</span> 模版内容</em>
+                    <textarea id="editor_id" name="templateSms" style="width:912px;height:90px;"></textarea>
+                    <div class="layui-inline" >
+                        <label class=""> <span style="color:#FE2121;font-weight:600;">*</span> 模版分类</label><br />
+                        <div class="layui-input-inline" style="width:300px">
+                            <select name="templateType" id="eventLevel">
+                                <option value="1">行业短信</option>
+                                <option value="2">营销短信</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--<div class="layui-inline" >-->
+                    <!--<label class="">申请人</label><br />-->
+                    <!--<div class="layui-input-inline" style="width:300px">-->
+                    <!--<input-->
+                    <!--type="text"-->
+                    <!--v-model="showData.loginName"-->
+                    <!--placeholder="请输入"-->
+                    <!--class="layui-input"-->
+                    <!--disabled-->
+                    <!--style="background: #ECECEC;"-->
+                    <!--/>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <div class="layui-inline dropdown unlike3" style="width:296px">
+                        <label class=""><span style="color:#FE2121;font-weight:600;">*</span> 申请人</label><br />
+                        <input type="text" class="dropdown-selected"
+                               data=""  name="userId" autocomplete="off" placeholder="请输入">
+                        <ul class="dns">
+                            <li v-for="(li, index) in userData">
+                                <a href="javaScript:" :data="li.userId">{{li.loginName}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="layui-inline" >
+                        <label class="">审核人员</label><br />
+                        <div class="layui-input-inline" style="width:300px">
+                            <input
+                                    type="text"
+                                    v-model="showData.auditName"
+                                    class="layui-input"
+                                    disabled
+                                    style="background: #ECECEC;"
+                                    />
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="">挂机模版</label>
+                        <div class="layui-input-inline" style="width: 250px;box-sizing: border-box;padding-left: 10px;">
+                            <input type="radio" lay-filter="a" name="a"  value="是" title="是" >
+                            <input type="radio" lay-filter="a" name="a"  value="否" title="否" checked>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="">主机号码</label><br />
+                        <div class="layui-input-inline" style="width:300px">
+                            <input
+                                    type="text"
+                                    name="miguMobile"
+                                    v-model="showData.miguMobile"
+                                    class="layui-input phone"
+                                    disabled
+                                    style="background: #ECECEC;"
+                                    />
+                        </div>
+                    </div> <br>
+                    <em> 备注</em>
+                    <textarea name="remark" id="text2" placeholder="请输入"  v-model="showData.remark"></textarea>
+                    <div>
+                        <p style="padding-top:8px;font-size:12px">
+                            * 模板内容请填写真实的发送内容，然后将要变化的部分标记成红色
+                            （不要用*#之类的符号来表示要变化的内容），如有需要特别申明的请写在备注中
+                        </p>
+                    </div>
+
+
+                    <div class="layui-input-inline">
+                        <button class="sw_btn1" style="margin-left: 410px;margin-bottom: 20px;" lay-submit="" lay-filter="demo6">
+                            确认申请
+                        </button>
+                        <span class="sw_btnwrong "  v-if="code == 1" @click="shanchu()">
+                          关闭
+                        </span>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</script>
+<script src="../../layui.all.js"></script>
+<script src="../../module/order_fail.js"></script>
+<script>
+    //头部
+//    var operaAI = new Vue({
+//        el: "#proMang",
+//        data: {
+//            topCurrent: 0
+//        }
+//    });
+    workbench()
+    var rightTable = new Vue({
+        el: "#rightTable"
+    });
+    var shade = new Vue({
+        el: "#shade"
+    });
+    var shade1 = new Vue({
+        el: "#shade1"
+    });
+    $(function () {
+        var topUrl = $('.top-a-box a').eq(0).attr('href');
+        //console.log($('.top-a-box a'))
+        if(topUrl == './order_fail.html'){
+
+        }else if(topUrl == undefined){
+        	window.open("../../login.html", "_self");
+        }else{
+            window.open(topUrl, "_self");
+        }
+        laydate.render({
+            elem: "#test", //指定元素
+            type: 'datetime',
+            value: getDay(0) + ' 00:00:00',
+
+        });
+        laydate.render({
+            elem: "#test1", //指定元素
+            type: 'datetime',
+            value: getDay(0) + ' 23:59:59',
+
+        });
+        laydate.render({
+            elem: "#test3", //指定元素
+            type: 'datetime',
+            value: getDay(0) + ' 00:00:00',
+
+        });
+        laydate.render({
+            elem: "#test4", //指定元素
+            type: 'datetime',
+            value: getDay(0) + ' 23:59:59',
+
+        });
+        $(document).ready(function(){
+            //$('#leftMenu_Box').css('background', '#040b29');
+          //  $('#proMang .top').css('background', '#fff');
+            var href = $('.left_a a').eq(0).attr('href');
+               //console.log(href)
+            window.open(href, "_self");   
+            setTimeout(function(){
+            	
+              $('#sw_load').remove()
+//            if(topUrl == './order_fail.html'){
+//
+//			        }else if(topUrl == undefined){
+//			        	window.open("../../login.html", "_self");
+//			        }else{
+//			            window.open(topUrl, "_self");
+//			        }               
+            }, 500);
+        });
+        total($(".unlike2 ul li"), $(".unlike2 .dropdown-selected"), $(".unlike2 ul"), $(".unlike2"));
+        total($(".unlike3 ul li"), $(".unlike3 .dropdown-selected"), $(".unlike3 ul"), $(".unlike3"));
+        total($(".unlike1 ul li"),$(".unlike1 .dropdown-selected1"),$(".unlike1 ul"),$(".unlike1"));
+    });
+</script>
+</body>
+</html>

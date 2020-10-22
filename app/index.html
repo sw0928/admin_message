@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+		<title>智能通信运营管理平台</title>
+		<link href="css/style.css" rel="stylesheet" />
+		<link href="css/response.css" rel="stylesheet" />
+	</head>
+
+	<body class="login-reg-bg">
+		<div class="content">
+			<div class="header">
+				<div class="header-nei">
+					<h2 class="header-title">智能通信运营管理平台</h2>
+				</div>
+			</div>
+			<!--head/-->
+			<div class="head-height">&nbsp;</div>
+			<!--登录校验在 style.js文件里面-->
+			<div class="login-reg">
+				<form>
+					<div class="log-reg-list">
+						<label><i class="iconfont icon-ziyuanxhdpi"></i></label>
+						<input type="text" name="user" class="log-reg-text check-tel" placeholder="用户名" value="" />
+						<em></em>
+					</div>
+					<div class="log-reg-list">
+						<label style="font-size:2.2rem; line-height:40px;"><i class="iconfont icon-mima"></i></label>
+						<input type="password" name="pass" class="log-reg-text check-pwd" placeholder="密码" autocomplete="off" />
+					</div>
+					<div class="log-reg-list">
+						<label style="font-size:2.2rem; line-height:40px;"><i class="iconfont icon-mima"></i></label>
+						<!--<input type="tel" name="zym" class="log-reg-text check-yzm" placeholder="验证码" autocomplete="off" />-->
+						<div class="border_b" id="code">
+							<input type="text" class="log-reg-text check-yzm" style="display: inline-block;width: 70%" name="zym" autocomplete="off" placeholder="验证码" />
+							<img id="imgCode" src="" />
+						</div>
+					</div>
+					<div class="log-reg-sub">
+						<a href="javascript:;" class="log-reg-btn login-btn">登录</a>
+					</div>
+				</form>
+
+			</div>
+			<!--login-reg/-->
+		</div>
+		<!--content/-->
+		<div class="bg100"></div>
+		<!--错误提示-->
+		<div class="tip-errors-bg">
+			<div class="tip-tip-box-nei">
+				<strong><i class="iconfont icon-shanchu"></i><em class="errors">错误提示</em></strong>
+			</div>
+			<!--tip-tip-box/-->
+		</div>
+		<!--tip-success-bg/-->
+		<!--正确提示-->
+		<div class="tip-success-bg">
+			<div class="tip-tip-box-nei">
+				<strong><i class="iconfont icon-smile" style="color:#0F0;"></i><em class="success">正确提示</em></strong>
+			</div>
+			<!--tip-tip-box/-->
+		</div>
+		<!--tip-success-bg/-->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/style.js"></script>
+		<script>
+			$(function() {
+				var token, codeShow;
+				checkNeed = function() {
+					var name = $('.check-tel').val();
+					if(name == '') {
+						$.ajax({
+							type: 'POST',
+							url: '/getVerifyCode',
+							data: {
+								uname: name
+							},
+							dataType: 'json',
+							success: function(data) {
+								//console.log(data)
+								$('#code input').val('');
+								token = data.token;
+								var img = 'data:image/jpg;base64,' + data.code;
+								$('#imgCode').attr('src', img)
+							}
+
+						});
+					} else {
+						$.ajax({
+							url: "/icos/authenticator/checkNeedAuthenticate",
+							type: 'post',
+							dataType: 'json',
+							async: false,
+							data: {
+								loginName: name,
+							},
+							success: function(data) {
+								codeShow = data.data;
+								if(data.statusCode == 200) {
+									if(data.data == 0) {
+										$("#imgCode").css("display", "inline-block");
+										$("#code input").css("width", "70%");
+										$.ajax({
+											type: 'POST',
+											url: '/getVerifyCode',
+											data: {
+												uname: name
+											},
+											dataType: 'json',
+											success: function(data) {
+												//console.log(data)
+												$('#code input').val('');
+												token = data.token;
+												var img = 'data:image/jpg;base64,' + data.code;
+												$('#imgCode').attr('src', img)
+											}
+
+										});
+									} else {
+										$("#code input").css("width", "100%");
+										$("#imgCode").css("display", "none");
+									}
+								} else {
+									layer.open({
+										content: data.message,
+										yes: function(index) {
+											layer.close(index);
+										}
+									});
+								}
+
+							},
+							error: function(err) {
+
+							}
+						});
+					}
+				};
+				setTimeout(function() {
+					checkNeed();
+				}, 100);
+				$('.check-tel').blur(function() {
+					checkNeed();
+				});
+				$("#imgCode").click(function() {
+					$.ajax({
+						type: 'POST',
+						url: '/getVerifyCode',
+						data: {
+							uname: $('.check-tel').val()
+						},
+						dataType: 'json',
+						success: function(data) {
+							//console.log(data)
+							$('#code input').val('');
+							token = data.token;
+							var img = 'data:image/jpg;base64,' + data.code;
+							$('#imgCode').attr('src', img)
+						}
+
+					});
+				})
+				//登录校验
+				//var str = /^1\d{10}$/; //手机号格式
+				$(".login-btn").on('click', function() {
+					var tel = $(".check-tel").val().trim();
+					var pwd = $(".check-pwd").val().trim();
+					var yzm = $(".check-yzm").val().trim();
+					var obg = {};
+					if(codeShow == 0) {
+						obg.username = tel;
+						obg.password = pwd;
+						obg.code = yzm;
+						obg.token = token;
+					} else if(codeShow == 2) {
+						obg.username = tel;
+						obg.password = pwd;
+						obg.code = yzm;
+					} else {
+						errors();
+						$(".errors").text("请绑定动态码之后登录!");
+						return false;			
+					}
+					if(tel == "") {
+						errors();
+						$(".errors").text("请输入正确的用户名");
+						return false;
+					}
+					if(pwd == "") {
+						errors();
+						$(".errors").text("您的密码不正确");
+						return false;
+					}
+					if(yzm == "") {
+						errors();
+						$(".errors").text("请输入正确的验证码");
+						return false;
+					} else {
+						$.ajax({
+							url: "/login",
+							type: 'post',
+							dataType: 'json',
+							async: false,
+							data: obg,
+							success: function(data) {
+								//console.log(data);
+								if(data.statusCode == 200) {
+									sessionStorage.setItem('id', data.data.Authorization);
+									sessionStorage.setItem('current', tel);
+									sessionStorage.setItem('accountType', data.data.userInfo.accountType);
+									sessionStorage.setItem('authorities', JSON.stringify(data.data.authorities));
+									success();
+									$(".success").text("登录成功!");
+									//$(".check-yzm").val('');
+									setTimeout(function() {
+										location.href = "nav.html"
+									}, 1000)
+
+								} else {
+									errors();
+									$(".errors").text(data.message);
+									$(".check-yzm").val('');
+									checkNeed();
+									return false;
+
+								}
+							},
+							error: function(err) {
+								errors();
+								$(".errors").text("用户名或密码错误!");
+								$(".check-yzm").val('');
+								return false;
+
+							}
+						});
+					}
+				})
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>智能通信运营管理平台</title>
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/layui.css" />
+    <script src="../../js/api.js"></script>
+    <script src="../../js/jquery-3.0.0.min.js"></script>
+    <script src="../laydate/laydate.js"></script>
+    <script src="../../js/vue.min.js"></script>
+</head>
+<!--[if IE 9]>
+<style>
+    #leftMenu_Box{
+        width: 15.08%;
+        height: 979px;
+        float: left;
+        background: #040b29 !important;
+        position: relative;
+        box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.5);
+    }
+</style>
+<![endif]-->
+<style>
+    /*#page {*/
+    /*padding: 50px 0 47px 0;*/
+    /*}*/
+    #page1,#page2{
+        text-align: center;
+        padding: 10px 0 28px;
+    }
+    #leftMenu_Box .leftMenu ul li div.prop a.prop24{
+        background-color: #1890FF !important;
+        color: #fff !important;
+    }
+    .sw_row tr td div {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-right: 10px;
+        box-sizing: border-box;
+    }
+    .shade_con,.shade_con1,.shade_con2,.shade_con3{
+        width: 390px;
+        height: auto;
+    }
+    .shade_con .temp,.shade_con1 .temp,.shade_con2 .temp,.shade_con3 .temp{
+        height: auto;
+        width: auto;
+        border: none;
+        background: unset;
+        margin: 20px 22px;
+    }
+    .layui-form-checkbox[lay-skin="primary"] span {
+        font-size: 12px;
+        padding-right: 0px;
+        color: #494949;
+    }
+    /*table tr th {*/
+    /*box-sizing: border-box;*/
+    /*padding: 16px 0;*/
+    /*border-bottom: 1px solid #e1e7ec;*/
+    /*}*/
+    .sw_row tr td:nth-child(9){
+        padding: 8px 0;
+    }
+    .shade_con1 .layui-form-select dl, .shade_con .layui-form-select dl, .shade_con2 .layui-form-select dl{
+        max-height:200px;
+        top: -30px !important;
+    }
+    .table_tou {
+        padding-left: 22px;
+    }
+    .table_tou h6 {
+        font-size: 15px;
+        color: rgba(143, 156, 170, 1);
+        cursor: pointer;
+        padding: 0px;;;
+        margin: 8px 25px 0px 0px;
+        padding-bottom: 6px;
+    }
+    .addClass2{
+        border-bottom: 2px solid #3C84D2;
+        font-size: 20px !important;
+        color: #000 !important;
+    }
+</style>
+<body>
+<div id="proMang">
+    <div class="top"><img src="../../img/logo.png" alt="" class="logo">
+        <ul>
+            <li class="top-a-box" data-value="210"><a href="../workbench/order_fail.html"><span
+                    class="iconfont icon-diannao" style="font-size: 22px;"></span>
+                工作台
+            </a></li>
+            <li class="top-a-box " data-value="211"><a href="../user_manage/user_manage.html">
+                <span class="iconfont icon-yonghu" style="font-size: 22px;"></span>
+                用户管理
+            </a></li>
+            <li class="top-a-box " data-value="212"><a href="../order_manage/order_manage.html"><span
+                    class="iconfont icon-dingdanguanli" style="font-size: 22px;"></span>
+                订单管理
+            </a></li>
+            <li class="top-a-box addClass" data-value="213"><a href="./take_orders.html"><span
+                    class="iconfont icon-iconfonticon-shebei" style="font-size: 22px;"></span>
+                资源配置
+            </a></li>
+        </ul>
+        <div class="sign">
+            <span class="ren"></span> <span class="type"></span>
+            <img src="../../img/退出.png" alt=""  onclick="sign()">
+        </div>
+    </div>
+</div>
+<div class="main-box">
+    <!-- 左侧菜单 -->
+    <div id="leftMenu_Box" class="resource">
+        <div class="leftMenu">
+            <ul>
+                <li class="left_a  dn" data-value="21313"><a href="javascript:void(0);" class="leftNav"  onclick="aa(event)">
+                    <span class="iconfont icon-iconfonticon-baobia"></span>
+                    接单模板配置
+                    <i class="iconfont icon-iconfontfold"></i></a>
+
+                    <div class="prop dns">
+                        <a href="./take_orders.html" data-value="2131310" class="prop7 left_a dn">接单模板</a>
+                        <a href="./signature_manage.html" data-value="2131311" class="prop8 left_a dn">签名管理</a>
+                        <a href="./template_manage.html" data-value="2131312" class="prop9 left_a dn">模板管理</a>
+                        <a href="./gateway.html" data-value="2131313" class="prop10 left_a dn">网关签名</a>
+                    		<a href="./shortChain.html" data-value="2131314" class="prop18 left_a dn sw_url">智能短链</a>
+                    </div>
+                </li>
+                <li class="left_a dn " data-value="21315">
+                    <a href="./test_send.html" class="leftNav" >
+                        <span class="iconfont icon-fasong"></span>
+                        测试发送
+                    </a>
+                </li>
+                <li class="left_a addclass_one dn" data-value="21310"><a href="javascript:void(0);" class="leftNav"  onclick="aa(event)">
+                    <span  class="iconfont icon-diannao-shuju" ></span>
+                    基础数据配置
+                    <i class="iconfont icon-icon11"></i> </a>
+                    <div class="prop dbs">
+                        <a href="./sensitive_word.html" data-value="2131010" class="prop1 left_a dn">敏感词部署</a>
+                        <a href="./rate_limiting.html" data-value="2131011" class="prop2 left_a dn">下单限速</a>
+                        <a href="./risk_list.html" data-value="2131012" class="prop3 left_a dn">危险词</a>
+                        <a href="javascript:void(0);" data-value="2131013" class="prop24 left_a dn">归属地维护</a>
+                        <a href="./home_protect.html" data-value="2131013" class="prop25 left_a dn">归属地保护</a>
+                    </div>
+                </li>
+                <li class="left_a dn" data-value="21311"><a href="javascript:void(0);" class="leftNav" onclick="aa(event)">
+                    <span class="iconfont icon-peizhishujuyuan"></span>
+                    网关配置
+                    <i class="iconfont icon-iconfontfold"></i></a>
+
+                    <div class="prop dns">
+                        <a href="./definition_gate.html" data-value="2131110" class="prop4 left_a dn">定义网关</a>
+                        <a href="./route_manage.html" data-value="2131111" class="prop5 left_a dn">配置路由</a>
+                        <a href="./route_list.html" data-value="2131112" class="prop6 left_a dn">通路选择</a>
+                        <a href="./gateway_send.html" data-value="2131113" class="prop16 left_a dn">网关发送</a>
+                        <a href="./user_data.html" data-value="2131114" class="prop17 left_a dn">用户数据统计</a>
+                    </div>
+                </li>
+                <!--<li class="left_a  " data-value="21312">-->
+                <!--<a href="javascript:void(0);" class="leftNav" style="padding: 20px;">-->
+                <!--<span class="iconfont icon-guanli"></span>-->
+                <!--通路配置-->
+                <!--</a>-->
+                <!--</li>-->
+
+                <li class="left_a dn " data-value="21314"><a href="javascript:void(0);" class="leftNav" onclick="aa(event)">
+                    <span class="iconfont icon-moban"></span>
+                    被叫配置
+                    <i class="iconfont icon-iconfontfold"></i></a>
+
+                    <div class="prop dns">
+                        <a href="./list_set.html" data-value="2131410" class="prop11 left_a dn">黑名单</a>
+                        <a href="./vip_list.html" data-value="2131411" class="prop12 left_a dn">VIP白名单</a>
+                        <a href="./unsubscribe.html" data-value="2131412" class="prop13 left_a dn">退订名单</a>
+                    </div>
+                </li>
+                <li class="left_a  dn" data-value="21316"><a href="javascript:void(0);" class="leftNav"  onclick="aa(event)">
+                    <span class="iconfont icon-peizhishujuyuan"></span>
+                    风险控制
+                    <i class="iconfont icon-iconfontfold"></i></a>
+                    <div class="prop dns">
+                        <a href="./risk_rule.html" data-value="2131610" class="prop21 left_a dn">风控规则</a>
+                        <a href="./risk_result.html" data-value="2131611" class="prop22 left_a dn">风控结果</a>
+                        <a href="./report_take.html" data-value="2131612" class="prop23 left_a dn">告警订阅</a>
+                    </div>
+                </li>
+            </ul>
+            <div class="group" onclick="flexible(event)"><span class="iconfont icon-xiangzuo"style="color: rgb(255, 255, 255); font-size: 13px;"></span></div>
+        </div>
+    </div>
+    <div id="rightTable"><v-signature></v-signature></div>
+</div>
+<div id="shade">
+    <v-rate></v-rate>
+</div>
+<div id="shade1">
+    <v-phone></v-phone>
+</div>
+<div id="shade2">
+    <v-operator></v-operator>
+    <v-ip></v-ip>
+</div>
+<script type="text/x-template" id="signature-template">
+    <div>
+        <div class="table_tou">
+            <h6 class="fl addClass2">归属地</h6>
+            <h6 class="fl">号段归属</h6>
+            <h6 class="fl">运营商号段</h6>
+            <h6 class="fl">IP归属地</h6>
+            <div class="fr sw_padd">
+            <span class="sw_num"
+                  v-cloak>{{totalCount}}</span>&nbsp; &nbsp;<span style="color:#738495">条记录</span>
+             <span class="Gradual" @click="shade()">
+              <span
+                      class="iconfont icon-jiekuanshenqing"
+                      >&nbsp;新增</span
+                      >
+            </span>
+            <!--<span class="Gradual" @click="importFile()" v-if="code == 0">-->
+						  <!--<span class="iconfont icon-export">&nbsp;导出</span>-->
+						<!--</span>-->
+            </div>
+        </div>
+        <div class="table_nav">
+            <form class="layui-form layui-form-pane" action="">
+                <div class="list">
+                    <div class="layui-inline">
+                        <label class="">开始时间</label><br/>
+                        <div class="layui-input-inline">
+                            <input type="text" name="startDate1" class="layui-input" id="test"/>
+                            <img src="../../img/Shape.png" alt=""/>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="">结束时间</label><br/>
+                        <div class="layui-input-inline">
+                            <input type="text" name="endDate1" class="layui-input" id="test1"/>
+                            <img src="../../img/Shape.png" alt=""/>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="">省份</label><br />
+                        <div class="layui-input-inline">
+                            <input
+                                    type="text"
+                                    name="province"
+                                    placeholder="请输入"
+                                    class="layui-input"
+                                    />
+                        </div>
+                    </div>
+                    <div class="layui-inline" >
+                        <label class="">运营商</label><br />
+                        <div class="layui-input-inline">
+                            <select name="operator" >
+                                <option value="">请选择</option>
+                                <option value="中国移动">中国移动</option>
+                                <option value="中国联通">中国联通</option>
+                                <option value="中国电信">中国电信</option>
+                                <option value="我的移动">我的移动</option>
+                                <option value="我的联通">我的联通</option>
+                                <option value="我的电信">我的电信</option>
+                                <option value="网关移动">网关移动</option>
+                                <option value="网关联通">网关联通</option>
+                                <option value="网关电信">网关电信</option>
+                                <option value="虚拟移动">虚拟移动</option>
+                                <option value="虚拟联通">虚拟联通</option>
+                                <option value="虚拟电信">虚拟电信</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-input-inline">
+                        <button type="button" class="sw_btn1" lay-submit="" lay-filter="demo1">
+                            查询
+                        </button>
+                    </div>
+                </div>
+                <div class="list2 dn">
+                    <div class="layui-inline">
+                        <label class="">开始时间</label><br/>
+                        <div class="layui-input-inline">
+                            <input type="text" name="startDate2" class="layui-input" id="test2"/>
+                            <img src="../../img/Shape.png" alt=""/>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="">结束时间</label><br/>
+                        <div class="layui-input-inline">
+                            <input type="text" name="endDate2" class="layui-input" id="test3"/>
+                            <img src="../../img/Shape.png" alt=""/>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="">号码段</label><br />
+                        <div class="layui-input-inline">
+                            <input
+                                    type="text"
+                                    name="telHead"
+                                    placeholder="请输入"
+                                    class="layui-input"
+                                    />
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="">省份</label><br />
+                        <div class="layui-input-inline">
+                            <input
+                                    type="text"
+                                    name="provinceTwo"
+                                    placeholder="请输入"
+                                    class="layui-input"
+                                    />
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="">城市</label><br />
+                        <div class="layui-input-inline">
+                            <input
+                                    type="text"
+                                    name="city"
+                                    placeholder="请输入"
+                                    class="layui-input"
+                                    />
+                        </div>
+                    </div>
+                    <div class="layui-input-inline">
+                        <button type="button" class="sw_btn1" lay-submit="" lay-filter="demo2">
+                            查询
+                        </button>
+                    </div>
+                </div>
+                <div class="list3 dn">
+                    <div class="layui-inline">
+                        <label class="">开始时间</label><br/>
+                        <div class="layui-input-inline">
+                            <input type="text" name="startDate3" class="layui-input" id="test4"/>
+                            <img src="../../img/Shape.png" alt=""/>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="">结束时间</label><br/>
+                        <div class="layui-input-inline">
+                            <input type="text" name="endDate3" class="layui-input" id="test5"/>
+                            <img src="../../img/Shape.png" alt=""/>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="">号码段</label><br />
+                        <div class="layui-input-inline">
+                            <input
+                                    type="text"
+                                    name="telHeadTwo"
+                                    placeholder="请输入"
+                                    class="layui-input"
+                                    />
+                        </div>
+                    </div>
+                    <div class="layui-inline" >
+                        <label class="">运营商</label><br />
+                        <div class="layui-input-inline">
+                            <select name="operatorTwo" >
+                                <option value="">请选择</option>
+                                <option value="中国移动">中国移动</option>
+                                <option value="中国联通">中国联通</option>
+                                <option value="中国电信">中国电信</option>
+                                <option value="我的移动">我的移动</option>
+                                <option value="我的联通">我的联通</option>
+                                <option value="我的电信">我的电信</option>
+                                <option value="网关移动">网关移动</option>
+                                <option value="网关联通">网关联通</option>
+                                <option value="网关电信">网关电信</option>
+                                <option value="虚拟移动">虚拟移动</option>
+                                <option value="虚拟联通">虚拟联通</option>
+                                <option value="虚拟电信">虚拟电信</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-input-inline">
+                        <button type="button" class="sw_btn1" lay-submit="" lay-filter="demo3">
+                            查询
+                        </button>
+                    </div>
+                </div>
+                <div class="list4 dn">                   
+                    <div class="layui-inline">
+                        <label class="">IP</label><br />
+                        <div class="layui-input-inline">
+                            <input
+                                    type="text"
+                                    name="ipRaw"
+                                    placeholder="请输入"
+                                    class="layui-input"
+                                    />
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="">IP用户</label><br />
+                        <div class="layui-input-inline">
+                            <input
+                                    type="text"
+                                    name="location"
+                                    placeholder="请输入"
+                                    class="layui-input"
+                                    />
+                        </div>
+                    </div> 
+                    <div class="layui-inline">
+                        <label class="">地址</label><br />
+                        <div class="layui-input-inline">
+                            <input
+                                    type="text"
+                                    name="operatorThree"
+                                    placeholder="请输入"
+                                    class="layui-input"
+                                    />
+                        </div>
+                    </div> 
+                    <div class="layui-input-inline">
+                        <button type="button" class="sw_btn1" lay-submit="" lay-filter="demo4">
+                            查询
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="sw_row">
+                <table style="margin-top: 15px;width: 100%">
+                    <tr v-if="code == 0">
+                        <th >ID</th>
+                        <th >省份</th>
+                        <th >运营商</th>
+                        <th >最后更新时间</th>
+                        <th style="width:260px;box-sizing: border-box;padding-left: 45px;">操作</th>
+                    </tr>
+                    <tr v-if="code == 1">
+                        <th >ID</th>
+                        <th >号段</th>
+                        <th >省份</th>
+                        <th >城市</th>
+                        <th >最后更新时间</th>
+                        <th style="width:260px;box-sizing: border-box;padding-left: 45px;">操作</th>
+                    </tr>
+                    <tr v-if="code == 2">
+                        <th >ID</th>
+                        <th >号段</th>
+                        <th >运营商</th>
+                        <th >最后更新时间</th>
+                        <th style="width:260px;box-sizing: border-box;padding-left: 45px;">操作</th>
+                    </tr>
+                    <tr v-if="code == 3">
+                        <th >国家</th>
+                        <th >IP</th>
+                        <th >地址</th>
+                        <th >创建时间</th>
+                        <th style="width:260px;box-sizing: border-box;padding-left: 45px;">操作</th>
+                    </tr>
+                    <tr v-cloak v-for="(li, index) in allData" v-if="code == 0">
+                        <td>{{li.locationId }}</td>
+                        <td>{{li.province}}</td>
+                        <td>{{li.operator}}</td>
+                        <td>{{li.createTime | limitTo}}</td>
+                        <td>
+                            <span class="sw_btn2 marr_5" @click="amend(li)">修改</span>
+                            <span class="sw_btn3" @click="del(li.locationId)">删除</span>
+                        </td>
+                    </tr>
+                    <tr v-cloak v-for="(li, index) in allData" v-if="code == 1">
+                        <td >{{li.locationId }}</td>
+                        <td>{{li.telHead}}</td>
+                        <td>{{li.province}}</td>
+                        <td>{{li.city}}</td>
+                        <td>{{li.createTime | limitTo}}</td>
+                        <td>
+                            <span class="sw_btn2 marr_5" @click="amend(li)">修改</span>
+                            <span class="sw_btn3" @click="del(li.telHead)">删除</span>
+                        </td>
+                    </tr>
+                    <tr v-cloak v-for="(li, index) in allData" v-if="code == 2">
+                        <td >{{li.operatorVector }}</td>
+                        <td>{{li.telHead}}</td>
+                        <td>{{li.operator}}</td>
+                        <td>{{li.createTime | limitTo}}</td>
+                        <td>
+                            <span class="sw_btn2 marr_5" @click="amend(li)">修改</span>
+                            <span class="sw_btn3" @click="del(li.telHead)">删除</span>
+                        </td>
+                    </tr>
+                    <tr v-cloak v-for="(li, index) in allData" v-if="code == 3">
+                        <td >{{li.location }}</td>
+                        <td>{{li.ipRaw}}</td>
+                        <td>{{li.operator}}</td>
+                        <td>{{li.createTime | limitTo}}</td>
+                        <td>
+                            <span class="sw_btn2 marr_5" @click="amend(li)">修改</span>
+                            <span class="sw_btn3" @click="del(li.ipRaw)">删除</span>
+                        </td>
+                    </tr>
+                </table>
+                <div class="sw_pad8" v-show="showNo == true">暂无数据</div>
+            </div>
+            <div id="page"></div>
+        </div>
+    </div>
+</script>
+<script type="text/x-template" id="rate-template">
+    <div class="shade_con">
+        <div class="tongji">
+            <h3 v-if="node == 0">新增归属地</h3>
+            <h3 v-if="node == 1">修改归属地</h3>
+            <span class="iconfont icon-shanchu" @click="shanchu()"></span>
+        </div>
+        <div class="temp">
+            <form class="layui-form layui-form-pane" action="" style="padding: 0px;">
+                <div class="border">
+                    <div class="layui-inline">
+                        <label class="">运营商</label><br />
+                        <div class="layui-input-inline" style="width:310px">
+                            <select name="operator" id="eventLevelOne">
+                                <option value="中国移动">中国移动</option>
+                                <option value="中国联通">中国联通</option>
+                                <option value="中国电信">中国电信</option>
+                                <option value="我的移动">我的移动</option>
+                                <option value="我的联通">我的联通</option>
+                                <option value="我的电信">我的电信</option>
+                                <option value="网关移动">网关移动</option>
+                                <option value="网关联通">网关联通</option>
+                                <option value="网关电信">网关电信</option>
+                                <option value="虚拟移动">虚拟移动</option>
+                                <option value="虚拟联通">虚拟联通</option>
+                                <option value="虚拟电信">虚拟电信</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="lable">ID</label><br />
+                        <div class="layui-input-inline" style="width:310px">
+                            <input
+                                    type="text"
+                                    name="locationId"
+                                    v-model="info.locationId"
+                                    placeholder="请输入"
+                                    class="layui-input locationId"
+                                    />
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="lable">省份</label><br />
+                        <div class="layui-input-inline" style="width:310px">
+                            <input
+                                    type="text"
+                                    name="province"
+                                    v-model="info.province"
+                                    placeholder="请输入"
+                                    class="layui-input"
+                                    />
+                        </div>
+                    </div>
+                    <div class="layui-input-inline">
+                        <button class="sw_btn1" style="margin: 30px 5px 0px 85px;" lay-submit="" lay-filter="demo6" v-if="node == 0">
+                            新增
+                        </button>
+                        <span class="sw_btn1" style="margin: 30px 5px 0px 85px;" lay-submit="" lay-filter="demo7" v-if="node == 1">修改</span>
+                        <span class="sw_btnwrong" @click="shanchu()">取消</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+<script type="text/x-template" id="phone-template">
+    <div class="shade_con1">
+        <div class="tongji">
+            <h3 v-if="node == 0">新增号段归属</h3>
+            <h3 v-if="node == 1">修改号段归属</h3>
+            <span class="iconfont icon-shanchu" @click="shanchu()"></span>
+        </div>
+        <div class="temp">
+            <form class="layui-form layui-form-pane" action="" style="padding: 0px;">
+                <div class="border">
+                    <div class="layui-inline">
+                        <label class="">运营商</label><br />
+                        <div class="layui-input-inline" style="width:310px">
+                            <select name="operator" id="eventLevelTwo">
+                                <option value="中国移动">中国移动</option>
+                                <option value="中国联通">中国联通</option>
+                                <option value="中国电信">中国电信</option>
+                                <option value="我的移动">我的移动</option>
+                                <option value="我的联通">我的联通</option>
+                                <option value="我的电信">我的电信</option>
+                                <option value="网关移动">网关移动</option>
+                                <option value="网关联通">网关联通</option>
+                                <option value="网关电信">网关电信</option>
+                                <option value="虚拟移动">虚拟移动</option>
+                                <option value="虚拟联通">虚拟联通</option>
+                                <option value="虚拟电信">虚拟电信</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="lable">号段</label><br />
+                        <div class="layui-input-inline" style="width:310px">
+                            <input
+                                    type="text"
+                                    name="telHead"
+                                    v-model="info.telHead"
+                                    placeholder="请输入"
+                                    class="layui-input telHead"
+                                    />
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="lable">省份</label><br />
+                        <div class="layui-input-inline" style="width:310px">
+                            <input
+                                    type="text"
+                                    name="province"
+                                    v-model="info.province"
+                                    placeholder="请输入"
+                                    class="layui-input"
+                                    />
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="lable">城市</label><br />
+                        <div class="layui-input-inline" style="width:310px">
+                            <input
+                                    type="text"
+                                    name="city"
+                                    v-model="info.city"
+                                    placeholder="请输入"
+                                    class="layui-input"
+                                    />
+                        </div>
+                    </div>
+                    <div class="layui-input-inline">
+                        <button class="sw_btn1" style="margin: 30px 5px 0px 85px;" lay-submit="" lay-filter="demo8" v-if="node == 0">
+                            新增
+                        </button>
+                        <span class="sw_btn1" style="margin: 30px 5px 0px 85px;" lay-submit="" lay-filter="demo9" v-if="node == 1">修改</span>
+                        <span class="sw_btnwrong" @click="shanchu()">取消</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+<script type="text/x-template" id="operator-template">
+    <div class="shade_con2">
+        <div class="tongji">
+            <h3 v-if="node == 0">新增运营商号段</h3>
+            <h3 v-if="node == 1">修改运营商号段</h3>
+            <span class="iconfont icon-shanchu" @click="shanchu()"></span>
+        </div>
+        <div class="temp">
+            <form class="layui-form layui-form-pane" action="" style="padding: 0px;">
+                <div class="border">
+                    <div class="layui-inline">
+                        <label class="">运营商</label><br />
+                        <div class="layui-input-inline" style="width:310px">
+                            <select name="operator" id="eventLevelThree">
+                                <option value="中国移动">中国移动</option>
+                                <option value="中国联通">中国联通</option>
+                                <option value="中国电信">中国电信</option>
+                                <option value="我的移动">我的移动</option>
+                                <option value="我的联通">我的联通</option>
+                                <option value="我的电信">我的电信</option>
+                                <option value="网关移动">网关移动</option>
+                                <option value="网关联通">网关联通</option>
+                                <option value="网关电信">网关电信</option>
+                                <option value="虚拟移动">虚拟移动</option>
+                                <option value="虚拟联通">虚拟联通</option>
+                                <option value="虚拟电信">虚拟电信</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="lable">号段</label><br />
+                        <div class="layui-input-inline" style="width:310px">
+                            <input
+                                    type="text"
+                                    name="telHead"
+                                    v-model="info.telHead"
+                                    placeholder="请输入"
+                                    class="layui-input telHeadTwo"
+                                    />
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="lable">ID</label><br />
+                        <div class="layui-input-inline" style="width:310px">
+                            <input
+                                    type="text"
+                                    name="operatorVector"
+                                    v-model="info.operatorVector"
+                                    placeholder="请输入"
+                                    class="layui-input"
+                                    />
+                        </div>
+                    </div>
+                    <div class="layui-input-inline">
+                        <button class="sw_btn1" style="margin: 30px 5px 0px 85px;" lay-submit="" lay-filter="demo10" v-if="node == 0">
+                            新增
+                        </button>
+                        <span class="sw_btn1" style="margin: 30px 5px 0px 85px;" lay-submit="" lay-filter="demo11" v-if="node == 1">修改</span>
+                        <span class="sw_btnwrong" @click="shanchu()">取消</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+<script type="text/x-template" id="ip-template">
+    <div class="shade_con3">
+        <div class="tongji">
+            <h3 v-if="node == 0">新增IP归属地</h3>
+            <h3 v-if="node == 1">修改IP归属地</h3>
+            <span class="iconfont icon-shanchu" @click="shanchu()"></span>
+        </div>
+        <div class="temp">
+            <form class="layui-form layui-form-pane" action="" style="padding: 0px;">
+                <div class="border">                   
+                    <div class="layui-inline">
+                        <label class="lable">IP</label><br />
+                        <div class="layui-input-inline" style="width:310px">
+                            <input
+                                    type="text"
+                                    name="ipRaw"
+                                    v-model="info.ipRaw"
+                                    placeholder="请输入"
+                                    class="layui-input"
+                                    />
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="lable">国家</label><br />
+                        <div class="layui-input-inline" style="width:310px">
+                            <input
+                                    type="text"
+                                    name="location"
+                                    v-model="info.location"
+                                    placeholder="请输入"
+                                    class="layui-input"
+                                    />
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="lable">地址</label><br />
+                        <div class="layui-input-inline" style="width:310px">
+                            <input
+                                    type="text"
+                                    name="operator"
+                                    v-model="info.operator"
+                                    placeholder="请输入"
+                                    class="layui-input"
+                                    />
+                        </div>
+                    </div>
+                    <div class="layui-input-inline">
+                        <button class="sw_btn1" style="margin: 30px 5px 0px 85px;" lay-submit="" lay-filter="demo12" v-if="node == 0">
+                            新增
+                        </button>
+                        <span class="sw_btn1" style="margin: 30px 5px 0px 85px;" lay-submit="" lay-filter="demo13" v-if="node == 1">修改</span>
+                        <span class="sw_btnwrong" @click="shanchu()">取消</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+<script src="../../layui.all.js"></script>
+<script src="../../module/home_location.js"></script>
+<script>
+    //头部
+    //    var operaAI = new Vue({
+    //        el: "#proMang",
+    //        data: {
+    //            topCurrent: 3
+    //        }
+    //    });
+    //    //   //左侧菜单组件实例化
+    //    var leftMenu = new Vue({
+    //        el: "#leftMenu_Box",
+    //        data: {
+    //            current: 1
+    //        }
+    //    });
+    resource()
+    //
+    var rightTable = new Vue({
+        el: "#rightTable"
+    });
+    //
+    var shade = new Vue({
+        el: "#shade"
+    });
+    var shade1 = new Vue({
+        el: "#shade1"
+    });
+    var shade2 = new Vue({
+        el: "#shade2"
+    });
+    $(function() {
+
+        laydate.render({
+            elem: "#test", //指定元素
+            // type: 'datetime',
+            showBottom: false,
+            value: '',
+        });
+        laydate.render({
+            elem: "#test1", //指定元素
+            // type: 'datetime',
+            showBottom: false,
+            value:'',
+        });
+        laydate.render({
+            elem: "#test2", //指定元素
+            // type: 'datetime',
+            showBottom: false,
+            value:'',
+        });
+        laydate.render({
+            elem: "#test3", //指定元素
+            // type: 'datetime',
+            showBottom: false,
+            value:'',
+        });
+        laydate.render({
+            elem: "#test4", //指定元素
+            // type: 'datetime',
+            showBottom: false,
+            value:'',
+        });
+        laydate.render({
+            elem: "#test5", //指定元素
+            // type: 'datetime',
+            showBottom: false,
+            value:'',
+        });
+        $(document).ready(function(){
+            $('#leftMenu_Box').css('background', '#040b29');
+            $('#proMang .top').css('background', '#fff')
+        });
+        //     $('#proMang .top ul li a').mousemove(function(){
+        //         $(this).addClass('addClass').parent().siblings().find('a').removeClass('addClass')
+        //   })
+        total($(".dropdown1 ul li"),$(".dropdown1 .dropdown-selected1"),$(".dropdown1 ul"),$(".dropdown1"));
+    });
+</script>
+</body>
+</html>

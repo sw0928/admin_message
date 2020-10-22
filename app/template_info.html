@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+<title>模板详情</title>
+<link href="css/style.css" rel="stylesheet"/>
+<link href="css/response.css" rel="stylesheet"/>
+</head>
+<body class="bg">
+<div class="content">
+	<div class="header">
+		<div class="header-nei">
+			<a href="template.html" class="back-up"><i class="iconfont icon-xiangzuo"></i></a>
+			<h2 class="header-title">模板详情</h2>
+            <a href="nav.html" class="back-top"><i class="iconfont icon-daohang"></i></a>
+		</div>
+	</div>
+	<!--head/-->
+	<div class="head-height">&nbsp;</div>
+	<div class="order-info" id="info">
+
+    </div>
+</div>
+<!--content/-->
+<div class="bg100"></div>
+<script src="js/jquery.min.js"></script>
+<script src="js/style.js"></script>
+<script src="js/doT.min.js"></script>
+<script id="infotmpl" type="text/x-dot-template">
+ <table>
+    <tr>
+     <th>模版ID</th>
+     <td>{{=it.templateId}}</td>
+    </tr>
+    <tr>
+     <th>申请用户</th>
+     <td>{{=it.loginName}}</td>
+    </tr>
+    <tr>
+     <th>模版分类</th>
+        {{? it.templateType == 1}}
+        <td >行业短信</td>
+        {{?? it.templateType == 2}}
+        <td >营销短信</td>
+        {{?}}
+    </tr>
+    <tr>
+     <th>模版内容</th>
+     <td>{{=it.templateSms}}</td>
+    </tr>
+    <tr>
+     <th>备注</th>
+     <td>{{=it.remark || '-'}}</td>
+    </tr>
+    <tr>
+     <th>批注</th>
+     <td>{{=it.auditMark || '-'}}</td>
+    </tr>
+    <tr>
+     <th>时间</th>
+     <td>{{=it.createTime}}</td>
+    </tr>
+    <tr>
+     <th>审核状态</th>
+        {{? it.review == 1 }}
+        <td style="color:#9AC938">已通过</td>
+        {{?? it.review == -1}}
+        <td style="color:#6E6E6E">试用中</td>
+        {{?? it.review == 0}}
+        <td style="color:#F8C411">待审核</td>
+        {{?? it.review == 2}}
+        <td style="color:#ff0000">已拒绝</td>
+        {{?}}
+    </tr>
+ </table>
+ <div class="log-reg-sub">
+     {{? it.review == 0 }}
+     <a href="javascript:;" class="log-reg-sw-btn order-btn marR15">审核</a>
+     <a href="refuse.html" class="log-reg-sw-btn refuse">拒绝</a>
+     {{?}}
+ </div>
+</script>
+<script>
+  $(function(){
+   var info = JSON.parse(sessionStorage.getItem('infoObj'));
+      var allData;
+      $.ajax({
+          url : '/icos/template/templateApplyInfo',
+          type : 'post',
+          async: false,
+          data :{
+              'templateId':info.templateId
+          },
+          headers : {
+              "Authorization":sessionStorage.getItem('id'),
+          },
+          success : function(data){
+             // console.log(data.data);
+              allData = data.data;
+              sessionStorage.setItem('infoObj', JSON.stringify(data.data));
+               var interText = doT.template($("#infotmpl").text());
+               $("#info").html(interText(allData));
+          },
+          error : function(err){
+              location.href = "index.html";
+              sessionStorage.clear();
+          }
+      });
+      //定单校验
+      $(".order-btn").on('click',function() {
+          $.ajax({
+              url : '/icos/template/getTemplateNameAndContent',
+              type : 'post',
+              async: false,
+              data :{
+                  'smsContent':allData.templateSms
+              },
+              headers : {
+                  "Authorization":sessionStorage.getItem('id'),
+              },
+              success : function(data){
+                  //console.log(data);
+                  sessionStorage.setItem('tempObj', JSON.stringify(data.data));
+                  location.href = "configuration.html"
+              },
+              error : function(err){
+                  location.href = "index.html";
+                  sessionStorage.clear();
+              }
+          });
+      })
+  })
+</script>
+</body>
+</html>

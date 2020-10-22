@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>智能通信运营管理平台</title>
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/layui.css" />
+    <script src="../../js/jquery-3.0.0.min.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../laydate/laydate.js"></script>
+    <script src="../../js/kindeditor-all-min.js"></script>
+    <script src="../../js/zh-CN.js"></script>
+    <script src="../../js/vue.min.js"></script>
+  </head>
+  <!--[if IE 9]>
+  <style>
+    #leftMenu_Box{
+      width: 15.08%;
+      height: 979px;
+      float: left;
+      background: #040b29 !important;
+      position: relative;
+      box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.5);
+    }
+  </style>
+  <![endif]-->
+  <style>
+    /*#page {*/
+      /*padding: 60px 0 66px 0;*/
+    /*}*/
+    .sw_row tr td:nth-child(9) {
+      padding: 8px 0;
+    }
+    .shade_con {
+      width: 1000px;
+      height: auto;
+    }
+    .shade_con3{
+      width: 1000px;
+      height:auto;
+    }
+    .shade_con3 .temp{
+      height: auto;
+      width: auto;
+      border: none;
+      margin: 15px 15px 0 15px;
+    }
+    #shade3 .shade_con3 .layui-inline label{
+      padding: 12px 0;
+    }
+    .shade_con .temp{
+      height: auto;
+
+    }
+    .shade_con1 {
+      width: 680px;
+      height: auto;
+    }
+    .shade_con2 {
+      width: 540px;
+      height: 444px;
+    }
+  #shade .tips1{
+    height: 280px;
+  }
+    .sw_row tr td div{
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+     /* padding-right: 10px;*/
+      box-sizing: border-box;
+    }
+    /*.sw_row tr td:nth-child(4) div{*/
+      /*max-width: 260px;*/
+    /*}*/
+    .sw_row tr td:nth-child(6) div{
+      max-width: 160px;
+    }
+    .sw_row tr td:nth-child(4) div{
+      max-width: 400px;
+    }
+    .sw_row tr td:nth-child(5) div{
+      max-width: 160px;
+    }
+    @media screen and (max-width: 1600px) {
+      .shade_con3{
+        width: 990px;
+      }
+      .shade_con3 .temp{
+        overflow-y: auto;
+        height: 470px;
+      }
+      .sw_row tr td:nth-child(7) div{
+        max-width: 140px;
+      }
+      .sw_row tr td:nth-child(8) div{
+        min-width: 55px;
+      }
+      .sw_row tr td:nth-child(3) div{
+        min-width: 55px;
+      }
+      /*.sw_row tr td:nth-child(2) div{*/
+        /*max-width: 55px;*/
+      /*}*/
+      .sw_row tr td:nth-child(4) div{
+        max-width: 215px;
+      }
+      .shade_con{
+        max-height: 660px;
+      }
+      .shade_con .temp{
+        height: 495px;
+        width: 970px;
+        overflow-y: auto;
+      }
+      .shade_con1 {
+        width: 690px;
+      }
+      .shade_con1 .temp{
+        width: 670px;
+        height:470px;
+        overflow-y: auto;
+      }
+    }
+
+    /*.sw_row tr td {*/
+      /*padding: 18px 0 18px 0;*/
+    /*}*/
+    #text {
+      width: 920px;
+      height: 101px;
+      margin: 10px 16px 0 22px;
+      border: 1px solid #e2e2e2;
+      box-sizing: border-box;
+      padding: 7px;
+    }
+    #text2 {
+      width: 912px;
+      height: 67px;
+      margin-top: 10px;
+      border: 1px solid #e2e2e2;
+      box-sizing: border-box;
+      padding: 7px;
+    }
+    #text6,#text7{
+      width: 912px;
+      height: 100px;
+      border: 1px solid #e2e2e2;
+      box-sizing: border-box;
+      padding: 7px;
+    }
+    #text3,#text4,#text5,#text8{
+      width:610px;
+      height: 95px;
+      margin: 10px 18px 0 0px;
+      border: 1px solid #e2e2e2;
+      box-sizing: border-box;
+      padding: 7px;
+    }
+    #text3{
+      width: 300px;
+    }
+    .shade_con1 .temp em{
+      padding: 10px 0 0px 0px;
+    }
+
+    /*.layui-inline label {*/
+      /*padding: 7px 0;*/
+    /*}*/
+    .ke-container {
+      margin: 10px 0 0 0px !important;
+    }
+    .ke-statusbar{
+      display: none;
+    }
+    .ke-colorpicker-cell-top{
+      display: none !important;
+    }
+    .addClass4{
+      background: #E1EFFF;
+    }
+    .layui-form-select dl{
+      top: -30px !important;
+    }
+  </style>
+  <body>
+    <div id="proMang">
+      <div class="top"><img src="../../img/logo.png" alt="" class="logo">
+        <ul>
+          <li class="top-a-box addClass" data-value="210"><a href="./order_fail.html"><span
+                  class="iconfont icon-diannao" style="font-size: 22px;"></span>
+            工作台
+          </a></li>
+          <li class="top-a-box " data-value="211"><a href="../user_manage/user_manage.html">
+            <span class="iconfont icon-yonghu" style="font-size: 22px;"></span>
+            用户管理
+          </a></li>
+          <li class="top-a-box " data-value="212"><a href="../order_manage/order_manage.html"><span
+                  class="iconfont icon-dingdanguanli" style="font-size: 22px;"></span>
+            订单管理
+          </a></li>
+          <li class="top-a-box " data-value="213"><a href="../resource/take_orders.html"><span
+                  class="iconfont icon-iconfonticon-shebei" style="font-size: 22px;"></span>
+            资源配置
+          </a></li>
+        </ul>
+        <div class="sign">
+          <span class="ren"></span> <span class="type"></span>
+          <img src="../../img/退出.png" alt=""  onclick="sign()">
+        </div>
+      </div>
+    </div>
+    <div class="main-box">
+      <!-- 左侧菜单 -->
+      <div id="leftMenu_Box" class="work_left">
+        <div class="leftMenu">
+          <ul class="prop">
+            <li class="left_a dn" data-value="21010"><a href="./order_fail.html" ><span
+                    class="iconfont icon-xiadanshibai"></span>
+              下单失败
+            </a></li>
+            <li class="left_a dn" data-value="21011"><a href="./auditing.html" ><span class="iconfont icon-shenhe"></span>
+              审核发送
+            </a></li>
+            <li class="left_a dn" data-value="21012"><a href="./detail.html"><span class="iconfont icon-mingxi"></span>
+              用户发送明细
+            </a></li>
+            <li class="left_a dn" data-value="21013"><a href="./user_count.html" ><span class="iconfont icon-tongji1"></span>
+              用户发送统计
+            </a></li>
+            <li class="left_a dn addclass_one " data-value="21014"><a href="javascript:void(0);" ><span class="iconfont icon-moban"></span>
+              模板申请
+            </a></li>
+            <li class="left_a  dn" data-value="21015"><a href="./signature.html" ><span class="iconfont icon-moban"></span>
+              签名申请
+            </a></li>
+            <li class="left_a dn" data-value="21016"><a href="./complain.html"><span class="iconfont icon-daoru1"></span>
+              投诉导入
+            </a></li>
+            <li class="left_a dn" data-value="21017"><a href="./complain_manage.html" ><span
+                    class="iconfont icon-guanli"></span>
+              投诉管理
+            </a></li>
+          </ul>
+          <div class="group" onclick="flexible(event)">
+            <span class="iconfont icon-xiangzuo" style="color: rgb(255, 255, 255); font-size: 13px;"></span>
+          </div>
+        </div>
+      </div>
+      <div id="rightTable"><v-send-detail></v-send-detail></div>
+    </div>
+    <div id="shade"><v-template></v-template></div>
+    <div id="shade1"><v-marry></v-marry></div>
+    <div id="select"><v-select></v-select></div>
+    <div id="shade3"><v-rate></v-rate></div>
+    <script type="text/x-template" id="right-template">
+      <div>
+        <div class="table_tou">
+          <h6 class="fl">模板申请列表</h6>
+          <div class="fr sw_padd" >
+            <span class="sw_num"
+                  v-cloak>{{totalCount}}</span>&nbsp; &nbsp;<span style="color:#738495">条记录</span>
+            <span class="Gradual" @click="shade()">
+              <span class="iconfont icon-jiekuanshenqing" >&nbsp;申请</span>
+            </span>
+          </div>
+        </div>
+        <div class="table_nav">
+          <form class="layui-form layui-form-pane" action="">
+            <div class="layui-inline">
+              <label class="">模板ID</label><br />
+              <div class="layui-input-inline">
+                <input
+                        type="text"
+                        name="templateId"
+                        placeholder="请输入"
+                        class="layui-input"
+                        />
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="">申请用户</label><br />
+              <div class="layui-input-inline">
+                <input
+                        type="text"
+                        name="loginName"
+                        placeholder="请输入"
+                        class="layui-input"
+                        />
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="">模板内容</label><br />
+              <div class="layui-input-inline">
+                <input
+                        type="text"
+                        name="templateSms"
+                        placeholder="请输入"
+                        class="layui-input"
+                        />
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="">审核状态</label><br />
+              <div class="layui-input-inline">
+                <select name="review">
+                  <option value="">请选择</option>
+                  <option value="0">待审核</option>
+                  <option value="1">已通过</option>
+                  <option value="2">已拒绝</option>
+                  <option value="-1">试用中</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-input-inline">
+              <button class="sw_btn1" lay-submit="" lay-filter="demo5" >
+                查询
+              </button>
+            </div>
+          </form>
+          <div class="sw_row">
+            <table style="margin-top: 15px;min-width: 1045px;">
+              <tr>
+                <th style="width:156px">模板ID</th>
+                <th style="width:167px">申请用户</th>
+                <th style="width:134px">模板分类</th>
+                <th style="width:268px">模板内容</th>
+                <th style="width:165px">备注</th>
+                <th style="width:173px">批注</th>
+                <th style="width:202px">时间</th>
+                <th style="width:138px">审核状态</th>
+                <th style="width:125px;box-sizing: border-box;padding-left: 15px;">操作</th>
+              </tr>
+              <tr v-cloak v-for="(li, index) in allData">
+                <td>{{li.templateId}}</td>
+                <td><div>{{li.loginName}}</div></td>
+                <td>
+                  <div v-if="li.templateType == '1'">行业短信</div>
+                  <div v-if="li.templateType == '2'">营销短信</div>
+                </td>
+                <td>
+                  <div :title="li.templateSms">{{li.templateSms}}</div>
+                </td>
+                <td><div :title="li.remark">{{li.remark}}</div></td>
+                <td><div :title="li.auditMark">{{li.auditMark}}</div></td>
+                <td><div :title="li.createTime">{{li.createTime}}</div></td>
+                <td  >
+                  <div style="color:#9AC938" v-if="li.review == '1'">
+                    已通过
+                    <span class="success"></span>
+                  </div>
+                  <div style="color:#6E6E6E" v-if="li.review == '-1'">
+                    试用中
+                    <span class="sw_report"></span>
+                  </div>
+                  <div style="color:#F8C411" v-if="li.review == '0'">
+                    待审核
+                    <span class="audit"></span>
+                  </div>
+                  <div style="color:#ff0000" v-if="li.review == '2'   ">
+                    已拒绝
+                    <span class="fail"></span>
+                  </div>
+                </td>
+                <td v-if="li.review == '0'">
+                  <span class="sw_btn2" @click="mapping(li.templateId)">审核</span>
+                </td>
+                <td  v-else>
+                  <span class="sw_btn2" @click="examine(li.templateId,li.review)">查看</span>
+                </td>
+              </tr>
+            </table>
+            <div class="sw_pad8" v-show="showNo == true">暂无数据</div>
+          </div>
+          <div id="page"></div>
+        </div>
+      </div>
+    </script>
+    <script type="text/x-template" id="shade-template">
+      <div>
+        <div class="shade_con">
+          <div class="tongji">
+            <h3 v-if="code == 0">申请模板</h3>
+            <h3 v-if="code == 1">查看模板</h3>
+            <h3 v-if="code == 2">审核模板</h3>
+            <span class="iconfont icon-shanchu" @click="shanchu()"></span>
+          </div>
+          <div class="temp">
+            <form class="layui-form layui-form-pane" action="">
+              <p v-if="code == 0" style="display: block;">
+                * 需要更改的地方请先选中，后点击下发的A按钮选择红色；
+                需要取消标记的地方请先选中，后点击删除文字格式按钮
+              </p>
+              <em> <span style="color:#FE2121;font-weight:600;" v-if="code != 1">*</span> 模板内容</em>
+              <textarea id="editor_id" name="templateSms" style="width:912px;height:90px;"></textarea>
+              <div class="layui-inline" >
+                <label class=""> <span style="color:#FE2121;font-weight:600;"  v-if="code != 1">*</span> 模板分类</label><br />
+                <div class="layui-input-inline" style="width:300px">
+                  <select name="templateType" id="eventLevel">
+                    <option value="1">行业短信</option>
+                    <option value="2">营销短信</option>
+                  </select>
+                </div>
+              </div>
+              <!--<div class="layui-inline" >-->
+                <!--<label class="">申请人</label><br />-->
+                <!--<div class="layui-input-inline" style="width:300px">-->
+                  <!--<input-->
+                          <!--type="text"-->
+                          <!--v-model="showData.loginName"-->
+                          <!--placeholder="请输入"-->
+                          <!--class="layui-input"-->
+                          <!--disabled-->
+                          <!--style="background: #ECECEC;"-->
+                          <!--/>-->
+                <!--</div>-->
+              <!--</div>-->
+              <div class="layui-inline dropdown unlike2" style="width:296px">
+                <label class=""><span style="color:#FE2121;font-weight:600;" v-if="code != 1">*</span> 申请人</label><br />
+                <input type="text" class="dropdown-selected"
+                     data=""  name="userId" autocomplete="off" placeholder="请输入">
+                <ul class="dns">
+                  <li v-for="(li, index) in userData">
+                    <a href="javaScript:" :data="li.userId">{{li.loginName}}</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="layui-inline" >
+                <label class="">审核人员</label><br />
+                <div class="layui-input-inline" style="width:300px">
+                  <input
+                          type="text"
+                          v-model="showData.auditName"
+                          class="layui-input"
+                          disabled
+                          style="background: #ECECEC;"
+                          />
+                </div>
+              </div>
+              <div class="layui-inline">
+                <label class="">挂机模板</label>
+                <div class="layui-input-inline" style="width: 250px;box-sizing: border-box;padding-left: 10px;">
+                  <input type="radio" lay-filter="a" name="a"  value="是" title="是" >
+                  <input type="radio" lay-filter="a" name="a"  value="否" title="否" checked>
+                </div>
+              </div>
+              <div class="layui-inline">
+                <label class="">主机号码</label><br />
+                <div class="layui-input-inline" style="width:300px">
+                  <input
+                          type="text"
+                          name="miguMobile"
+                          v-model="showData.miguMobile"
+                          class="layui-input phone"
+                          disabled
+                          style="background: #ECECEC;"
+                          />
+                </div>
+              </div> <br>
+              <em> 备注</em>
+              <textarea name="remark" id="text2" placeholder="请输入"  v-model="showData.remark"></textarea>
+              <div>
+                <p style="font-size:12px" v-if="code == 0">
+                  * 模板内容请填写真实的发送内容，然后将要变化的部分标记成红色
+                  （不要用*#之类的符号来表示要变化的内容），如有需要特别申明的请写在备注中
+                </p>
+              </div>
+
+
+              <div class="layui-input-inline">
+                <button class="sw_btn1" style="margin-left: 410px;margin-bottom: 20px;" lay-submit="" lay-filter="demo6"  v-if="code == 0">
+                  确认申请
+                </button>
+                <span class="sw_btn1" style="margin-left: 360px;margin-bottom: 20px;" lay-submit="" lay-filter="demo9" @click="again(showData.templateId)"  v-if="satus == -1">
+                  重新申請
+                </span>
+                <span class="sw_btn1" style="margin-right: 10px;" v-if="satus == -1" @click="remove(showData.templateId)">
+                  刪除
+                </span>
+                <span class="sw_btn1" style="margin-left: 390px;margin-right: 15px;margin-bottom: 20px;"  v-if="code == 1 && satus != -1"  @click="refuse(showData.templateId)">
+                  拒绝
+                </span>
+                <span class="sw_btnwrong "  v-if="code == 1" @click="close()">
+                  关闭
+                </span>
+                <span class="sw_btn1" style="margin-left: 380px;margin-bottom: 20px;"  v-if="code == 2" @click="matching(showData.templateId)">
+                  模板匹配
+                </span>
+                <span class="sw_btn1"  v-if="code == 2" @click="refuse(showData.templateId)">
+                  拒绝
+                </span>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+        <div class="tips1">
+          <form class="layui-form layui-form-pane" action="" style="margin-left: 15%;margin-top: 20px;">
+            <div class="layui-inline" style=" padding-bottom: 10px;">
+              <label class="">原因</label><br />
+              <div class="layui-input-inline" style="width:300px">
+                <select name="replenish">
+                  <option value="营销类内容">营销类内容</option>
+                  <option value="模板内容格式不对">模板内容格式不对</option>
+                  <option value="模板已存在">模板已存在</option>
+                </select>
+              </div>
+            </div><br>
+            <em >补充</em><br>
+            <textarea name="con" id="text3" placeholder="请输入"></textarea>
+            <div class="">
+                <span class="sw_btn1" style="margin: 20px 15px 0 60px;" lay-submit="" lay-filter="demo10" >
+                  确认拒绝
+                </span>
+                <span class="sw_btnwrong" @click="quxiao()">
+                  取消
+                </span>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </script>
+    <script type="text/x-template" id="marry-template">
+      <div class="shade_con1">
+        <div class="tongji">
+          <h3>模板匹配</h3>
+          <span class="iconfont icon-shanchu" @click="shanchu()"></span>
+        </div>
+        <div class="temp">
+          <form class="layui-form layui-form-pane" action="" style="padding: 0 0 15px 20px;">
+            <div class="layui-inline ">
+              <label class=""
+                      ><span style="color:#FE2121;font-weight:600;">*</span
+                      >模板名</label
+                      ><br />
+              <div class="layui-input-inline" style="width:300px">
+                <input
+                        type="text"
+                        name="templateName"
+                        v-model="Info.templateName"
+                        class="layui-input"
+                        />
+              </div>
+            </div>
+            <div
+                    class="layui-inline"
+                    style="padding-left: 0px;margin-right:0px"
+                    >
+              <label class=""
+                      ><span style="color:#FE2121;font-weight:600;">*</span
+                      >优先级</label
+                      ><br />
+              <div class="layui-input-inline" style="width:300px">
+                <input
+                        type="text"
+                        name="user"
+                        placeholder="请输入"
+                        class="layui-input"
+                        />
+              </div>
+            </div>
+            <div class="layui-inline ">
+              <label class="">
+                <span style="color:#FE2121;font-weight:600;">*</span>
+                模板分类</label
+                      ><br />
+              <div class="layui-input-inline" style="width:300px">
+                <select name="code">
+                  <option value="">请选择</option>
+                  <option value="0">是</option>
+                  <option value="1">否</option>
+                </select>
+              </div>
+            </div>
+            <div
+                    class="layui-inline"
+                    style="padding-left: 0px;margin-right:0px"
+                    >
+              <label class=""> 内容分类</label><br />
+              <div class="layui-input-inline"style="width:300px">
+                <select name="code">
+                  <option value="">请选择</option>
+                  <option value="0">是</option>
+                  <option value="1">否</option>
+                </select>
+              </div>
+            </div>
+            <em
+                    ><span style="color:#FE2121;font-weight:600;">*</span>
+              模板内容</em
+                    >
+            <textarea name="msgContent" v-model="Info.templateSms" id="text8" placeholder="请输入"></textarea>
+            <em
+                    ><span style="color:#FE2121;font-weight:600;">*</span>
+              匹配内容</em
+                    >
+            <textarea name="expression" v-model="Info.templateCotent" id="text4" placeholder="请输入"></textarea>
+            <div class="layui-inline ">
+              <label class="">内容分类</label>
+              <div class="layui-input-inline" style="width:110px">
+              <span class="Gradual1" @click="appoint()">
+                 选择用户
+              </span>
+
+              </div>
+              <p style="padding:15px 0;font-size:12px">
+                * 当修改用户时，请记得点击测试，测试通过后点击修改，否则指定用户修改失败
+              </p>
+            </div>
+            <div class="layui-inline ">
+              <label class=""> 是否暂停</label><br />
+              <div class="layui-input-inline" style="width:300px">
+                <select name="code">
+                  <option value="">请选择</option>
+                  <option value="0">是</option>
+                  <option value="1">否</option>
+                </select>
+              </div>
+            </div>
+            <div
+                    class="layui-inline"
+                    style="padding-left: 0px;margin-right:0px"
+                    >
+              <label class=""> 合并类型</label><br />
+              <div class="layui-input-inline" style="width:300px">
+                <select name="mergeType" >
+                  <option value="1" selected>模板合并</option>
+                  <option value="2">相同合并</option>
+                  <option value="3">相似合并</option>
+                </select>
+              </div>
+            </div>
+            <em
+                    ><span style="color:#FE2121;font-weight:600;">*</span>
+              挂机号码</em
+                    >
+            <textarea name="aa" id="text5" placeholder="请输入"></textarea>
+            <div class="layui-inline ">
+              <label class="">
+                <span style="color:#FE2121;font-weight:600;">*</span>
+                模板状态</label
+                      ><br />
+              <div class="layui-input-inline" style="width:300px">
+                <select name="code">
+                  <option value="">请选择</option>
+                  <option value="0">是</option>
+                  <option value="1">否</option>
+                </select>
+              </div>
+            </div>
+            <div
+                    class="layui-inline"
+                    style="padding-left: 0px;margin-right:0px"
+                    >
+              <label class=""> 模板特性</label><br />
+              <div class="layui-input-inline" style="width:300px">
+                <select name="code">
+                  <option value="">请选择</option>
+                  <option value="0">是</option>
+                  <option value="1">否</option>
+                </select>
+              </div>
+            </div>
+            <div class="tc">
+              <p style="padding:15px 0;font-size:12px">
+                * 新增/修改 时必须点击测试后才能进行 新增/修改
+              </p>
+            </div>
+            <div class="layui-input-inline">
+              <button
+                      class="sw_btn1"
+                      style="margin: 10px 0 0 240px;"
+                      lay-submit=""
+                      lay-filter="demo7">
+                测试
+              </button>
+              <span class="sw_btnwrong marl_15" @click="sw_btnwrong()">关闭</span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </script>
+    <script type="text/x-template" id="select-template">
+      <div class="shade_con2">
+        <div class="tongji">
+          <h3>指定用户</h3>
+          <span class="iconfont icon-shanchu" @click="shanchu()"></span>
+        </div>
+        <div class="select_bor">
+          <form class="layui-form layui-form-pane" action="">
+            <div class="layui-inline">
+              <label class="">登录名</label><br />
+              <div class="layui-input-inline" style="width:300px;height: 30px;">
+                <input
+                        type="text"
+                        name="phone"
+                        placeholder="请输入"
+                        class="layui-input"
+                        style="height:30px"
+                        />
+              </div>
+            </div>
+            <div class="layui-input-inline">
+              <button class="sw_btn1" style="margin: 30px 0 0 10px;"  lay-submit="" lay-filter="demo8">
+                查询
+              </button>
+                <span class="sw_btn1" style="margin: 30px 0 0 10px;">
+                    确认指定
+                  </span>
+            </div>
+          </form>
+          <div style="margin-top: 15px;">
+            <div class="fl leftSele" style="margin-left: 15px;">
+              <h6>未添加用户</h6>
+              <div>
+                <p>1311</p>
+                <p>143231</p>
+                <p>14531</p>
+                <p>1351</p>
+                <p>1351</p>
+                <p>1351</p>
+                <p>1351</p>
+                <p>1351</p>
+              </div>
+            </div>
+            <div class="fl centerSele">
+              <button @click="moveRight()">></button><br>
+              <button @click="moveLeft()"><</button><br>
+              <button @click="allRight()">>></button><br>
+              <button @click="allLeft()"><<</button>
+            </div>
+            <div class="fl rightSele">
+              <h6>已添加用户</h6>
+              <div>
+                <p>1361</p>
+                <p>1371</p>
+                <p>1831</p>
+                <p>14431</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+    <script type="text/x-template" id="rate-template">
+      <div class="shade_con3">
+        <div class="tongji">
+          <h3>模板配置信息</h3>
+          <span class="iconfont icon-shanchu" @click="shanchu()"></span>
+        </div>
+        <div class="temp">
+          <form class="layui-form layui-form-pane" action="" >
+            <div class="layui-inline" >
+              <label class=""><span style="color:#FE2121;font-weight:600;">*</span> 模板名</label><br />
+              <div class="layui-input-inline" style="width:300px">
+                <input
+                        type="text"
+                        name="templateName"
+                        v-model="Info.templateName"
+                        placeholder="请输入"
+                        class="layui-input"
+                        />
+              </div>
+            </div>
+            <div class="layui-inline dropdown1">
+              <label class="">用户名</label><br />
+              <input type="text" class="dropdown-selected1"
+                     :data="Info.userId" name="userId" autocomplete="off" placeholder="请输入">
+              <ul >
+                <li v-for="(li, index) in userData1">
+                  <a href="javaScript:" :data="li.userId">{{li.loginName}}</a>
+                </li>
+              </ul>
+            </div><br>
+            <em style="margin: 20px 0px 0px;display: inline-block;"><span style="color:#FE2121;font-weight:600;">*</span> 短信内容</em>
+            <textarea name="msgContent" v-model="Info.templateSms" id="text6" placeholder="请输入"></textarea>
+            <em style="margin: 20px 0px 0px;display: inline-block;"><span style="color:#FE2121;font-weight:600;">*</span> 模板内容</em>
+            <textarea name="expression" v-model="Info.templateCotent" id="text7" placeholder="请输入"></textarea>
+            <div class="layui-inline" >
+              <label class=""><span style="color:#FE2121;font-weight:600;">*</span> 内容分类</label><br />
+              <div class="layui-input-inline" style="width:300px">
+                <select name="bizType" >
+                  <option value="">请选择</option>
+                  <option
+                          v-for="(li, index) in content"
+                          :value="li.bizTypeId"
+                          >{{li.bizTypeName}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class=""><span style="color:#FE2121;font-weight:600;">*</span> 匹配优先级</label><br />
+              <div class="layui-input-inline" style="width:300px">
+                <input
+                        type="text"
+                        name="priority"
+                        v-model="Info.priority"
+                        placeholder="请输入"
+                        class="layui-input"
+                        />
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class=""><span style="color:#FE2121;font-weight:600;">*</span> 接单动作</label><br />
+              <div class="layui-input-inline" style="width:300px">
+                <select name="actionType" >
+                  <option value="4" selected>接受</option>
+                  <option value="3">先发后审</option>
+                  <option value="2">先审后发</option>
+                  <option value="1">拒绝</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-inline" >
+              <label class=""><span style="color:#FE2121;font-weight:600;">*</span> 状态</label><br />
+              <div class="layui-input-inline" style="width:300px">
+                <select name="statusInt" >
+                  <option value="1" selected>可用</option>
+                  <option value="0">不可用</option>
+                  <option value="2">测试</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class=""><span style="color:#FE2121;font-weight:600;">*</span> 同一内容周期内发送数量（条）</label><br />
+              <div class="layui-input-inline" style="width:300px">
+                <input
+                        type="text"
+                        name="taskCount"
+                        v-model="Info.taskCount"
+                        placeholder="请输入"
+                        class="layui-input"
+                        />
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class=""><span style="color:#FE2121;font-weight:600;">*</span> 同一内容发送周期（秒）</label><br />
+              <div class="layui-input-inline" style="width:300px">
+                <input
+                        type="text"
+                        v-model="Info.taskPeriod"
+                        name="taskPeriod"
+                        placeholder="请输入"
+                        class="layui-input phone"
+                        />
+              </div>
+            </div>
+            <div class="layui-inline" >
+              <label class=""><span style="color:#FE2121;font-weight:600;">*</span> 合并方式</label><br />
+              <div class="layui-input-inline" style="width:300px">
+                <select name="mergeType" >
+                  <option value="1" selected>模板合并</option>
+                  <option value="2">相同合并</option>
+                  <option value="3">相似合并</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="">过期时间</label><br />
+              <div class="layui-input-inline" style="width:300px">
+                <input type="text"  name="expireTime" class="layui-input" autocomplete="off" id="test"  />
+                <img src="../../img/Shape.png" alt="" />
+              </div>
+            </div><br>
+            <div class="layui-input-inline" style="width: 98%;text-align: center;">
+              <button class="sw_btn1"  lay-submit="" lay-filter="demo11">
+                新增
+              </button>
+                <span class="sw_btnwrong marl_15"  @click="close()">
+                  关闭
+                </span>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </script>
+    <script src="../../layui.all.js"></script>
+    <script src="../../module/template.js"></script>
+    <script>
+      //头部
+//      var operaAI = new Vue({
+//        el: "#proMang",
+//        data: {
+//          topCurrent: 0
+//        }
+//      });
+//      //   //左侧菜单组件实例化
+//      var leftMenu = new Vue({
+//        el: "#leftMenu_Box",
+//        data: {
+//          current: 4
+//        }
+//      });
+      //
+      workbench()
+      var rightTable = new Vue({
+        el: "#rightTable"
+      });
+      //
+      var shade = new Vue({
+        el: "#shade"
+      });
+      //
+      var shade1 = new Vue({
+        el: "#shade1"
+      });
+      //
+      var shade3 = new Vue({
+        el: "#shade3"
+      });
+      var select = new Vue({
+        el: "#select"
+      });
+      $(function() {
+          laydate.render({
+            elem: "#test", //指定元素
+            type: 'datetime',
+            value: ''
+          });
+        $(document).ready(function(){
+          $('#leftMenu_Box').css('background', '#040b29');
+          $('#proMang .top').css('background', '#fff')
+        });
+          $('#select').on('click','.select_bor p', function () {
+            $(this).addClass('addClass4').siblings().removeClass('addClass4').parent().parent().siblings().find('p').removeClass('addClass4');
+          })
+        total($(".dropdown1 ul li"),$(".dropdown1 .dropdown-selected1"),$(".dropdown1 ul"),$(".dropdown1"));
+        total($(".unlike2 ul li"),$(".unlike2 .dropdown-selected"),$(".unlike2 ul"),$(".unlike2"));
+      });
+    </script>
+  </body>
+</html>

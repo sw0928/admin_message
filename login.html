@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>智能通信运营管理平台</title>
+		<link rel="stylesheet" href="./css/style.css" />
+		<link rel="stylesheet" href="./css/layui.css" />
+		<script src="https://use.typekit.net/zbv4fek.js"></script>
+		<script>
+			try {
+				Typekit.load({
+					async: true
+				});
+			} catch(e) {}
+		</script>
+	</head>
+	<style>
+		html,
+		body {
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+			background: #262b2e
+		}
+		/*#login {*/
+		/*height:100%;*/
+		/*width:100%;*/
+		/*text-align: center;*/
+		/*display: table;*/
+		/*position:absolute;*/
+		/*}*/
+		
+		#login canvas {
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		
+		#canvas {
+			z-index: 1;
+		}
+		
+		#canvasbg {
+			z-index: -10;
+			-webkit-filter: blur(3px);
+			-moz-filter: blur(3px);
+			-o-filter: blur(3px);
+			filter: blur(3px);
+			opacity: 0.6;
+		}
+		
+		.layui-form-label {
+			float: initial;
+			padding: 5px 0px;
+			width: auto;
+			text-align: left;
+			color: #738495;
+		}
+		
+		.layui-input {
+			border: none;
+			height: 55px;
+			font-size: 15px;
+			padding-top: 4%;
+		}
+		
+		.border_b {
+			border-bottom: 1px solid #eaf0f3;
+		}
+		
+		@media screen and (max-width: 1445px) {
+			.layui-input {
+				height: 35px;
+				padding-top: 0px;
+			}
+		}
+		
+		.layui-form-item {
+			margin-bottom: 10px;
+			height: 25%;
+		}
+		
+		.layui-form {
+			width: 100%;
+			height: 71%;
+			border: none;
+			padding: 0px;
+		}
+	</style>
+
+	<body>
+		<div id="login">
+			<div class="login_con">
+				<div class="fl">
+					<p class="login_mess">
+
+						上海盛拓拥有与三大电信运营商的通讯能力， 为集团客户提供短彩信、流量等增值业务服 务，在全国范围内拥有超过500家客户，覆盖 第三产业所有行业领域。
+					</p>
+				</div>
+				<div class="fr">
+					<div class="login_logo">
+						<img src="./img/logo.png" alt="" /> <span></span>
+						<em>智能通信运营管理平台</em>
+					</div>
+					<h2>用户登录</h2>
+					<form class="layui-form" action="">
+						<div class="layui-form-item">
+							<label class="layui-form-label">用户名</label>
+							<div class="border_b">
+								<input type="text" name="name" id="loginName" autocomplete="on" placeholder="请输入" class="layui-input" />
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">密码</label>
+							<div class="border_b">
+								<input type="password" name="pass" autocomplete="off" placeholder="请输入" class="layui-input" />
+							</div>
+						</div>
+						<div class="layui-form-item" id="code">
+							<label class="layui-form-label">验证码</label>
+							<div class="border_b">
+								<input type="text" style="display: inline-block;width: 70%" name="code" autocomplete="off" placeholder="请输入" class="layui-input" />
+								<img id="imgCode" style="display: inline-block;width: 28%;height: 35px;" src="" />
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="">
+								<button class="layui-btn" lay-submit="" lay-filter="formDemo">
+                  登录
+                </button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<canvas id="canvas" width="1950px" height="1080px"></canvas>
+			<canvas id="canvasbg" width="1950px" height="1080px"></canvas>
+		</div>
+
+	</body>
+	<script src="./layui.all.js"></script>
+	<script src="./js/jquery-3.0.0.min.js"></script>
+	<script src="./js/script.js"></script>
+	<script>
+		var token, codeShow;
+		
+		layui.use("form", function() {
+			var form = layui.form;
+			//      form.verify({
+			//        username: function(value) {
+			//          var str = value;
+			//          if (str == null || str.length < 5 || str.length > 16) {
+			//            return "至少得5-16位 字母+数字";
+			//          }
+			//          var reg1 = new RegExp(/^(?![^a-zA-Z]+$)(?!\D+$)/);
+			//          if (!reg1.test(str)) {
+			//            return "必须为字母加数字";
+			//          }
+			//          var reg = new RegExp(/^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$/);
+			//          if (!reg.test(str)) {
+			//            return "不能包含特殊符号";
+			//          }
+			//        },
+			//        pass: function(value) {
+			//          var str = value;
+			//          if (str == null || str.length < 6) {
+			//            return "密码必须6到16位，且不能出现空格";
+			//          }
+			//          var reg1 = new RegExp(/^(?![^a-zA-Z]+$)(?!\D+$)/);
+			//          if (!reg1.test(str)) {
+			//            return "必须为字母加数字";
+			//          }
+			//          var reg = new RegExp(/^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$/);
+			//          if (!reg.test(str)) {
+			//            return "不能包含特殊符号";
+			//          }
+			//        }
+			//      });
+			//监听提交
+			form.on("submit(formDemo)", function(res) {
+				let obg = {};
+				if(codeShow == 0) {
+					obg.username = res.field.name;
+					obg.password = res.field.pass;
+					obg.code = res.field.code;
+					obg.token = token;
+				} else if(codeShow == 2){
+					obg.username = res.field.name;
+					obg.password = res.field.pass;
+					obg.code = res.field.code;
+				}else{
+					layer.open({
+							content: '请绑定动态码之后登录！',
+							yes: function(index) {
+								layer.close(index);
+							}
+						});
+						return false;
+				}
+				//console.log(obg)
+				$.ajax({
+					url: "/login",
+					type: 'post',
+					dataType: 'json',
+					async: false,
+					data: obg,
+					success: function(data) {
+						// console.log(data);
+						if(data.statusCode == 200) {
+							localStorage.setItem('id', data.data.Authorization);
+							localStorage.setItem('authoritiesTwo', JSON.stringify(data.data.authorities));
+							localStorage.setItem('loginName', data.data.userInfo.loginName);
+							localStorage.setItem('accountType', accountType(data.data.userInfo.accountType));
+							window.open('./html/workbench/order_fail.html', "_self");
+							//              for (var i=0;i<data.data.authorities.length;i++)
+							//              {
+							//                if(data.data.authorities[i].roleId.toString().length < 4 && data.data.authorities[i].roleId.toString().substr(0,1) == 2){
+							//                  sessionStorage.setItem('id', data.data.Authorization);
+							//                  sessionStorage.setItem('authorities', JSON.stringify(data.data.authorities));
+							//                  sessionStorage.setItem('loginName',data.data.userInfo.username );
+							//                  add();
+							//                  break;
+							//                }
+							//              }
+						} else {
+							layer.open({
+								content: data.message,
+								yes: function(index) {
+									layer.close(index);
+									$.ajax({
+										type: 'POST',
+										url: '/getVerifyCode',
+										data: {
+											uname: res.field.name
+										},
+										dataType: 'json',
+										success: function(data) {
+											//console.log(data)
+											$('#code input').val('');
+											token = data.token;
+											var img = 'data:image/jpg;base64,' + data.code;
+											$('#imgCode').attr('src', img)
+										}
+							
+									});
+								}
+								,cancel: function(){ 
+						    //右上角关闭回调
+						    $('#code input').val('');
+						    //return false 开启该代码可禁止点击该按钮关闭
+						  }
+							});
+						}
+					},
+					error: function(err) {
+						layer.open({
+							content: '服务器异常！',
+							yes: function(index) {
+								layer.close(index);
+							}
+						});
+					}
+				});
+				// layer.msg(JSON.stringify(data.field));
+
+				return false;
+			});
+		});
+		$(function() {
+			//      var toUrl ='/admin/html/workbench/order_fail.html';
+			accountType = function(type) {
+				if(type == 1) {
+					return '管理员';
+				}
+				if(type == 2) {
+					return '财务';
+				}
+				if(type == 3) {
+					return '运营';
+				}
+				if(type == 4) {
+					return '销售总监';
+				}
+				if(type == 5) {
+					return '销售经理';
+				}
+				if(type == 6) {
+					return '客户经理';
+				}
+				if(type == 7) {
+					return '代理商';
+				}
+				if(type == 8) {
+					return '客户';
+				}
+				if(type == 110) {
+					return '通道管理员';
+				}
+			};
+			checkNeed = function() {
+				var name = $('#loginName').val();
+				if(name == '') {
+					$.ajax({
+						type: 'POST',
+						url: '/getVerifyCode',
+						data: {
+							uname: name
+						},
+						dataType: 'json',
+						success: function(data) {
+							//console.log(data)
+							$('#code input').val('');
+							token = data.token;
+							var img = 'data:image/jpg;base64,' + data.code;
+							$('#imgCode').attr('src', img)
+						}
+			
+					});
+				} else {
+					$.ajax({
+						url: "/icos/authenticator/checkNeedAuthenticate",
+						type: 'post',
+						dataType: 'json',
+						async: false,
+						data: {
+							loginName: name,
+						},
+						success: function(data) {
+							codeShow = data.data;
+							if(data.statusCode ==200){
+								if(data.data == 0) {
+								$("#imgCode").css("display", "inline-block");
+								$.ajax({
+									type: 'POST',
+									url: '/getVerifyCode',
+									data: {
+										uname: name
+									},
+									dataType: 'json',
+									success: function(data) {
+										//console.log(data)
+										$('#code input').val('');
+										token = data.token;
+										var img = 'data:image/jpg;base64,' + data.code;
+										$('#imgCode').attr('src', img)
+									}
+
+								});
+							} else {
+								$("#imgCode").css("display", "none");
+							}
+							}else{
+								layer.open({
+									content: data.message,
+									yes: function(index) {
+										layer.close(index);
+									}
+								});
+							}
+							
+
+						},
+						error: function(err) {
+
+						}
+					});
+				}
+			};
+			setTimeout(function() {
+				checkNeed();
+			}, 100);
+			$('#loginName').blur(function() {
+				checkNeed();
+			});
+			$("#imgCode").click(function() {
+				$.ajax({
+					type: 'POST',
+					url: '/getVerifyCode',
+					data: {
+						uname: $('#loginName').val()
+					},
+					dataType: 'json',
+					success: function(data) {
+						//console.log(data)
+						$('#code input').val('');
+						token = data.token;
+						var img = 'data:image/jpg;base64,' + data.code;
+						$('#imgCode').attr('src', img)
+					}
+
+				});
+			})
+		});
+	</script>
+
+</html>

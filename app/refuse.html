@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	<title>模板拒绝</title>
+	<link href="css/style.css" rel="stylesheet"/>
+	<link href="css/response.css" rel="stylesheet"/>
+</head>
+<body class="bg">
+<div class="content">
+	<div class="header">
+		<div class="header-nei">
+			<a href="template_info.html" class="back-up"><i class="iconfont icon-xiangzuo"></i></a>
+			<h2 class="header-title">模板拒绝</h2>
+			<a href="nav.html" class="back-top"><i class="iconfont icon-daohang"></i></a>
+		</div>
+	</div>
+	<!--head/-->
+	<div class="head-height">&nbsp;</div>
+	<!--录入校验在style.js  搜order-btn-->
+	<div class="login-reg" style="padding-top:16px;">
+		<div class="log-reg-list" id="replenish">
+			<select name="replenish">
+				<option value="营销类内容" selected>营销类内容</option>
+				<option value="模板内容格式不对">模板内容格式不对</option>
+				<option value="模板已存在">模板已存在</option>
+			</select>
+		</div>
+		<div class="log-reg-list">
+			<textarea class="con"></textarea>
+		</div>
+		<div class="log-reg-sub">
+			<a href="javascript:;" class="log-reg-btn order-btn refuse">确定</a>
+		</div>
+	</div>
+</div>
+<!--content/-->
+<div class="bg100"></div>
+<!--错误提示-->
+<div class="tip-errors-bg">
+	<div class="tip-tip-box-nei">
+		<strong><i class="iconfont icon-shanchu"></i><em class="errors">错误提示</em></strong>
+	</div>
+	<!--tip-tip-box/-->
+</div>
+<!--tip-success-bg/-->
+<!--正确提示-->
+<div class="tip-success-bg">
+	<div class="tip-tip-box-nei">
+		<strong><i class="iconfont icon-shanchu" style="color:#0F0;"></i><em class="success">正确提示</em></strong>
+	</div>
+	<!--tip-tip-box/-->
+</div>
+<!--tip-success-bg/-->
+<script src="js/jquery.min.js"></script>
+<script src="js/style.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var tempInfo = JSON.parse(sessionStorage.getItem('infoObj'));
+		//拒绝
+		$(".refuse").on('click',function() {
+			var replenish = $("#replenish  option:selected").val();
+			var con = $(".con").val();
+			$.ajax({
+				url : '/icos/template/repulseTemplateApply',
+				type : 'post',
+				dataType : 'json',
+				contentType: 'application/json',
+				async: false,
+				data : JSON.stringify({
+					"auditMark": replenish +";"+ con,
+					"templateId": tempInfo.templateId
+				}),
+				headers :{
+					"Authorization":sessionStorage.getItem('id'),
+				},
+				success : function(data){
+					if(data.data == true){
+						success();
+						$(".success").text(data.message);
+						setTimeout(function(){
+							location.href = "template.html"
+						},1000)
+					}else{
+						errors();
+						$(".errors").text(data.message);
+					}
+				},
+				error : function(err){
+					location.href = "index.html";
+					sessionStorage.clear();
+				}
+			});
+		})
+	})
+
+</script>
+</body>
+</html>

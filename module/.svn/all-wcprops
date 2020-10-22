@@ -1,0 +1,287 @@
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/dev/!svn/ver/1885/source/h5/icos-st/module
+END
+sensitive_word.js
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/sensitive_word.js
+END
+risk_result.js
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/risk_result.js
+END
+order_fail.js
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/dev/!svn/ver/2026/source/h5/icos-st/module/order_fail.js
+END
+signature_manage.js
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/signature_manage.js
+END
+complain_manage.js
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/complain_manage.js
+END
+template.js
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/dev/!svn/ver/1929/source/h5/icos-st/module/template.js
+END
+status_report_record.js
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/status_report_record.js
+END
+report_take.js
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/report_take.js
+END
+client_type.js
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/client_type.js
+END
+home_location.js
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/home_location.js
+END
+status_report_reset.js
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/status_report_reset.js
+END
+template_manage.js
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/template_manage.js
+END
+unsubscribe.js
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/dev/!svn/ver/1900/source/h5/icos-st/module/unsubscribe.js
+END
+user_manage.js
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/dev/!svn/ver/2031/source/h5/icos-st/module/user_manage.js
+END
+rate_limiting.js
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/rate_limiting.js
+END
+home_protect.js
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/dev/!svn/ver/2026/source/h5/icos-st/module/home_protect.js
+END
+vip_list.js
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/vip_list.js
+END
+operation_list.js
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/operation_list.js
+END
+risk_rule.js
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/risk_rule.js
+END
+order-manage.js
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/dev/!svn/ver/2034/source/h5/icos-st/module/order-manage.js
+END
+gateway.js
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/gateway.js
+END
+shortChain.js
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/dev/!svn/ver/1950/source/h5/icos-st/module/shortChain.js
+END
+complain.js
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/complain.js
+END
+take_orders.js
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/dev/!svn/ver/1885/source/h5/icos-st/module/take_orders.js
+END
+auditing.js
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/auditing.js
+END
+route_manage.js
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/route_manage.js
+END
+order_list.js
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/order_list.js
+END
+user_data.js
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/user_data.js
+END
+channel_test.js
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/dev/!svn/ver/2026/source/h5/icos-st/module/channel_test.js
+END
+gateway_send.js
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/gateway_send.js
+END
+journal.js
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/journal.js
+END
+shortVisit.js
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/dev/!svn/ver/1895/source/h5/icos-st/module/shortVisit.js
+END
+noteSend.js
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/dev/!svn/ver/1895/source/h5/icos-st/module/noteSend.js
+END
+channel_new.js
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/channel_new.js
+END
+called_distribute.js
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/dev/!svn/ver/1950/source/h5/icos-st/module/called_distribute.js
+END
+list_set.js
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/dev/!svn/ver/2016/source/h5/icos-st/module/list_set.js
+END
+user_count.js
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/user_count.js
+END
+definition_gate.js
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/definition_gate.js
+END
+test_send.js
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/test_send.js
+END
+route_list.js
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/dev/!svn/ver/1933/source/h5/icos-st/module/route_list.js
+END
+order_detail.js
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/dev/!svn/ver/1914/source/h5/icos-st/module/order_detail.js
+END
+signature_distribute.js
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/signature_distribute.js
+END
+signature.js
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/signature.js
+END
+detail.js
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/detail.js
+END
+order_rule.js
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/dev/!svn/ver/2034/source/h5/icos-st/module/order_rule.js
+END
+risk_list.js
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/dev/!svn/ver/1897/source/h5/icos-st/module/risk_list.js
+END
+analyze.js
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/dev/!svn/ver/1895/source/h5/icos-st/module/analyze.js
+END

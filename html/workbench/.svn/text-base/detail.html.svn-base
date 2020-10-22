@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>智能通信运营管理平台</title>
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/layui.css" />
+    <script src="../../js/api.js"></script>
+    <script src="../../js/jquery-3.0.0.min.js"></script>
+    <script src="../laydate/laydate.js"></script>
+    <script src="../../js/vue.min.js"></script>
+  </head>
+  <!--[if IE 9]>
+  <style>
+    #leftMenu_Box{
+      width: 15.08%;
+      height: 979px;
+      float: left;
+      background: #040b29;
+      position: relative;
+      box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.5);
+    }
+  </style>
+  <![endif]-->
+  <style>
+    /*#page{*/
+      /*padding: 40px 0 40px 0;*/
+    /*}*/
+    .shade_con{
+      height:auto;
+      padding-bottom: 20px;
+      width: 60%;
+    }
+    .sw_row tr td p{
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-right: 8px;
+      box-sizing: border-box;
+    }
+    .sw_row tr td div {
+      word-wrap: break-word;
+      word-break:break-all;
+      padding-right: 8px;
+      box-sizing: border-box;
+    }
+    .sw_row tr td:nth-child(9){
+    	padding: 8px 0;
+    }
+    /*.sw_row tr td:nth-child(8) div{*/
+    /*max-width: 300px;*/
+    /*}*/
+    /*@media screen and (max-width: 1600px) {*/
+      /*.sw_row tr td:nth-child(3) div{*/
+        /*max-width: 250px;*/
+      /*}*/
+    /*}*/
+  </style>
+  <body >
+    <div id="proMang">
+      <div class="top"><img src="../../img/logo.png" alt="" class="logo">
+        <ul>
+          <li class="top-a-box addClass" data-value="210"><a href="./order_fail.html"><span
+                  class="iconfont icon-diannao" style="font-size: 22px;"></span>
+            工作台
+          </a></li>
+          <li class="top-a-box " data-value="211"><a href="../user_manage/user_manage.html">
+            <span class="iconfont icon-yonghu" style="font-size: 22px;"></span>
+            用户管理
+          </a></li>
+          <li class="top-a-box " data-value="212"><a href="../order_manage/order_manage.html"><span
+                  class="iconfont icon-dingdanguanli" style="font-size: 22px;"></span>
+            订单管理
+          </a></li>
+          <li class="top-a-box " data-value="213"><a href="../resource/take_orders.html"><span
+                  class="iconfont icon-iconfonticon-shebei" style="font-size: 22px;"></span>
+            资源配置
+          </a></li>
+        </ul>
+        <div class="sign">
+          <span class="ren"></span> <span class="type"></span>
+          <img src="../../img/退出.png" alt=""  onclick="sign()">
+        </div>
+      </div>
+    </div>
+    <div class="main-box">
+      <!-- 左侧菜单 -->
+      <div id="leftMenu_Box" class="work_left">
+        <div class="leftMenu">
+          <ul class="prop">
+            <li class="left_a dn" data-value="21010"><a href="./order_fail.html" ><span
+                    class="iconfont icon-xiadanshibai"></span>
+              下单失败
+            </a></li>
+            <li class="left_a dn" data-value="21011"><a href="./auditing.html" ><span class="iconfont icon-shenhe"></span>
+              审核发送
+            </a></li>
+            <li class="left_a dn addclass_one " data-value="21012"><a href="javascript:void(0);"><span class="iconfont icon-mingxi"></span>
+              用户发送明细
+            </a></li>
+            <li class="left_a dn" data-value="21013"><a href="./user_count.html" ><span class="iconfont icon-tongji1"></span>
+              用户发送统计
+            </a></li>
+            <li class="left_a dn " data-value="21014"><a href="./template.html" ><span class="iconfont icon-moban"></span>
+              模板申请
+            </a></li>
+            <li class="left_a dn" data-value="21015"><a href="./signature.html" ><span class="iconfont icon-moban"></span>
+              签名申请
+            </a></li>
+            <li class="left_a dn" data-value="21016"><a href="./complain.html"><span class="iconfont icon-daoru1"></span>
+              投诉导入
+            </a></li>
+            <li class="left_a dn" data-value="21017"><a href="./complain_manage.html" ><span
+                    class="iconfont icon-guanli"></span>
+              投诉管理
+            </a></li>
+          </ul>
+          <div class="group" onclick="flexible(event)">
+            <span class="iconfont icon-xiangzuo" style="color: rgb(255, 255, 255); font-size: 13px;"></span>
+          </div>
+        </div>
+      </div>
+      <div id="rightTable">
+        <v-send-detail></v-send-detail>
+      </div>
+    </div>
+    <div id="shade">
+      <v-tong-ji></v-tong-ji>
+    </div>
+    <script type="text/x-template" id="detail-template">
+      <div>
+        <div class="table_tou">
+          <h6 class="fl">用户发送明细</h6>
+          <div class="fr sw_padd" >
+            <span class="sw_num"
+                  v-cloak>{{totalCount}}</span>&nbsp; &nbsp;<span style="color:#738495">条记录</span>
+            <span class="Gradual" @click="shade()">
+              <span class="iconfont icon-tongji">&nbsp;回执统计</span>
+            </span>
+            <span class="Gradual" @click="importFile()">
+              <span class="iconfont icon-export" >&nbsp;导出</span>
+            </span>
+          </div>
+        </div>
+        <div class="table_nav">
+          <form class="layui-form layui-form-pane" action="">
+            <div class="layui-inline">
+              <label class="">开始时间</label><br />
+              <div class="layui-input-inline">
+                <input type="text" name="startDate" v-model="data1.startDate" class="layui-input" autocomplete="off" id="test"  />
+                <img src="../../img/Shape.png" alt="" />
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="">结束时间</label><br />
+              <div class="layui-input-inline">
+                <input type="text" name="endDate" v-model="data1.endDate" class="layui-input" autocomplete="off" id="test1"  />
+                <img src="../../img/Shape.png" alt="" />
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="">被叫号码</label><br />
+              <div class="layui-input-inline">
+                <input
+                        type="text"
+                        name="moblieNumber"
+                        v-model="data1.moblieNumber"
+                        placeholder="请输入"
+                        class="layui-input"
+                        />
+              </div>
+            </div>
+            
+            <!--<div class="layui-inline">
+              <label class="">订单号</label><br />
+              <div class="layui-input-inline">
+                <input
+                        type="text"
+                        name="orderSn"
+                        v-model="data1.orderSn"
+                        placeholder="请输入"
+                        class="layui-input"
+                        />
+              </div>
+            </div>-->
+            <div class="layui-inline dropdown unlike2" v-if="loginType != '通道管理员'">
+              <label class="">用户名</label><br />
+              <input type="text" class="dropdown-selected"
+                     name="userName" autocomplete="off" placeholder="请输入">
+              <ul class="dns">
+                <li v-for="(li, index) in userData">
+                  <a href="javaScript:" :data="li.userId">{{li.loginName}}</a>
+                </li>
+              </ul>
+            </div>
+            <div class="layui-inline">
+              <label class="">内容</label><br />
+              <div class="layui-input-inline">
+                <input
+                        type="text"
+                        name="smsConten"
+                        v-model="data1.smsConten"
+                        placeholder="请输入"
+                        class="layui-input"
+                        />
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="">状态报告</label><br />
+              <div class="layui-input-inline">
+                <input
+                        type="text"
+                        name="receiptStatusText"
+                        v-model="data1.receiptStatusText"
+                        placeholder="请输入"
+                        class="layui-input"
+                        />
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="">签名</label><br />
+              <div class="layui-input-inline">
+                <input
+                        type="text"
+                        name="signName"
+                        v-model="data1.signName"
+                        placeholder="请输入"
+                        class="layui-input"
+                        />
+              </div>
+            </div>
+            
+            <div class="layui-inline">
+              <label class="">状态说明</label><br />
+              <div class="layui-input-inline">
+                <select name="receiptStatus" v-model="data1.receiptStatus" id="receiptStatus">
+                  <option value="">请选择</option>
+                  <option value="1">成功</option>
+                  <option value="0">失败</option>
+                  <option value="-1">未知</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-inline" v-if="loginType != '通道管理员'">
+              <label class="">发送类型</label><br />
+              <div class="layui-input-inline">
+                <select name="sendType" v-model="data1.sendType"  id="sendType">
+                  <option value="">请选择</option>
+                  <option v-cloak
+                          v-for="(li, index) in content"
+                          :value="index + 1"
+                          >{{li}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-inline dropdown1 unlike3" v-show="loginType != '通道管理员'&&sw_show_A">
+              <label class="">网关</label><br />
+              <input type="text" class="dropdown-selected1"
+                     name="ismgId" autocomplete="off" placeholder="请输入">
+              <ul class="dns">
+                <li v-for="(li, index) in userData1">
+                  <a href="javaScript:" :data="li.ismgId">{{li.ismgName}}</a>
+                </li>
+              </ul>
+            </div>
+            <div class="layui-inline" v-show="loginType != '通道管理员'&&sw_show_A">
+              <label class="">发送方式</label><br />
+              <div class="layui-input-inline">
+                <select name="howSend" v-model="data1.howSend"  id="howSend">
+                  <option value="">请选择</option>
+                  <option value="0">待发</option>
+                  <option value="1">A</option>
+                  <option value="2">Z报成功</option>
+                  <option value="3">Z报失败</option>
+                  <option value="4">Z报空号</option>
+                  <option value="5">Z报内容限制</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-inline" v-if="sw_show_A">
+              <label class="">任务号</label><br />
+              <div class="layui-input-inline">
+                <input
+                        type="text"
+                        name="taskSn"
+                        v-model="data1.taskSn"
+                        placeholder="请输入"
+                        class="layui-input"
+                        />
+              </div>
+            </div>
+            <div class="layui-input-inline">
+              <button class="sw_btn1" lay-submit="" lay-filter="demo3">
+                查询
+              </button>
+            </div>
+              <div class="layui-input-inline"  style="padding-left: 8px;height: 25px;padding-top: 11px;box-sizing: border-box;">
+                <input type="checkbox" lay-filter="sw_show_A" name="sw_show_A" value="" title="高级查询" lay-skin="primary">
+              </div>
+          </form>
+          <div class="sw_row">
+            <table style="margin-top: 15px;min-width: 1800px;" :class="{'minWidth':loginType == '通道管理员','minWidth':!sw_show_A}" class="table_width">
+              <tr>
+                <!--<th style="width:182px">订单号</th>-->
+                <th  v-if="loginType != '通道管理员'">用户名</th>
+                <th >被叫号码</th>
+                <th >归属地</th>
+                <th >短信内容</th>
+                <th  v-if="loginType != '通道管理员'">发送类型</th>
+                <th >长短信条数</th>
+                <th >成功数量</th>
+                <th  v-if="loginType == '管理员'">接单时间</th>
+                <th >发送时间</th>
+                <th >回执时间</th>
+                <th >状态报告</th>
+                <th >状态说明</th>
+                <th v-if="sw_show_A">接入号</th>
+                <th  v-if="loginType == '管理员'&&sw_show_A">发送方式</th>
+                <th  v-if="loginType == '管理员'&&sw_show_A">网关</th>
+                <th  v-if="sw_show_A">任务号</th>
+              </tr>
+              <tr  v-cloak v-for="(li, index) in allData">
+                <td v-if="loginType != '通道管理员'">{{li.loginName}}</td>
+                <td>{{li.receiverMsisdn}}</td>
+                <td>
+                  <span> {{li.province | numTo}}</span>
+                </td>
+                <td>
+                  <div :title="li.msgContent" style="width: 230px;">{{li.msgContent}}</div>
+                </td>
+                <td v-if="loginType != '通道管理员'">
+                  <div style="width: 68px">{{li.typeName}}</div>
+                </td>
+                <td style="text-align: center;">{{li.msgTotal}}</td>
+                <td style="text-align: center;">{{li.successAmount}}</td>
+                <td v-if="loginType == '管理员'">
+                	<div style="width: 88px">{{li.createTime | limitTo}}</div>
+                </td>
+                <td>
+                	<div style="width: 88px">{{li.sentTime | limitTo}}</div>               	
+                </td>
+                <td>
+                	<div style="width: 88px">{{li.receiptTime | limitTo}}</div>       
+                </td>
+                <td>
+                    <p :title="li.receiptStatusText" >{{li.receiptStatusText}}</p>
+                </td>
+                <td>
+                  <div style="color:#9AC938;text-align: center;" v-if="li.receiptStatusCode == '1'">
+                    成功
+                    <span class="success"></span>
+                  </div>
+                  <div style="color:#FF3939;text-align: center;" v-if="li.receiptStatusCode == '0'">
+                    失败
+                    <span class="fail"></span>
+                  </div>
+                  <div style="color:#A9A9A9;text-align: center;" v-if="li.receiptStatusCode != '1' && li.receiptStatusCode != '0'">
+                    未知
+                    <span class="sw_refuse"></span>
+                  </div>
+                </td>
+                <td v-if="sw_show_A">{{li.srcId}}</td>
+                <td v-if="loginType == '管理员'&&sw_show_A" style="text-align: center;">
+                  <span v-if="li.howSend == '0'">待发</span>
+                  <span v-if="li.howSend == '1'">A</span>
+                  <span v-if="li.howSend == '2'">Z报成功</span>
+                  <span v-if="li.howSend == '3'">Z报失败</span>
+                  <span v-if="li.howSend == '4'">Z报空号</span>
+                  <span v-if="li.howSend == '5'">Z报内容限制</span>
+                </td>
+                <td  v-if="loginType == '管理员'&&sw_show_A">{{li.ismgName}}</td>
+                <td v-if="sw_show_A">{{li.taskSn}}</td>
+              </tr>
+
+            </table>
+            <div class="sw_pad8" v-show="mapShow == true">暂无数据</div>
+          </div>
+          <div id="page"></div>
+        </div>
+      </div>
+    </script>
+    <script type="text/x-template" id="tong-template">
+      <div class="shade_con">
+        <div class="tongji" style="margin-bottom: 25px;">
+          <h3>回执统计</h3>
+          <span class="iconfont icon-shanchu" @click="shanchu()"></span>
+        </div>
+        <div class="sw_row" style="margin:0 20px 0 22px;padding:0 15px;background: #fff;border: 1px solid #E1E7EC;border-bottom:none;max-height: 400px;">
+          <table style="margin-top: 15px;">
+            <tr>
+              <th style="width:544px">状态报告</th>
+              <th style="width:568px">回执状态</th>
+              <th style="width:256px">发送数量</th>
+            </tr>
+            <tr  v-for="(li, index) in allData">
+              <td>
+                <p  style="width: 400px;">{{li.TEXT}}</p>
+              </td>
+              <td>
+                <div style="color:#9AC938" v-if="li.CODE == '1'">
+                  成功
+                  <span class="success"></span>
+                </div>
+                <div style="color:#ff0000" v-if="li.CODE == '0'">
+                  失败
+                  <span class="fail"></span>
+                </div>
+                <div style="color:#6E6E6E" v-if="li.CODE != '0'&& li.CODE != '1'">
+                  未知
+                  <span class="sw_report"></span>
+                </div>
+              </td>
+              <td>{{li.STATISTICAL}}</td>
+            </tr>
+          </table>
+          <div class="sw_pad8" v-show="mapShow2 == true">暂无数据</div>
+        </div>
+        <div  style="text-align: center;">
+            <span class="sw_btn1"  @click="shanchu()">
+                关闭
+            </span>
+        </div>
+      </div>
+    </script>
+    <script src="../../layui.all.js"></script>
+    <script src="../../module/detail.js"></script>
+    <script>
+      workbench()
+      //头部
+//      var operaAI = new Vue({
+//        el: "#proMang",
+//        data: {
+//          topCurrent: 0
+//        }
+//      });
+//      //   //左侧菜单组件实例化
+//      var leftMenu = new Vue({
+//        el: "#leftMenu_Box",
+//        data: {
+//          current: 2
+//        }
+//      });
+      // 
+      var rightTable = new Vue({
+        el: "#rightTable"
+      });
+       // 
+       var shade = new Vue({
+        el: "#shade"
+      });
+      $(function() {
+        //     $('#proMang .top ul li a').mousemove(function(){
+        //         $(this).addClass('addClass').parent().siblings().find('a').removeClass('addClass')
+        //   })
+        $(document).ready(function(){
+          $('#leftMenu_Box').css('background', '#040b29');
+          $('#proMang .top').css('background', '#fff');
+          total($(".unlike2 ul li"),$(".unlike2 .dropdown-selected"),$(".unlike2 ul"),$(".unlike2"));
+          total($(".unlike3 ul li"),$(".unlike3 .dropdown-selected1"),$(".unlike3 ul"),$(".unlike3"));
+        });
+        laydate.render({
+          elem: "#test", //指定元素
+          type: 'datetime',
+          value: getDay(0)+' 00:00:00',
+        });
+        laydate.render({
+          elem: "#test1", //指定元素
+          type: 'datetime',
+          value: getDay(0)+' 23:59:59',
+        });
+       // total($(".unlike1 ul li"),$(".unlike1 .dropdown-selected1"),$(".unlike1 ul"),$(".unlike1"));
+      });
+    </script>
+  </body>
+</html>

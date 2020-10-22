@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+<title>发送明细</title>
+	<link rel="stylesheet" type="text/css" href="css/date.css">
+<link href="css/style.css" rel="stylesheet"/>
+<link href="css/response.css" rel="stylesheet"/>
+</head>
+<body class="bg">
+<div class="content">
+	<div class="header">
+		<div class="header-nei">
+			<a href="nav.html" class="back-up"><i class="iconfont icon-xiangzuo"></i></a>
+			<h2 class="header-title">发送明细</h2>
+		</div>
+	</div>
+	<!--head/-->
+	<div class="head-height">&nbsp;</div>
+    <!--录入校验在style.js  搜order-btn-->
+	<div id="datePlugin"></div>
+	<div class="login-reg" style="padding-top:16px;">
+		<div class="log-reg-list"><input type="text" id="dateSelectorOne" class="log-reg-text2 startDate" value="" placeholder="开始时间"/></div>
+		<div class="log-reg-list"><input type="text" id="dateSelectorTwo" class="log-reg-text2 endDate" value="" placeholder="结束时间"/></div>
+		<div class="log-reg-list" id="userName">
+			<!--<input type="text" class="log-reg-text2 userName" placeholder="用户"/>-->
+		</div>
+		<div class="log-reg-list" id="ismgName">
+			<!--<input type="text" class="log-reg-text2 userName" placeholder="用户"/>-->
+		</div>
+		<div class="log-reg-list"><input type="tel" class="log-reg-text2 moblieNumber" placeholder="手机号"/></div>
+		<div class="log-reg-list"><input type="text" class="log-reg-text2 smsConten" placeholder="内容"/></div>
+		<div class="log-reg-list"><input type="text" class="log-reg-text2  signName" placeholder="签名"/></div>
+		<div class="log-reg-list" id="receiptStatus">
+			<select name="receiptStatus">
+				<option value="">请选择状态</option>
+				<option value="1">成功</option>
+				<option value="0">失败</option>
+				<option value="-1">未知</option>
+			</select>
+		</div>
+		<div class="log-reg-list" id="sendType">
+			<select name="sendType">
+				<option value="">请选择发送类型</option>
+				<option value="1">短信移动成功计费</option>
+				<option value="2">短信联通成功计费</option>
+				<option value="3">短信电信成功计费</option>
+				<option value="4">短信移动提交计费</option>
+				<option value="5">短信联通提交计费</option>
+				<option value="6">短信电信提交计费</option>
+				<option value="7">彩信移动成功计费</option>
+				<option value="8">彩信联通成功计费</option>
+				<option value="9">彩信电信成功计费</option>
+				<option value="10">彩信联通提交计费</option>
+				<option value="11">彩信电信提交计费</option>
+				<option value="12">USSD弹屏成功计费</option>
+				<option value="13">语音成功计费</option>
+				<option value="14">国际短信成功计费</option>
+			</select>
+		</div>
+		<div class="log-reg-list" id="howSend">
+			<select name="howSend">
+				<option value="">请选择发送方式</option>
+				<option value="0">待发</option>
+				<option value="1">A</option>
+				<option value="2">Z报成功</option>
+				<option value="3">Z报失败</option>
+				<option value="4">Z报空号</option>
+				<option value="5">Z报内容限制</option>
+			</select>
+		</div>
+
+		<div class="log-reg-sub">
+			<a href="javascript:;" class="log-reg-btn order-btn">查询</a>
+		</div>
+	</div>
+</div>
+<!--content/-->
+<div class="bg100"></div>
+<!--错误提示-->
+<div class="tip-errors-bg">
+	<div class="tip-tip-box-nei">
+		<strong><i class="iconfont">&#xe614;</i><em class="errors">错误提示</em></strong>
+	</div>
+	<!--tip-tip-box/-->
+</div>
+<!--tip-success-bg/-->
+<!--正确提示-->
+<div class="tip-success-bg">
+	<div class="tip-tip-box-nei">
+		<strong><i class="iconfont" style="color:#0F0;">&#xe611;</i><em class="success">正确提示</em></strong>
+	</div>
+	<!--tip-tip-box/-->
+</div>
+<!--tip-success-bg/-->
+<script src="js/jquery.min.js"></script>
+<script src="js/style.js"></script>
+<script src="js/doT.min.js"></script>
+<script type="text/javascript" src="js/date.js"></script>
+<script type="text/javascript" src="js/iscroll_date.js"></script>
+<script id="interpolationtmpl" type="text/x-dot-template">
+	<div class="layui-inline dropdown unlike1">
+		<input type="text" class="dropdown-selected1"
+			   name="userId" autocomplete="off" placeholder="请输入用户">
+		<ul class="dns">
+			{{~it:value:index}}
+			<li>
+				<a href="javaScript:" data="{{=value.userId}}">{{=value.loginName}}</a>
+			</li>
+			{{~}}
+		</ul>
+	</div>
+</script>
+<script id="ismg" type="text/x-dot-template">
+	<div class="layui-inline dropdown unlike2">
+		<input type="text" class="dropdown-selected1"
+			   name="ismgId" autocomplete="off" placeholder="请输入网关">
+		<ul class="dns">
+			{{~it:value:index}}
+			<li>
+				<a href="javaScript:" data="{{=value.ismgId}}">{{=value.ismgName}}</a>
+			</li>
+			{{~}}
+		</ul>
+	</div>
+</script>
+<script type="text/javascript">
+	$(function(){
+		var userName,ismgName;
+		$.ajax({
+			url : '/icos/user/queryUserName',
+			type : 'post',
+			async: false,
+			data :{
+				'loginName':""
+			},
+			headers : {
+				"Authorization":sessionStorage.getItem('id'),
+			},
+			success : function(data){
+				userName  =   data.data;
+			},
+			error : function(err){
+				location.href = "index.html";
+				sessionStorage.clear();
+			}
+		});
+		$.ajax({
+			url : '/icos/ismg/queryIsmgName',
+			type : 'post',
+			async: false,
+			data :{
+				'loginName':""
+			},
+			headers : {
+				"Authorization":sessionStorage.getItem('id'),
+			},
+			success : function(data){
+				ismgName  =   data.data;
+			},
+			error : function(err){
+				location.href = "index.html";
+				sessionStorage.clear();
+			}
+		});
+		var UserName = userName;
+		var IsmgName = ismgName;
+		var interText = doT.template($("#interpolationtmpl").text());
+		var htmlIsmg = doT.template($("#ismg").text());
+		$("#userName").html(interText(UserName));
+		$("#ismgName").html(htmlIsmg(IsmgName));
+		var myDate = new Date();
+		var Year = myDate.getFullYear(); //获取完整的年份(4位,1970-????)
+		var Month = myDate.getMonth() + 1; //获取当前月份(0-11,0代表1月)
+		var date = myDate.getDate(); //获取当前日(1-31)
+		//console.log(Year +'-'+Month+'-'+ date)
+		$(".startDate").val(Year +'-'+Month+'-'+ date);
+		$(".endDate").val(Year +'-'+Month+'-'+ date);
+		$('#dateSelectorOne').date();
+		$('#dateSelectorTwo').date();
+		//定单校验
+		$(".order-btn").on('click',function() {
+			var startDate = $(".startDate").val();
+			var endDate = $(".endDate").val();
+			var text = $(".unlike1 .dropdown-selected1").val();
+			var text1 = $(".unlike2 .dropdown-selected1").val();
+			var userId = null,ismgId = null;
+			if(text == ''){
+				userId = ''
+			}else{
+				if(verify_user(UserName,$(".unlike1 .dropdown-selected1"),text)){
+					userId = $(".unlike1 .dropdown-selected1").attr('data')
+				}else{
+					errors();
+					$(".errors").text('请选择下拉框内容！');
+					return false;
+				}
+			};
+			if(text1 == ''){
+				ismgId = ''
+			}else{
+				if(verify_ism(IsmgName,$(".unlike2 .dropdown-selected1"),text1)){
+					ismgId = $(".unlike2 .dropdown-selected1").attr('data')
+				}else{
+					errors();
+					$(".errors").text('请选择下拉框内容！');
+					return false;
+				}
+			};
+			var receiptStatus = $("#receiptStatus  option:selected").val();
+			var howSend = $("#howSend  option:selected").val();
+			var sendType = $("#sendType  option:selected").val();
+			var moblieNumber = $(".moblieNumber").val();
+			var smsConten = $(".smsConten").val().trim();
+			var signName = $(".login-reg .signName").val();
+			var orderObj = {
+				endDate: endDate +' 23:59:59',
+				startDate:startDate +' 00:00:00',
+				howSend: howSend,
+				ismgId:ismgId,
+				moblieNumber: moblieNumber,
+				offset: 1,
+				orderSn: '',
+				pageSize: 10,
+				receiptStatus: receiptStatus,
+				receiptStatusText: "",
+				sendType: sendType,
+				signName: signName,
+				smsConten: smsConten,
+				userName: userId
+			};
+			sessionStorage.setItem('inputObj', JSON.stringify(orderObj));
+			location.href = "detil.html"
+		});
+		total($(".unlike1 ul li"),$(".unlike1 .dropdown-selected1"),$(".unlike1 ul"),$(".unlike1"));
+		total($(".unlike2 ul li"),$(".unlike2 .dropdown-selected1"),$(".unlike2 ul"),$(".unlike2"));
+	})
+
+</script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <title>黑白名单</title>
+    <link href="css/style.css" rel="stylesheet"/>
+    <link href="css/response.css" rel="stylesheet"/>
+</head>
+<body class="bg">
+<div class="content">
+    <div class="header">
+        <div class="header-nei">
+            <a href="inputList.html" class="back-up"><i class="iconfont icon-xiangzuo"></i></a>
+            <h2 class="header-title">黑白名单</h2>
+            <a href="nav.html" class="back-top"><i class="iconfont icon-daohang"></i></a>
+        </div>
+    </div>
+    <!--head/-->
+    <div class="head-height">&nbsp;</div>
+    <div class="nav" id="list_set">
+
+    </div>
+    <div class="loading"><a href="javascript:;">加载更多...</a></div>
+</div>
+<!--content/-->
+<div class="bg100"></div>
+<!--错误提示-->
+<div class="tip-errors-bg">
+    <div class="tip-tip-box-nei">
+        <strong><i class="iconfont icon-shanchu"></i><em class="errors">错误提示</em></strong>
+    </div>
+    <!--tip-tip-box/-->
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/style.js"></script>
+<script src="js/doT.min.js"></script>
+<script id="list_set_tmp" type="text/x-dot-template">
+    {{~it:value:index}}
+    <dl>
+        <a href="javascript:;" class="order_info" >
+            <form>
+                <input type="hidden" name="msisdn" value="{{=value.msisdn}}">
+                <input type="hidden" name="whiteLevel" value="{{=value.whiteLevel}}">
+                <input type="hidden" name="whiteDesc" value="{{=value.whiteDesc}}">
+                <input type="hidden" name="blackLevel" value="{{=value.blackLevel}}">
+                <input type="hidden" name="blackDesc" value="{{=value.blackDesc}}">
+                <input type="hidden" name="notIsLevel" value="{{=value.notIsLevel}}">
+                <input type="hidden" name="notIsDesc" value="{{=value.notIsDesc}}">
+                <input type="hidden" name="createTime" value="{{=value.createTime}}">
+                <input type="hidden" name="remark" value="{{=value.remark}}">
+            </form>
+            <dt></dt>
+            <dd>
+                <span>{{=value.msisdn}}</span> {{=value.createTime || '暂无'}}
+                <div class="con_cal" style="padding: 0 8px">{{=value.whiteDesc}}</div>
+            </dd>
+            <i class="iconfont icon-xiangyou"></i>
+            <div class="clears"></div>
+        </a>
+    </dl>
+    {{~}}
+</script>
+<script>
+    $(function(){
+        var allData,num = 1,totalCount;
+        var objCan = JSON.parse(sessionStorage.getItem('inputObj')) ;
+        function addData(obj){
+            $.ajax({
+                url :"/icos/blacklist/queryBlackList",
+                type : 'post',
+                async: true,
+                dataType : 'json',
+                contentType: 'application/json',
+                data : JSON.stringify(obj),
+                headers : {
+                    "Authorization":sessionStorage.getItem('id'),
+                },
+                complete: function (xhr) {
+                    $("#load").remove();
+                    // 获取相关Http Response header
+                    if(xhr.getResponseHeader('Authorization') != null){
+                        sessionStorage.setItem('id', xhr.getResponseHeader('Authorization'));
+                    }
+                },
+                success : function(res){
+
+                    if (res.statusCode == '401') {
+                        errors();
+                        $(".errors").text("用户超时，请重新登录！");
+                        setTimeout(function(){
+                            location.href = "index.html";
+                            sessionStorage.clear();
+                        },1000)
+                    }else if(res.statusCode == '400'){
+                        errors();
+                        $(".errors").text(res.message);
+                    }  else {
+                        allData = res.data.data;
+                        if(res.data.offset == 1){
+                            totalCount = res.data.totalCount;
+                            $(".loading a").html('加载更多...总共('+ totalCount + ')条')
+                        }
+                        if(allData.length == 0){
+                            errors();
+                            $(".errors").text('用户暂无更多数据');
+                        }
+                        var interText = doT.template($("#list_set_tmp").text());
+                        $("#list_set").append(interText(allData));
+                    }
+                },
+                error : function(err){
+                    location.href = "index.html";
+                    sessionStorage.clear();
+                }
+            });
+        };
+        addData(objCan)
+        //定单校验
+        $(".loading").on('click',function() {
+            num = num + 1
+            objCan.offset = num;
+            addData(objCan)
+        })
+        $("#list_set").on('click','.order_info',function() {
+            var json = $(this).find('form').serializeArray()
+            sessionStorage.setItem('infoObj', JSON.stringify(serializeFormJSON(json)));
+            location.href = "list_set_info.html"
+        })
+    })
+</script>
+</body>
+</html>

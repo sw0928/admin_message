@@ -1,0 +1,286 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+		<title>短信服务监控运维平台</title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/scanboard.css" />
+		<link rel="stylesheet" type="text/css" href="css/base.css" />
+		<link rel="stylesheet" type="text/css" href="css/jquery.shCircleLoader.css" />
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.shCircleLoader-min.js"></script>
+		<script type="text/javascript" src="js/animateBackground-plugin.js"></script>
+		<script type="text/javascript" src="js/fontscroll.js"></script>
+	  <script type="text/javascript" src="js/jquery.nicescroll.js"></script>
+	</head>
+
+	<body>
+		<div id="loader"></div>
+		<script type="text/javascript">
+			$('#loader').shCircleLoader({
+				color: "#00deff"
+			});
+		</script>
+		<!--Top Start!-->
+		<div class="scanboardWp">
+			<div id="top">
+				<!--<img src="images/1.png"/>-->
+				<div class="wp clearfix" style="width: 98%;">
+					<div class="left pageTit">
+						<span class="sw_hours">
+						</span>
+						<span class="sw_span">
+							
+						</span>
+					</div>
+					<div class="center topLogo">
+						<span>
+							短信服务监控运维平台
+						</span>
+					</div>
+					<div class="right topBar">
+						<div class="topTime">时间加载中...</div>
+						<a href="javascript:;" class="signOut fr">退出</a>
+					</div>
+				</div>
+			</div>
+			<!--Top End!-->
+			<div class="">
+				<div class="centerWp">
+					<!--总计运单数-->
+					<div class="item total">
+						<div class="itemCon">
+							<div class="totalNum">
+								<span class="sw_today">
+								本月短信量：
+							</span>
+								<span id="sw-num1" class="t_num">
+									<i class="span_li_00" style="background-Position: 0px -622px;"></i>
+									<span class="sw_A">,</span>
+									<i class="span_li_01" style="background-Position: 0px -622px;"></i>
+									<i class="span_li_02" style="background-position: 0px -622px;"></i>
+									<i class="span_li_03" style="background-Position: 0px -622px;"></i>
+									<span class="sw_A">,</span>
+									<i class="span_li_04" style="background-position: 0px -622px;"></i>
+									<i class="span_li_05" style="background-position: 0px -622px;"></i>
+									<i class="span_li_06" style="background-position: 0px -622px;"></i>
+									<i class="span_li_07" style="background-position: 0px -622px;"></i>
+								</span>
+							</div>
+						</div>
+						<div class="sw_new">
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Main Start!-->
+			<div id="main" class="wp clearfix">
+				<div class="left" style="width: 63%;position: relative;">
+					<!--各阶段平均用时统计-->
+					<div class=" " style="height: 74.5%;">
+						<div id="myChart3"></div>
+					</div>
+					<div class="jx">
+						<div class="L_transform">
+							<div class="trans_bg">
+								<div class="bg_shade"></div>
+								<div class="heart_box">
+									<div class="heart"></div>
+									<div class="shan">
+										<ul class='pie'>
+											<li class='slice-8 slice'> </li>
+											<ul>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="boxall defer">
+						<div class="sw_defer">
+							<p>短信发送延迟</p>
+							<div>
+								<span>
+								<i class="sw_red"></i>高危
+							</span>
+								<span>
+								<i class="sw_yellow"></i>中危
+							</span>
+								<span>
+								<i class="sw_green"></i>正常
+							</span>
+							</div>
+						</div>
+						<div class="boxfoot"></div>
+					</div>
+					<div id="echarts_value">
+
+					</div>
+				</div>
+				<div class="right" style="width: 37%;">
+					<!--运单状态-->
+					<div class="item billState">
+						<div id="myChart2" style="margin-top: 7%;"></div>
+						<div class="sw_h6">
+							报警雷达
+						</div>
+						<div id="myChart4"></div>
+						<div id="radar">
+
+						</div>
+					</div>
+					<!--人员信息-->
+					<div class="item " style="height: 32%;width: 95%;margin: 0 0 0 22px;">
+						<div class="item billState boxall" style="width: 48%;height: 78%;float: left;margin-right: 4%;">
+							<div class="itemTit">
+								<span class="border-green">SMS通道 <span style="font-size: 12px;">成功率倒序</span></span>
+							</div>
+							<div class="itemCon">
+								<div class="StateBox sw_box">
+									<div class="StateTit">
+										<span>排名</span>
+										<span>通道名称</span>
+										<span>成功率</span>
+									</div>
+									<div id="FontScrollTwo">
+										
+									</div>
+								</div>
+							</div>
+							<div class="boxfoot"></div>
+						</div>
+						<div class="item billState boxall" style="width: 48%;height: 78%;float: left;">
+							<div class="itemTit">
+								<span class="border-green">SMS用户提交 <span style="font-size: 12px;">成功率倒序</span></span>
+							</div>
+							<div class="itemCon">
+								<div class="StateBox sw_box">
+									<div class="StateTit">
+										<span>排名</span>
+										<span>用户名</span>
+										<span>成功率</span>
+									</div>
+									<div id="Stick">
+									</div>
+									<div id="FontScroll">
+									</div>
+								</div>
+							</div>
+							<div class="boxfoot"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Main End!-->
+		</div>
+		<!--<div class="filterbg"></div>-->		
+	</body>
+	<script type="text/javascript" src="js/doT.min.js"></script>
+	<script type="text/javascript" src="js/echarts.min.js"></script>
+	<script type="text/javascript" src="js/china.js"></script>
+	<script type="text/javascript" src="js/monitoring.js"></script>
+	<script type="text/javascript">
+//			$(function() {
+				//页面淡入效果
+//				$(".animsition").animsition({
+//					inClass: 'fade-in',
+//					outClass: 'fade-out',
+//					inDuration: 300,
+//					outDuration: 1000,
+//					// e.g. linkElement   :   'a:not([target="_blank"]):not([href^=#])'
+//					loading: false,
+//					loadingParentElement: 'body', //animsition wrapper element
+//					loadingClass: 'animsition-loading',
+//					unSupportCss: ['animation-duration',
+//						'-webkit-animation-duration',
+//						'-o-animation-duration'
+//					],
+//					//"unSupportCss" option allows you to disable the "animsition" in case the css property in the array is not supported by your browser.
+//					//The default setting is to disable the "animsition" in a browser that does not support "animation-duration".
+//			
+//					//overlay: false,
+//			
+//					overlayClass: 'animsition-overlay-slide',
+//					overlayParentElement: 'body'
+//				});
+				
+//			});	     
+	</script>
+	<script id="alarm_time" type="text/x-dot-template">
+		<ul>
+			{{~it:value:index}}
+			<li>
+				<div class="fontInner clearfix">
+					<span>{{= index+1 }}</span>
+					<span>{{=value.ismgName}}</span>
+					<span>{{=value.succRate}}</span>
+				</div>
+			</li>			
+			{{~}}
+		</ul>
+	</script>
+	<script id="echarts_tep" type="text/x-dot-template">
+		<ul>
+			{{~it:value:index}} {{? value.delayState == 0 }}
+			<li class="normal_back">
+				<p class="sw_city">{{=value.name}}</p>
+				<p class="sw_number">短信条数：<span class="sw_col{{= index}}" total="{{=value.value}}">0</span></p>
+			</li>
+			{{?? value.delayState == 1}}
+			<li class="centre_risk_back">
+				<p class="sw_city">{{=value.name}}</p>
+				<p class="sw_number">短信条数：<span class="sw_col{{= index}}" total="{{=value.value}}">0</span></p>
+			</li>
+			{{?? value.delayState == 2}}
+			<li class="high_risk_back">
+				<p class="sw_city">{{=value.name}}</p>
+				<p class="sw_number">短信条数：<span class="sw_col{{= index}}" total="{{=value.value}}">0</span></p>
+			</li>
+			{{?}} {{~}}
+		</ul>
+	</script>
+	<script id="Stick_user" type="text/x-dot-template">
+		<ul>
+			{{~it:value:index}}
+			<li>
+				<div class="fontInner clearfix">
+					<span>{{= index+1 }}</span>
+					<span>{{=value.loginName}}</span>
+					<span>{{=value.succRate}}</span>
+				</div>
+			</li>
+			{{~}}
+		</ul>
+	</script>
+	<script id="alarm_user" type="text/x-dot-template">
+			<ul>
+			{{~it:value:index}}
+			<li>
+				<div class="fontInner clearfix">
+					<span>{{= index+3 }}</span>
+					<span>{{=value.loginName}}</span>
+					<span>{{=value.succRate}}</span>
+				</div>
+			</li>					
+			{{~}}
+		</ul>
+	</script>
+	<script id="infotmpl" type="text/x-dot-template">
+		<p>磁盘：<span class="sw_radar">{{=it.diskUse}}%</span></p>
+		<p>进程：<span class="sw_radar">{{=it.process}}</span></p>
+		<p>内存：<span class="sw_radar">{{=it.ram}}%</span></p>
+		<p>运行时间：<span class="sw_radar">{{=it.runTime || '-'}}</span></p>
+		<p>cpu：<span class="sw_radar">{{=it.cpu}}%</span></p>
+		<p>磁盘空间：<span class="sw_radar">{{=it.diskSpace}}GB</span></p>
+	</script>
+	<script id="comparison" type="text/x-dot-template">
+		{{? it.trend == 0}}
+		<p class="new_decline">{{=it.other}}月发送量{{=it.otherMonthNum}}，{{=it.last}}月发送量{{=it.lastMonthNum}}<span class="iconfont icon-iconset0414" style="font-size: 32px;color: #11f511;font-weight: 600;"></span></p>
+		{{?? it.trend != 0}}
+		<p class="new_up">{{=it.other}}月发送量{{=it.otherMonthNum}}，{{=it.last}}月发送量{{=it.lastMonthNum}}<span class="iconfont icon-iconset0413" style="font-size: 32px;color: #ff1313;font-weight: 600;"></span></p>
+		{{?}}
+	</script>
+
+</html>

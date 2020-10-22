@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>智能通信运营管理平台</title>
+    <link rel="stylesheet" href="../../css/style.css"/>
+    <link rel="stylesheet" href="../../css/layui.css"/>
+    <script src="../../js/jquery-3.0.0.min.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../laydate/laydate.js"></script>
+    <script src="../../js/vue.min.js"></script>
+</head>
+<!--[if IE 9]>
+<style>
+    #leftMenu_Box {
+        width: 15.08%;
+        height: 979px;
+        float: left;
+        background: #040b29 !important;
+        position: relative;
+        box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.5);
+    }
+</style>
+<![endif]-->
+<style>
+    /*.sw_row tr td {*/
+        /*padding: 14px 0 14px 0;*/
+    /*}*/
+    /*#page {*/
+        /*padding: 26px 0 20px 0;*/
+    /*}*/
+    .shade_con1 {
+        width: 877px;
+        height: 240px;
+    }
+
+    .shade_con1 .temp {
+        width: 840px;
+        height: 100px;
+    }
+    .fileinput-button {
+        position: relative;
+        display: inline-block;
+        overflow: hidden;
+    }
+
+    .fileinput-button input{
+        position:absolute;
+        right: 0px;
+        top: 0px;
+        opacity: 0;
+        -ms-filter: 'alpha(opacity=0)';
+        font-size: 200px;
+    }
+</style>
+<body style=" background: #FAFAFA;">
+<div id="proMang">
+    <div class="top"><img src="../../img/logo.png" alt="" class="logo">
+        <ul>
+            <li class="top-a-box addClass" data-value="210"><a href="./order_fail.html"><span
+                    class="iconfont icon-diannao" style="font-size: 22px;"></span>
+                工作台
+            </a></li>
+            <li class="top-a-box " data-value="211"><a href="../user_manage/user_manage.html">
+                <span class="iconfont icon-yonghu" style="font-size: 22px;"></span>
+                用户管理
+            </a></li>
+            <li class="top-a-box " data-value="212"><a href="../order_manage/order_manage.html"><span
+                    class="iconfont icon-dingdanguanli" style="font-size: 22px;"></span>
+                订单管理
+            </a></li>
+            <li class="top-a-box " data-value="213"><a href="../resource/take_orders.html"><span
+                    class="iconfont icon-iconfonticon-shebei" style="font-size: 22px;"></span>
+                资源配置
+            </a></li>
+        </ul>
+        <div class="sign">
+            <span class="ren"></span> <span class="type"></span>
+            <img src="../../img/退出.png" alt=""  onclick="sign()">
+        </div>
+    </div>
+</div>
+<div class="main-box">
+    <!-- 左侧菜单 -->
+    <div id="leftMenu_Box" class="work_left">
+        <div class="leftMenu">
+            <ul class="prop">
+                <li class="left_a dn" data-value="21010"><a href="./order_fail.html"><span
+                        class="iconfont icon-xiadanshibai"></span>
+                    下单失败
+                </a></li>
+                <li class="left_a dn" data-value="21011"><a href="./auditing.html"><span
+                        class="iconfont icon-shenhe"></span>
+                    审核发送
+                </a></li>
+                <li class="left_a dn" data-value="21012"><a href="./detail.html"><span
+                        class="iconfont icon-mingxi"></span>
+                    用户发送明细
+                </a></li>
+                <li class="left_a dn" data-value="21013"><a href="./user_count.html"><span
+                        class="iconfont icon-tongji1"></span>
+                    用户发送统计
+                </a></li>
+                <li class="left_a dn" data-value="21014"><a href="./template.html"><span
+                        class="iconfont icon-moban"></span>
+                    模板申请
+                </a></li>
+                <li class="left_a dn" data-value="21015"><a href="./signature.html"><span
+                        class="iconfont icon-moban"></span>
+                    签名申请
+                </a></li>
+                <li class="left_a dn addclass_one " data-value="21016"><a href="javascript:void(0);"><span
+                        class="iconfont icon-daoru1"></span>
+                    投诉导入
+                </a></li>
+                <li class="left_a dn" data-value="21017"><a href="./complain_manage.html"><span
+                        class="iconfont icon-guanli"></span>
+                    投诉管理
+                </a></li>
+            </ul>
+            <div class="group" onclick="flexible(event)">
+                <span class="iconfont icon-xiangzuo" style="color: rgb(255, 255, 255); font-size: 13px;"></span>
+            </div>
+        </div>
+    </div>
+    <div id="rightTable">
+        <v-complain></v-complain>
+    </div>
+</div>
+<script type="text/x-template" id="complain-template">
+    <div>
+        <div class="table_tou">
+            <h6 class="fl">导入投诉号码列表</h6>
+
+            <div class="fr sw_padd">
+            <span class="sw_num"
+                  v-cloak>{{totalCount}}</span
+                    >&nbsp; &nbsp;<span style="color:#738495">条记录</span>
+            <span class="Gradual" @click="complain()">
+              <span
+                      class="iconfont icon-daoru"
+                      >&nbsp;导入投诉</span
+                      >
+            </span>
+            </div>
+        </div>
+        <div class="table_nav">
+            <form class="layui-form layui-form-pane" action="">
+                <div class="layui-inline">
+                    <label class="">开始时间</label><br/>
+
+                    <div class="layui-input-inline">
+                        <input type="text" name="startDate" class="layui-input" id="test"/>
+                        <img src="../../img/Shape.png" alt=""/>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="">结束时间</label><br/>
+
+                    <div class="layui-input-inline">
+                        <input type="text" name="endDate" class="layui-input" id="test1"/>
+                        <img src="../../img/Shape.png" alt=""/>
+                    </div>
+                </div>
+                <div class="layui-inline dropdown1 unlike3">
+                    <label class="">所属网关</label><br />
+                    <input type="text" class="dropdown-selected1"
+                           name="ismgId"  autocomplete="off" placeholder="请输入">
+                    <ul class="dns"  v-cloak>
+                        <li v-for="(li, index) in content3">
+                            <a href="javaScript:" :data="li.ismgId">{{li.ismgName}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--<div class="layui-inline">-->
+                    <!--<label class="">发送端口</label><br/>-->
+
+                    <!--<div class="layui-input-inline">-->
+                        <!--<input-->
+                                <!--type="text"-->
+                                <!--name="sendPort"-->
+                                <!--placeholder="请输入"-->
+                                <!--class="layui-input"-->
+                                <!--/>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="layui-inline">-->
+                    <!--<label class="">号码</label><br/>-->
+
+                    <!--<div class="layui-input-inline">-->
+                        <!--<input-->
+                                <!--type="text"-->
+                                <!--name="complaiPhone"-->
+                                <!--placeholder="请输入"-->
+                                <!--class="layui-input"-->
+                                <!--/>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="layui-inline">-->
+                    <!--<label class="">内容</label><br/>-->
+
+                    <!--<div class="layui-input-inline">-->
+                        <!--<input-->
+                                <!--type="text"-->
+                                <!--name="complaiContent"-->
+                                <!--placeholder="请输入"-->
+                                <!--class="layui-input"-->
+                                <!--/>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="layui-input-inline">
+                    <button class="sw_btn1" lay-submit="" lay-filter="demo">
+                        查询
+                    </button>
+                </div>
+            </form>
+            <div class="sw_row">
+                <table style="margin-top: 15px;width: 100%">
+                    <tr>
+                        <th style="width:190px">网关名称</th>
+                        <th style="width:197px">导入数量</th>
+                        <th style="width:240px">创建时间</th>
+                        <th style="width:118px;box-sizing: border-box;padding-left: 15px;">操作</th>
+                    </tr>
+                    <tr v-cloak v-for="(li, index) in allData">
+                        <td>{{li.ismgName}}</td>
+                        <td>{{li.complaintCount}}</td>
+                        <td>{{li.createTime | limitTo}}</td>
+                        <td>
+                            <span class="sw_btn3" @click="del(li.complaintId)">删除</span>
+                        </td>
+                    </tr>
+                </table>
+                <div class="sw_pad8" v-show="mapShow == true">暂无数据</div>
+            </div>
+            <div id="page"></div>
+            <div id="shade2">
+                <div class="shade_con1">
+                    <div class="tongji"><h3>模版匹配</h3> <span class="iconfont icon-shanchu" @click="shanchu()"></span>
+                    </div>
+                    <div class="temp">
+                        <form action="" class="layui-form layui-form-pane" style="border: none;" id="uploadForm" enctype="multipart/form-data">
+                            <div class="layui-inline dropdown1 unlike2" style="width: 200px">
+                                <label class="">所属网关</label><br />
+                                <input type="text" class="dropdown-selected"
+                                       name="ismgId"  autocomplete="off" placeholder="请输入">
+                                <ul class="dns"  v-cloak style="max-height: 95px;">
+                                    <li v-for="(li, index) in content3">
+                                        <a href="javaScript:" :data="li.ismgId">{{li.ismgName}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="layui-inline" >
+                                <label class="">文件名</label><br/>
+                                <div class="layui-input-inline" style="width: 100px">
+                                    <input
+                                            type="text"
+                                            name="fileName"
+                                            v-model="fileName"
+                                            class="layui-input"
+                                            disabled
+                                            style="background: #ECECEC;"
+                                            />
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <div class="fileinput-button" style="width: 110px;margin-top: 33px">
+                                    <!--<span class="Gradual1" >批量导入</span>-->
+                                    <span class="Gradual1" >批量导入</span>
+                                    <input id="file" type="file" name="file"/>
+                                </div>
+                                <a  href="../../js/complaint.xls" style="padding:2px 0px; font-size: 13px;color: #3C84D2;border-bottom: 2px solid; font-weight: 600;vertical-align: bottom;display: inline-block;">
+                                    投诉导入模板下载
+                                </a>
+                            </div>
+                            <div class="layui-input-inline">
+                                <button type="button" lay-submit="" lay-filter="demo7" class="sw_btn1"
+                                        style="margin:30px 0px 0px 190px;">
+                                    导入
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="tips2">
+                    <div class="weizhi">
+                        <img src="../../img/warming.png" alt="">
+                    </div>
+                    <div class="tc">
+                        确定要删除导入的投诉号码？
+                    </div>
+                    <div class="tc">
+                        <button class="sw_btnsuss" @click="sw_btnsuss()">确认</button>
+                        <button class="sw_btnwrong marl_15" @click="sw_btnwrong()">取消</button>
+                    </div>
+                </div>
+                <div class="tips_chid2">
+                    <div class="weizhi">
+                        <img src="../../img/success.png" alt="">
+                    </div>
+                    <div class="tc">
+                        删除投诉号码成功
+                    </div>
+                    <div class="tc">
+                        <button class="sw_btnsuss" @click="sw_qued()">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script src="../../layui.all.js"></script>
+<script src="../../module/complain.js"></script>
+<script>
+    //头部
+//        var operaAI = new Vue({
+//            el: "#proMang",
+//            data: {
+//                topCurrent: 0
+//            }
+//        });
+    //    //   //左侧菜单组件实例化
+    //    var leftMenu = new Vue({
+    //        el: "#leftMenu_Box",
+    //        data: {
+    //            current: 6
+    //        }
+    //    });
+    workbench()
+    //   //左侧菜单组件实例化
+    var rightTable = new Vue({
+        el: "#rightTable"
+    });
+    $(function () {
+        //     $('#proMang .top ul li a').mousemove(function(){
+        //         $(this).addClass('addClass').parent().siblings().find('a').removeClass('addClass')
+        //   })
+        $(document).ready(function () {
+            $('#leftMenu_Box').css('background', '#040b29');
+            $('#proMang .top').css('background', '#fff')
+        });
+        laydate.render({
+            elem: "#test", //指定元素
+            type: 'datetime',
+            value: getDay(0) + ' 00:00:00',
+
+        });
+        laydate.render({
+            elem: "#test1", //指定元素
+            type: 'datetime',
+            value: getDay(0) + ' 23:59:59',
+
+        });
+        total($(".unlike3 ul li"),$(".unlike3 .dropdown-selected1"),$(".unlike3 ul"),$(".unlike3"));
+        total($(".unlike2 ul li"),$(".unlike2 .dropdown-selected"),$(".unlike2 ul"),$(".unlike2"));
+    });
+</script>
+</body>
+</html>

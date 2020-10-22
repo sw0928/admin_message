@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>智能通信运营管理平台</title>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../css/layui.css" />
+		<link rel="stylesheet" href="../../css/jquery.treemenu.css" />
+		<script src="../../js/api.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script src="../../js/jquery-3.0.0.min.js"></script>
+		<script src="../../js/jquery.treemenu.js"></script>
+	</head>
+	<!--[if IE 9]>
+	<style>
+		#leftMenu_Box{
+			width: 15.08%;
+			height: 979px;
+			float: left;
+			background: #040b29 !important;
+			position: relative;
+			box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.5);
+		}
+	</style>
+	<![endif]-->
+	<style>
+		/*#page {*/
+			/*padding: 57px 0 40px 0;*/
+		/*}*/
+		#page1,
+		#page2 {
+			text-align: center;
+			padding: 10px 0 28px;
+		}
+		.sw_row tr td:nth-child(9){
+			padding: 8px 0;
+		}
+		/*.sw_row tr td {*/
+			/*padding: 16px 0 16px 0;*/
+		/*}*/
+		.sw_row tr td:nth-child(7) div,.sw_row tr td:nth-child(5) div{
+			max-width: 160px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			padding-right: 10px;
+			box-sizing: border-box;
+		}
+		.shade_con3 {
+			width: 1000px;
+			height: auto;
+		}
+
+		.shade_con3 .temp {
+			height: auto;
+			border: none;
+			background: unset;
+		}
+		.shade_con1 {
+			width: 680px;
+			height: auto;
+		}
+
+		.shade_con1 .temp {
+			width: auto;
+			height: auto;
+			margin: 12px 18px 0 20px;
+			border: none;
+		}
+
+		/*.layui-inline label {*/
+			/*padding: 10px 0;*/
+		/*}*/
+
+		.layui-form-checkbox[lay-skin="primary"] span {
+			font-size: 12px;
+			padding-right: 0px;
+			color: #494949;
+		}
+
+		/*table tr th {*/
+			/*box-sizing: border-box;*/
+			/*padding: 16px 0;*/
+			/*border-bottom: 1px solid #e1e7ec;*/
+		/*}*/
+
+		.layui-form h5 {
+			width: 80px;
+			height: 28px;
+			font-size: 20px;
+			font-family: PingFangSC-Regular;
+			font-weight: 400;
+			color: rgba(0, 0, 0, 1);
+			line-height: 28px;
+			margin-bottom: 7px;
+		}
+
+		.border h3 {
+			width: 100px;
+			height: 22px;
+			font-size: 16px;
+			font-family: PingFangSC-Regular;
+			font-weight: 400;
+			color: rgba(73, 73, 73, 1);
+			line-height: 22px;
+			margin-bottom: 10px;
+		}
+
+		.border .checkbox label {
+			width: 100%;
+			display: block;
+			margin-bottom: 3px;
+		}
+
+		.form2 h5 {
+			width: 80px;
+			height: 28px;
+			font-size: 20px;
+			font-family: PingFangSC-Regular;
+			font-weight: 400;
+			color: rgba(0, 0, 0, 1);
+			line-height: 28px;
+			margin-bottom: 7px;
+		}
+		.tree {  color:#7DAFE2;width:50%;box-sizing: border-box;padding-left: 20px;float: left;}
+		.tree li,
+		.tree li > a,
+		.tree li > span {
+			padding: 3pt;
+			border-radius: 4px;
+		}
+
+		.tree li label {
+			color:#7DAFE2;
+			line-height: 20pt;
+		}
+		.tree-empty{
+			padding: 0 35px !important;
+		}
+		.layui-form-select dl{
+			top: -20px !important;
+		}
+		.layui-form-pane .layui-form-switch{
+			margin-top: 3px;
+    	margin-left: 0;
+		}
+	</style>
+	<body>
+		<div id="proMang">
+			<div class="top"><img src="../../img/logo.png" alt="" class="logo">
+				<ul>
+					<li class="top-a-box  " data-value="210"><a href="../workbench/order_fail.html"><span
+							class="iconfont icon-diannao" style="font-size: 22px;"></span>
+						工作台
+					</a></li>
+					<li class="top-a-box addClass " data-value="211"><a href="./user_manage.html">
+						<span class="iconfont icon-yonghu" style="font-size: 22px;"></span>
+						用户管理
+					</a></li>
+					<li class="top-a-box " data-value="212"><a href="../order_manage/order_manage.html"><span
+							class="iconfont icon-dingdanguanli" style="font-size: 22px;"></span>
+						订单管理
+					</a></li>
+					<li class="top-a-box " data-value="213"><a href="../resource/take_orders.html"><span
+							class="iconfont icon-iconfonticon-shebei" style="font-size: 22px;"></span>
+						资源配置
+					</a></li>
+				</ul>
+				<div class="sign">
+					<span class="ren"></span> <span class="type"></span>
+					<img src="../../img/退出.png" alt=""  onclick="sign()">
+				</div>
+			</div>
+		</div>
+		<div class="main-box">
+			<!-- 左侧菜单 -->
+			<div id="leftMenu_Box" class="user_manage">
+				<div class="leftMenu">
+					<ul class="prop">
+						<li class="left_a dn " data-value="21110"><a href="./user_manage.html"><span
+								class="iconfont icon-yonghu"></span>
+							用户列表
+						</a></li>
+						<li class="left_a addclass_one dn" data-value="21111"><a href="javascript:void(0);" class=""><span
+								class="iconfont icon-shenhe"></span>
+							运维列表
+						</a></li>
+						<li class="left_a dn" data-value="21112">
+							<a href="./journal.html" class=""><span class="iconfont icon-shenhe"></span> 访问日志
+							</a>
+						</li>
+					</ul>
+					<div class="group" onclick="flexible(event)"><span class="iconfont icon-xiangzuo" style="color: rgb(255, 255, 255); font-size: 13px;"></span></div>
+				</div>
+			</div>
+			<div id="rightTable">
+				<v-operation-list></v-operation-list>
+			</div>
+		</div>
+		<div id="shade1">
+			<v-operation-manage></v-operation-manage>
+
+		</div>
+		<div id="shade3">
+			<v-amend></v-amend>
+		</div>
+		<script type="text/x-template" id="operation-template">
+			<div>
+				<div class="table_tou">
+					<h6 class="fl">运维列表</h6>
+					<div class="fr sw_padd" >
+            <span class="sw_num"
+				  v-cloak>{{totalCount}}</span>&nbsp; &nbsp;<span style="color:#738495">条记录</span>
+            <span class="Gradual" @click="shade()">
+              <span class="iconfont icon-xinzeng" >&nbsp;新增</span>
+            </span>
+					</div>
+				</div>
+				<div class="table_nav">
+					<form class="layui-form layui-form-pane" action="">
+						<div class="layui-inline" >
+							<label class="">登录名</label><br />
+							<div class="layui-input-inline">
+								<input
+										type="text"
+										name="loginName"
+										placeholder="请输入"
+										class="layui-input"
+										/>
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="">账户类型</label><br />
+							<div class="layui-input-inline">
+								<select name="accountType">
+									<option value="">请选择</option>
+									<option value="1">管理员</option>
+									<option value="110">通道管理员</option>
+									<option value="2">财务</option>
+									<option value="3">运营</option>
+									<option value="4">销售总监</option>
+									<option value="5">销售经理</option>
+									<option value="6">客户经理</option>
+									<option value="7">代理商</option>
+									<option value="8">客户</option>
+									<option value="100">直营客户</option>
+								</select>
+							</div>
+						</div>										   
+						<div class="layui-input-inline">
+							<button class="sw_btn1" lay-submit="" lay-filter="demo5" >
+								查询
+							</button>
+						</div>
+					</form>
+					<div class="sw_row">
+						<table style="margin-top: 15px;width: 100%;">
+							<tr>
+								<th >登录名</th>
+								<th >用户名</th>
+								<th >账户状态</th>
+								<th >账户类型</th>
+								<th >最后登录时间</th>
+								<th >创建人</th>
+								<th >创建时间</th>
+								<th style="width:70px;box-sizing: border-box;text-align: center;">MFA</th>
+								<th style="width:220px;box-sizing: border-box;text-align: center;">操作</th>
+							</tr>
+							<tr v-cloak v-for="(li, index) in allData">
+								<td>{{li.loginName}}</td>
+								<td>{{li.userName}}</td>
+								<td v-if="li.accountStatus == '1'">
+									不可用
+								</td>
+								<td v-if="li.accountStatus == '0'">
+									可用
+								</td>
+								<td class="account">
+									<span v-if="li.accountType == '1'">管理员</span>
+									<span v-if="li.accountType == '2'">财务</span>
+									<span v-if="li.accountType == '3'">运营</span>
+									<span v-if="li.accountType == '4'">销售总监</span>
+									<span v-if="li.accountType == '5'">销售经理</span>
+									<span v-if="li.accountType == '6'">客户经理</span>
+									<span v-if="li.accountType == '7'">代理商</span>
+									<span v-if="li.accountType == '8'">客户</span>
+									<span v-if="li.accountType == '9'">渠道人员</span>
+									<span v-if="li.accountType == '100'">直营客户</span>
+									<span v-if="li.accountType == '110'">通道管理员</span>
+								</td>
+
+								<td>
+									<div > {{li.lastLoginTime | limitTo}} </div>
+								</td>
+								<td>{{li.createrName}}</td>
+								<td>
+									<div > {{li.createrTime | limitTo}} </div>
+								</td>
+								<td>
+									<div style="min-width: 70px;text-align: center;">
+										<form class="layui-form layui-form-pane" action="" style="display: inline-block;border-bottom: none;padding: 0;">							
+										    <div class="layui-input-inline">
+										      <input type="checkbox" name="yyy" lay-skin="switch" lay-filter="yyy" :value="li.userId" lay-text="ON|OFF" :checked="li.mfaState != 0">
+										    </div>			
+										</form>
+									</div>
+								</td>
+								<td>
+									<div style="min-width: 220px;text-align: center;">
+										<span class="sw_btn2 " @click="amend(li.loginName)" :class="{'pointerA':li.accountType != '3'}">修改</span>
+										<span class="sw_btn2 " @click="manage($event,li.userId,li.loginName,li.userName,li.accountStatus)" style="padding: 0 4px;">权限管理</span>
+										<span class="sw_btn2 " @click="reset(li.loginName)"  style="padding: 0 4px;">重置密码</span>
+										<!--<span class="sw_btn3" @click="del(li.loginName)" :class="{'pointerA':li.accountType != '3'}">删除</span>-->																				
+									</div>
+								</td>
+							</tr>
+						</table>
+						<div class="sw_pad8" v-show="showNo == true">暂无数据</div>
+					</div>
+					<div id="page"></div>
+					<div id="shade2">
+						<div class="tips2">
+							<div class="weizhi">
+								<img src="../../img/warming.png" alt="">
+							</div>
+							<div class="tc" v-if="!mapShow">
+								您确认执行重置密码操作吗？
+							</div>
+							<div v-cloak class="tc" v-else>
+								您确认执行({{loginName}})删除操作吗？
+							</div>
+							<div class="tc">
+								<button class="sw_btnsuss" @click="sw_btnsuss()">确认</button>
+								<button class="sw_btnwrong marl_15" @click="sw_btnwrong()">取消</button>
+							</div>
+						</div>
+						<div class="tips_chid2">
+							<div class="weizhi">
+								<img src="../../img/success.png" alt="">
+							</div>
+							<div v-cloak class="tc" v-if="!mapShow">
+								{{pass}}
+							</div>
+							<div v-cloak class="tc" v-else>
+								删除{{loginName}}用户成功！
+							</div>
+							<div class="tc">
+								<button class="sw_btnsuss" @click="sw_qued()">确认</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</script>
+		<script type="text/x-template" id="manage-template">
+			<div class="shade_con1">
+				<div class="tongji">
+					<h3>权限管理</h3>
+					<span class="iconfont icon-shanchu" @click="shanchu()"></span>
+				</div>
+				<div class="temp">
+					<form class="layui-form layui-form-pane" action="" style="padding:0px">
+						<h5>用户信息</h5>
+						<div class="border">
+							<div class="layui-inline">
+								<label class="">登录名</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input
+											type="text"
+											v-model="loginName"
+											placeholder="请输入"
+											class="layui-input"
+											disabled
+											style="background: #ECECEC;color: #444;"
+											/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">用户名</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input
+											type="text"
+											v-model="userName"
+											placeholder="请输入"
+											class="layui-input"
+											disabled
+											style="background: #ECECEC;color: #444;"
+											/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">账户类型</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input
+											type="text"
+											v-model="accountType"
+											placeholder="请输入"
+											class="layui-input"
+											disabled
+											style="background: #ECECEC;color: #444;"
+											/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">账户状态</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input
+											type="text"
+											v-model="accountStatus"
+											placeholder="请输入"
+											class="layui-input"
+											disabled
+											style="background: #ECECEC;color: #444;"
+											/>
+								</div>
+							</div>
+						</div>
+					</form>
+					<form class="form2">
+						<div class="pore">
+							<h5 style="margin: 15px 0;">权限列表</h5>
+							<span class="sw_btn1" style="position: absolute;top: -36px;right: 15px;" @click="queding()">确定</span>
+						</div>
+
+						<div class="border" style="height:245px;overflow-y: auto;">
+							<ul class="tree treemenu">
+								<li class="tree-closed "><span>后台权限</span>
+									<ul class="treemenu sw-clo">
+										<li v-cloak class="tree-closed" v-for="(li, index) in aa">
+											<span style="cursor: pointer;" @click="shut($event)">+</span>
+											<label @click="checkAll($event)">
+												<input type="checkbox" :value="li.menuId" :checked="li.isEnabled" class="sw_bb" />{{li.moduleName}}
+											</label>
+											<ul class="treemenu fater dns sw-clo">
+												<li v-for="(item, index1) in li.word" class="tree-empty">
+													<span style="cursor: pointer;"  @click="shutTwo($event)">+</span>
+													<label @click="checkAllA($event)">
+														<input type="checkbox" :value="item.menuId" :checked="item.isEnabled"  class="sw_cc" />{{item.moduleName}}
+													</label>
+													<!--@click="checkDanA($event)"-->
+													<ul class="treemenu chird dns sw-clo">
+														<li v-for="(i, index2) in item.bb" class="tree-empty" style="width: 150px;">
+															<span style="cursor: pointer;"  @click="shutThree($event)">+</span>
+															<label >
+																<input type="checkbox" :value="i.menuId" :checked="i.isEnabled"/>{{i.moduleName}}
+															</label>
+															<ul class="treemenu chird_two dns sw-clo">
+																<li v-for="(item2, index3) in i.chird" class="tree-empty" style="width: 130px;">
+																	<label >
+																		<input type="checkbox" :value="item2.menuId" :checked="item2.isEnabled"/>{{item2.moduleName}}
+																	</label>
+																</li>
+															</ul>
+														</li>
+													</ul>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<ul class="tree treemenu">
+								<li class="tree-closed "><span>前台权限</span>
+									<ul class="treemenu sw-clo">
+										<li class="tree-closed" v-for="(li, index) in web">
+											<span style="cursor: pointer;" @click="shut($event)">+</span>
+											<label @click="checkAll($event)">
+												<input type="checkbox" :value="li.menuId" :checked="li.isEnabled" class="sw_bb" />{{li.moduleName}}
+											</label>
+											<ul class="treemenu fater dns sw-clo">
+												<li v-for="(item, index1) in li.word" class="tree-empty">
+													<span style="cursor: pointer;"  @click="shutTwo($event)">+</span>
+													<label @click="checkDan($event)">
+														<input type="checkbox" :value="item.menuId" :checked="item.isEnabled"/>{{item.moduleName}}
+													</label>
+
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						</form>
+				</div>
+			</div>
+		</script>
+		<script type="text/x-template" id="amend-template">
+			<div class="shade_con3">
+				<div class="tongji">
+					<h3 v-if="code== 0">新增用户</h3>
+					<h3 v-if="code== 1">修改用户</h3>
+					<span class="iconfont icon-shanchu" @click="shanchu()"></span>
+				</div>
+				<div class="temp">
+					<form class="layui-form layui-form-pane" action="" style="padding:0px">
+						<div class="border">
+							<div class="layui-inline">
+								<label class=""><span style="color:#FE2121;font-weight:600;">*</span> 登录名</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input
+											type="text"
+											name="loginName"
+											v-model="Info.loginName"
+											lay-verify="required"
+											placeholder="请输入"
+											class="layui-input loginName"
+											disabled
+											style="background: #ECECEC;color: #444;"
+											/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class=""><span style="color:#FE2121;font-weight:600;">*</span> 用户名</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input
+											type="text"
+											name="userName"
+											lay-verify="required"
+											v-model="Info.userName"
+											placeholder="请输入"
+											class="layui-input"
+											/>
+								</div>
+							</div>
+							<div class="layui-inline" >
+								<label class=""><span style="color:#FE2121;font-weight:600;">*</span> 账户状态</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<select name="accountStatus" id="eventLevel">
+										<option value="0" selected>可用</option>
+										<option value="1">不可用</option>
+									</select>
+								</div>
+							</div>
+							<div class="layui-inline" >
+								<label class=""><span style="color:#FE2121;font-weight:600;">*</span> 账户类型</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<select name="accountType" id="eventLevelTwo">
+										<!--<option value="" selected>请选择</option>-->
+										<!--<option value="1">管理员</option>-->
+										<!--<option value="2" >财务</option>-->
+										<option value="3"  selected>运营</option>
+										<option value="110">通道管理员</option>
+										<!--<option value="4" >销售总监</option>-->
+										<!--<option value="5" >销售经理</option>-->
+										<!--<option value="6" >客户经理</option>-->
+										<!--<option value="7" >代理商</option>-->
+										<!--<option value="8" >客户</option>-->
+										<!--<option value="9" >渠道人员</option>-->
+										<!--<option value="100" >直营客户</option>-->
+									</select>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">省份</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input
+											type="text"
+											name="province"
+											v-model="Info.province"
+											placeholder="请输入"
+											class="layui-input"
+											/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">地市</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input
+											type="text"
+											name="city"
+											v-model="Info.city"
+											placeholder="请输入"
+											class="layui-input"
+											/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">公司</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input
+											type="text"
+											name="company"
+											v-model="Info.company"
+											placeholder="请输入"
+											class="layui-input"
+											/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">联系人</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input
+											type="text"
+											name="department"
+											v-model="Info.department"
+											placeholder="请输入"
+											class="layui-input"
+											/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">邮箱</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input
+											type="text"
+											name="email"
+
+											v-model="Info.email"
+											placeholder="请输入"
+											class="layui-input"
+											/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">手机号</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input
+											type="text"
+											name="mobilePhone"
+											v-model="Info.mobilePhone"
+											placeholder="请输入"
+											class="layui-input"
+											/>
+								</div>
+							</div>
+							<div class="layui-inline" v-if="code== 0">
+								<label class=""><span style="color:#FE2121;font-weight:600;">*</span>密码</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input
+											type="password"
+											name="password"
+											autocomplete="off"
+											placeholder="请输入"
+											class="layui-input"
+											/>
+								</div>
+							</div>
+							<div class="layui-inline" v-if="code== 0">
+								<label class=""><span style="color:#FE2121;font-weight:600;">*</span>确认密码</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input
+											type="password"
+											name="yesPassword"
+											autocomplete="off"
+											placeholder="请输入"
+											class="layui-input"
+											/>
+								</div>
+							</div>
+							<div class="layui-inline" v-if="code== 1">
+								<label class="">最后登录时间</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input
+											type="text"
+											name="lastLoginTime"
+											v-model="Info.lastLoginTime"
+											class="layui-input"
+											disabled
+											style="background: #ECECEC;color: #444;"
+											/>
+								</div>
+							</div>
+							<div class="layui-inline"v-if="code== 1">
+								<label class="">最后登录IP地址</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input
+											type="text"
+											name="lastLoginIp"
+											v-model="Info.lastLoginIp"
+											class="layui-input"
+											disabled
+											style="background: #ECECEC;color: #444;"
+											/>
+								</div>
+							</div>
+							<div class="layui-input-inline">
+								<button class="sw_btn1"  :class="{'pointerA':Info.accountType != '3'}" style="margin-left: 410px;" lay-submit="" lay-filter="demo6" v-if="code== 1">
+									确认修改
+								</button>
+								<button class="sw_btn1" style="margin-left: 410px;" lay-submit="" lay-filter="demo7" v-if="code== 0">
+									确定新增
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</script>
+		<script src="../../layui.all.js"></script>
+		<script src="../../module/operation_list.js"></script>
+		<script type="text/javascript">
+//			//头部
+//			var operaAI = new Vue({
+//				el: "#proMang",
+//				data: {
+//					topCurrent: 1
+//				}
+//			});
+//			//   //左侧菜单组件实例化
+//			var leftMenu = new Vue({
+//				el: "#leftMenu_Box",
+//				data: {
+//					current: 1
+//				}
+//			});
+			user_manage()
+			var rightTable = new Vue({
+				el: "#rightTable"
+			});
+			//
+
+			//
+			var shade1 = new Vue({
+				el: "#shade1"
+			});
+			//
+			var shade3 = new Vue({
+				el: "#shade3"
+			});
+			$(function() {
+				$(document).ready(function () {
+					$('#leftMenu_Box').css('background', '#040b29');
+					$('#proMang .top').css('background', '#fff')
+				});
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+<title>发送明细</title>
+<link href="css/style.css" rel="stylesheet"/>
+<link href="css/response.css" rel="stylesheet"/>
+</head>
+<body class="bg">
+<div class="content">
+	<div class="header">
+		<div class="header-nei">
+			<a href="inputDetil.html"  class="back-up"><i class="iconfont icon-xiangzuo"></i></a>
+			<h2 class="header-title">发送明细</h2>
+            <a href="nav.html" class="back-top"><i class="iconfont icon-daohang"></i></a>
+		</div>
+	</div>
+	<!--head/-->
+	<div class="head-height">&nbsp;</div>
+	<div class="nav" id="order_fail">
+
+    </div>
+    <div class="loading"><a href="javascript:;">加载更多...</a></div>
+</div>
+<!--content/-->
+<div class="bg100"></div>
+<!--错误提示-->
+<div class="tip-errors-bg">
+    <div class="tip-tip-box-nei">
+        <strong><i class="iconfont icon-shanchu"></i><em class="errors">错误提示</em></strong>
+    </div>
+    <!--tip-tip-box/-->
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/style.js"></script>
+<script src="js/doT.min.js"></script>
+<script id="interpolationtmpl" type="text/x-dot-template">
+    {{~it:value:index}}
+         <dl>
+            <a href="javascript:;" class="order_info" >
+                <form>
+                    <input type="hidden" name="orderSn" value="{{=value.orderSn}}">
+                    <input type="hidden" name="loginName" value="{{=value.loginName}}">
+                    <input type="hidden" name="receiverMsisdn" value="{{=value.receiverMsisdn}}">
+                    <input type="hidden" name="province" value="{{=value.province}}">
+                    <input type="hidden" name="msgContent" value="{{=value.msgContent}}">
+                    <input type="hidden" name="typeName" value="{{=value.typeName}}">
+                    <input type="hidden" name="msgTotal" value="{{=value.msgTotal}}">
+                    <input type="hidden" name="successAmount" value="{{=value.successAmount}}">
+                    <input type="hidden" name="sentTime" value="{{=value.sentTime}}">
+                    <input type="hidden" name="receiptTime" value="{{=value.receiptTime}}">
+                    <input type="hidden" name="receiptStatusText" value="{{=value.receiptStatusText}}">
+                    <input type="hidden" name="receiptStatusCode" value="{{=value.receiptStatusCode}}">
+                    <input type="hidden" name="ismgName" value="{{=value.ismgName}}">
+                    <input type="hidden" name="howSend" value="{{=value.howSend}}">
+                </form>
+                <dt></dt>
+                <dd>
+                     <span>{{=value.loginName}}</span>
+                    {{? value.receiptStatusCode == null}}
+                    <span style="color:#A9A9A9;float: right;">未知</span>
+                    {{?? value.receiptStatusCode == 1}}
+                    <span style="color:#9AC938;float: right;">成功</span>
+                    {{?? value.receiptStatusCode == 0}}
+                    <span style="color:#FF3939;float: right;">失败</span>
+                    {{?}}<br>
+                     <span>{{=value.receiverMsisdn}}</span> <i style="float: right;">{{=value.createTime}}</i>
+                    <div class="con_cal">{{=value.msgContent}}</div>
+                </dd>
+                <i class="iconfont icon-xiangyou"></i>
+                <div class="clears"></div>
+            </a>
+        </dl>
+    {{~}}
+</script>
+<script>
+    $(function(){
+        var allData,num = 1,totalCount;
+        var objCan = JSON.parse(sessionStorage.getItem('inputObj')) ;
+        function addData(obj){
+            $.ajax({
+                url :"/icos/order/queryUserSendDetailList",
+                type : 'post',
+                async: true,
+                dataType : 'json',
+                contentType: 'application/json',
+                data : JSON.stringify(obj),
+                headers : {
+                    "Authorization":sessionStorage.getItem('id'),
+                },
+                complete: function (xhr) {
+                    $("#load").remove();
+                    // 获取相关Http Response header
+                    if(xhr.getResponseHeader('Authorization') != null){
+                        sessionStorage.setItem('id', xhr.getResponseHeader('Authorization'));
+                    }
+                },
+                success : function(res){
+
+                    if (res.statusCode == '401') {
+                        errors();
+                        $(".errors").text("用户超时，请重新登录！");
+                        setTimeout(function(){
+                            location.href = "index.html";
+                            sessionStorage.clear();
+                        },1000)
+                    }else if(res.statusCode == '400'){
+                        errors();
+                        $(".errors").text(res.message);
+                    }  else {
+                        allData = res.data.data;
+                        if(res.data.offset == 1){
+                            totalCount = res.data.totalCount;
+                            $(".loading a").html('加载更多...总共('+ totalCount + ')条')
+                        }
+                        if(allData.length == 0){
+                            errors();
+                            $(".errors").text('用户暂无更多数据');
+                        }
+                        var interText = doT.template($("#interpolationtmpl").text());
+                        $("#order_fail").append(interText(allData));
+                    }
+                },
+                error : function(err){
+                    location.href = "index.html";
+                    sessionStorage.clear();
+                }
+            });
+        };
+       addData(objCan)
+        //定单校验
+        $(".loading").on('click',function() {
+            num = num + 1
+
+            objCan.offset = num;
+            addData(objCan)
+        })
+        $("#order_fail").on('click','.order_info',function() {
+            var json = $(this).find('form').serializeArray()
+            sessionStorage.setItem('infoObj', JSON.stringify(serializeFormJSON(json)));
+            location.href = "detil_info.html"
+        })
+    })
+</script>
+</body>
+</html>

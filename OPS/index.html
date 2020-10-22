@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+		<title>大数据登录</title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/scanboardLogin.css" />
+		<link rel="stylesheet" type="text/css" href="css/animsition.css" />
+	</head>
+
+	<body>
+		<div class="wp animsition">
+			<div class="boardLogin">
+				<a href="#" class="logo">
+					<img src="images/loginLogo.png">
+				</a>
+				<form id="form">
+					<div class="inpGroup">
+						<span class="loginIco1"></span>
+						<input type="text" id="user" name="user" placeholder="请输入您的用户名" autocomplete="off">
+					</div>
+					<div class="prompt">
+						<p class="errorUser error">用户名错误或不存在</p>
+					</div>
+
+					<div class="inpGroup">
+						<span class="loginIco2"></span>
+						<input type="password" id="pass" name="pass" placeholder="请输入您的密码" autocomplete="off">
+					</div>
+					<div class="prompt">
+						<p class="errorPass error">密码不正确</p>
+					</div>
+					<div class="inpGroup">
+						<span class="loginIco2"></span>
+						<input type="text" id="yzm" name="yzm" placeholder="请输入您的验证码" autocomplete="off">
+					</div>
+					<div class="prompt">
+						<p class="errorYzm error">验证码错误</p>
+					</div>
+					<!-- <button class="animsition-link submit">登录</button> -->
+					<a class="submit">登录</a>
+					<div class="prompt">
+						<p class="errorLogin error"></p>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div id="particles-js"></div>
+	</body>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery.animsition.js"></script>
+	<script src="js/particles.min.js"></script>
+	<script src="js/app.js"></script>
+	<script type="text/javascript">
+		$('.submit').on('click', function() {
+			var _this = $(this);
+			var user = $("#user").val().trim();
+			var pass = $("#pass").val().trim();
+			var yzm = $("#yzm").val().trim();
+			if(user == '') {
+				$('#form .errorUser').show();
+				setTimeout(function() {
+					$('#form .errorUser').hide();
+				}, 1000)
+				return false;
+			}
+			if(pass == '') {
+				$('#form .errorPass').show();
+				setTimeout(function() {
+					$('#form .errorPass').hide();
+				}, 1000)
+				return false;
+			}
+			if(yzm == '') {
+				$('#form .errorYzm').show();
+				setTimeout(function() {
+					$('#form .errorYzm').hide();
+				}, 1000)
+				return false;
+			}
+			$.ajax({
+				url: "/login",
+				type: 'post',
+				dataType: 'json',
+				async: false,
+				data: {
+					username: user,
+					password: pass,
+					code: yzm
+				},
+				success: function(data) {
+					// console.log(data);
+					if(data.statusCode == 200) {
+						localStorage.setItem('id', data.data.Authorization);
+						_this.attr('href', './monitoring.html');
+						setTimeout(function() {
+							_this.addClass('animsition-link')
+						}, 2000)
+					} else {
+						$('#form .errorLogin').html(data.message);
+						$('#form .errorLogin').show();
+						setTimeout(function() {
+							$('#form .errorLogin').hide();
+						}, 1000)
+						return false;
+					}
+				},
+				error: function(err) {
+					$('#form .errorLogin').html(err.message)
+					$('#form .errorLogin').show()
+					return false;
+				}
+			});
+			//console.log($("#form"))
+		});
+		$(document).keydown(function(event) {
+			var e = event || window.event || arguments.callee.caller.arguments[0];
+			if(e && e.keyCode == 13) { // enter 键
+				var user = $("#user").val().trim();
+				var pass = $("#pass").val().trim();
+				var yzm = $("#yzm").val().trim();
+				if(user == '') {
+					$('#form .errorUser').show();
+					setTimeout(function() {
+						$('#form .errorUser').hide();
+					}, 1000)
+					return false;
+				}
+				if(pass == '') {
+					$('#form .errorPass').show();
+					setTimeout(function() {
+						$('#form .errorPass').hide();
+					}, 1000)
+					return false;
+				}
+				if(yzm == '') {
+					$('#form .errorYzm').show();
+					setTimeout(function() {
+						$('#form .errorYzm').hide();
+					}, 1000)
+					return false;
+				}
+				$.ajax({
+					url: "/login",
+					type: 'post',
+					dataType: 'json',
+					async: false,
+					data: {
+						username: user,
+						password: pass,
+						code: yzm
+					},
+					success: function(data) {
+						// console.log(data);
+						if(data.statusCode == 200) {
+							localStorage.setItem('id', data.data.Authorization);
+							window.location.href = 'monitoring.html';
+//							_this.attr('href', './scanboard.html');
+//							setTimeout(function() {
+//								_this.addClass('animsition-link');
+//								
+//							}, 2000)
+						} else {
+							$('#form .errorLogin').html(data.message);
+							$('#form .errorLogin').show();
+							setTimeout(function() {
+								$('#form .errorLogin').hide();
+							}, 1000)
+							return false;
+						}
+					},
+					error: function(err) {
+						$('#form .errorLogin').html(err.message)
+						$('#form .errorLogin').show()
+						return false;
+					}
+				});
+			}
+		});
+		$(".animsition").animsition({
+			inClass: 'fade-in',
+			outClass: 'fade-out',
+			inDuration: 800,
+			outDuration: 1000,
+			linkElement: '.animsition-link',
+
+			loading: true,
+			loadingParentElement: 'body',
+			loadingClass: 'animsition-loading',
+			unSupportCss: ['animation-duration',
+				'-webkit-animation-duration',
+				'-o-animation-duration'
+			],
+
+			overlay: false,
+
+			overlayClass: 'animsition-overlay-slide',
+			overlayParentElement: 'body',
+		});
+	</script>
+
+</html>

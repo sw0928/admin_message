@@ -1,0 +1,180 @@
+.jx {
+    width: 340px;
+    display: block;
+    position: absolute;
+    top: 25%;
+    z-index: 999;
+    left: 25%;
+}
+.jx .ysu{float:left;    margin-top: 0;}
+.jx .ti {
+    float: left;
+    width: 100%;
+    font-size: 18px;
+    text-align: center;
+    color: #2a2a2a;
+    line-height: 36px;    margin-bottom: 6px;
+}
+.L_transform{float: left;width: 340px;height: 340px}
+.L_transform .trans_bg{position: relative;float: left;width:340px;height:340px;}
+
+.L_transform .bg_shade {    
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+    box-sizing: border-box;
+    position: absolute;
+    background: rgba(66, 159, 216, 0.3)
+}
+.trans_bg .pos{position:relative;width: 133px;}
+.trans_bg .trio{color: #ffffff;font-size: 16px;text-align: center;margin: 0 auto;width: 60px;height: 60px;background: #00c8d4;position: absolute;border-radius: 50%;}
+.trans_bg .trio p{width: 38px;margin-left: 11px;margin-top: 8px;}
+.trans_bg .pos span{color: #999fb1;font-size: 14px;}
+.trans_bg .heart_box{width: 340px;display: inline-block;height: 340px;}
+.trans_bg .heart_box .shan{				
+		top: 5px;
+    left: 5px;
+    position: absolute;
+    /* -webkit-transform-origin: 107px 124px; */
+    /* transform-origin: 108px 124px; */
+    transform: rotate(0deg);
+    animation: radar 5s linear infinite;
+}
+@keyframes radar{
+    0%{
+        transform: rotate(0deg);
+    }
+    50%{
+        transform: rotate(180deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+  .pie {
+    padding: 0;
+    width: 330px;
+    margin: 0px;
+    height: 330px;
+    border-radius: 100%;
+    list-style: none;
+    overflow: hidden;
+    transform: rotate(0deg) /*针对mac safari浏览器兼容*/
+
+  }
+  .slice {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 50%;
+    transform-origin: 0% 100%;
+  }
+  .slice-8 {
+    transform: rotate(-288deg) skewY(-54deg);
+    background: rgba(239, 200, 96, 0.6)
+ }
+ .defer{
+ 	  position: absolute;
+    width: 250px;
+    height: 90px;
+    display: block;
+    bottom: 32%;
+    z-index: 999;
+    left: 3%;
+    padding: 8px 12px;
+    background: transparent;
+ }
+ .sw_defer{
+ 	  background: linear-gradient(to bottom, #132750 0%,#1f3165 100%);
+    padding: 5px 0px 5px 15px;
+    height: 85%;
+ }
+ .defer p{
+ 	color: #fff;
+  font-size: 18px;
+  margin-bottom: 10px;
+ }
+.defer div span{
+	display: inline-block;
+  width: 32%;
+ 	color: #fff;
+ 	font-size: 12px;
+ }
+ .sw_red,.sw_yellow,.sw_green{
+ 	  display: inline-block;
+    width: 18px;
+    height: 18px;
+    background: #ff1313;
+    border-radius: 50%;
+    vertical-align: sub;
+    margin-right: 6px;
+ }
+.sw_yellow{
+	background: #ffff0f;
+}
+.sw_green{
+	background: #11f511;
+}
+ #echarts_value{
+ 	  position: absolute;
+    width: 20.5%;
+    height: 65%;
+    display: block;
+    bottom: 28%;
+    z-index: 999;
+    left: 72%;
+    top: 7%;
+    animation: sw_result 1s linear;
+    -webkit-animation: sw_result 1.5s linear; /* Safari 和 Chrome */
+ }
+ #echarts_value ul{
+ 	width: 100%;
+    height: 100%;
+ }
+#echarts_value ul li{
+	display: inline-block;
+    width: 100%;
+    height: 13%;
+    margin-bottom: 7%;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+ 		color: #fff;
+ }
+ .sw_city{
+ 	font-size: 16px;
+  padding: 8.5% 0 0 11%;
+ }
+.sw_number{
+	font-size: 12px;
+  padding: 0 0 0 11%;
+}
+#echarts_value li span{
+	  font-size: 20px;
+    font-weight: 800;
+    font-family: 'tapeworm';
+}
+.normal_back{
+	background-image: url(../images/aa.png);
+}
+.centre_risk_back{
+	background-image: url(../images/bb.png);
+}
+.high_risk_back{
+	background-image: url(../images/cc.png);
+}
+@keyframes sw_result{
+    0%{
+        left: 0;
+        opacity: 0;
+    }
+    50%{
+       left: 47%;
+       opacity: .4;
+    }
+    100%{
+      left: 74%;
+      opacity: 1;
+    }
+}

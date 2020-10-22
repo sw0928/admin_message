@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>智能通信运营管理平台</title>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../css/layui.css" />
+		<script src="../../js/api.js"></script>
+		<script src="../../js/jquery-3.0.0.min.js"></script>
+		<script src="../laydate/laydate.js"></script>
+		<script src="../../js/vue.min.js"></script>
+	</head>
+	<!--[if IE 9]>
+<style>
+    #leftMenu_Box{
+        width: 15.08%;
+        height: 979px;
+        float: left;
+        background: #040b29 !important;
+        position: relative;
+        box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.5);
+    }
+</style>
+<![endif]-->
+	<style>
+		/*#page {*/
+		/*padding: 50px 0 47px 0;*/
+		/*}*/
+		
+		#aa,#bb,#cc,#page1,
+		#page2 {
+			text-align: center;
+			padding: 10px 0 10px;
+		}
+		
+		#leftMenu_Box .leftMenu ul li div.prop a.prop4 {
+			background-color: #1890FF !important;
+			color: #fff !important;
+		}
+		/*.sw_row tr td div {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-right: 10px;
+        box-sizing: border-box;
+    }*/
+		/*.sw_row tr td:nth-child(2) div {*/
+		/*width: 88px;*/
+		/*}*/
+		/*.sw_row tr td:nth-child(7) div {*/
+		/*width: 75px;*/
+		/*}*/
+		/*.sw_row tr td:nth-child(4) div {*/
+		/*width: 80px;*/
+		/*}*/
+		/*.sw_row tr td:nth-child(7) div {*/
+		/*width: 170px;*/
+		/*white-space: nowrap;*/
+		/*padding-right: 10px;*/
+		/*box-sizing: border-box;*/
+		/*}*/
+		/*.sw_row tr td {*/
+		/*padding: 18px 0 18px 0;*/
+		/*}*/
+		
+		.sw_row tr td:nth-child(9) {
+			padding: 8px 0;
+		}
+		
+		.shade_con {
+			width: 980px;
+			height: auto;
+		}			
+		.shade_con .temp {
+			width: 970px;
+			height: auto;
+			margin: 10px 10px 0 10px;
+			padding-top: 10px;
+			overflow-y: auto;
+		}
+		/*.layui-form {
+        padding: 0px;
+        border: none;
+    }*/
+		
+		#text3 {
+			width: 915px;
+			height: 80px;
+			margin: 10px 0px 0 0px;
+			border: 1px solid #e2e2e2;
+			box-sizing: border-box;
+			padding: 7px;
+		}
+		
+		#text4 {
+			width: 922px;
+			height: 80px;
+			margin: 0px 18px 0 18px;
+			border: 1px solid #e2e2e2;
+			box-sizing: border-box;
+			padding: 7px;
+		}
+		.shade_con1,.shade_con2,.shade_con3,.shade_con4{
+        height: auto;
+        width: 62%;
+        padding-bottom: 20px;
+    }
+		.shade_con1 .temp,.shade_con2 .temp,.shade_con3 .temp {
+			width: auto;
+			height: auto;
+			margin: 10px 22px 0 22px;
+		}
+		/*.layui-inline label {
+        padding: 10px 0;
+    }*/
+		
+		.layui-form-checkbox[lay-skin="primary"] span {
+			font-size: 12px;
+			padding-right: 0px;
+			color: #494949;
+		}
+		/*table tr th {*/
+		/*box-sizing: border-box;*/
+		/*padding: 16px 0;*/
+		/*border-bottom: 1px solid #e1e7ec;*/
+		/*}*/
+		/*.layui-form-select dl{
+			max-height: 225px;
+		}*/
+		.layui-form-pane .layui-form-switch {
+			margin-top: -4px;
+			margin-left: 0;
+		}
+	</style>
+
+	<body>
+		<div id="proMang">
+			<div class="top"><img src="../../img/logo.png" alt="" class="logo">
+				<ul>
+					<li class="top-a-box" data-value="210">
+						<a href="../workbench/order_fail.html"><span class="iconfont icon-diannao" style="font-size: 22px;"></span> 工作台
+						</a>
+					</li>
+					<li class="top-a-box " data-value="211">
+						<a href="../user_manage/user_manage.html">
+							<span class="iconfont icon-yonghu" style="font-size: 22px;"></span> 用户管理
+						</a>
+					</li>
+					<li class="top-a-box addClass" data-value="212">
+						<a href="./order_manage.html"><span class="iconfont icon-dingdanguanli" style="font-size: 22px;"></span> 订单管理
+						</a>
+					</li>
+					<li class="top-a-box " data-value="213">
+						<a href="../resource/take_orders.html"><span class="iconfont icon-iconfonticon-shebei" style="font-size: 22px;"></span> 资源配置
+						</a>
+					</li>
+				</ul>
+				<div class="sign">
+					<span class="ren"></span> <span class="type"></span>
+					<img src="../../img/退出.png" alt="" onclick="sign()">
+				</div>
+			</div>
+		</div>
+		<div class="main-box">
+			<!-- 左侧菜单 -->
+			<div id="leftMenu_Box" class="order_manage">
+				<div class="leftMenu">
+					<ul>
+						<li class="left_a dn " data-value="21210">
+							<a href="./order_manage.html" class="leftNav sw_url">
+								<span class="iconfont icon-guanli"></span> 订单管理
+							</a>
+						</li>
+						<li class="left_a dn addclass_one" data-value="21210">
+							<a href="javascript:void(0);" class="leftNav sw_url">
+								<span class="iconfont icon-guanli"></span> 订单规则
+							</a>
+						</li>
+						<li class="left_a dn " data-value="21211">
+							<a href="./order_list.html" class="leftNav sw_url">
+								<span class="iconfont icon-liebiao"></span> 详单列表
+							</a>
+						</li>
+						<li class="left_a  dn" data-value="21214">
+							<a href="./order_detail.html" class="leftNav sw_url">
+								<span class="iconfont icon-liebiao"></span> 接单明细
+							</a>
+						</li>
+						<li class="left_a dn" data-value="21212">
+							<a href="javascript:void(0);" class="leftNav" onclick="aa(event)">
+								<span class="iconfont icon-diannao-shuju"></span> 客户支持
+								<i class="iconfont icon-iconfontfold"></i> </a>
+							<div class="prop dns">
+								<a href="./signature_distribute.html" data-value="2121210" class="prop13 left_a dn sw_url">签名分布</a>
+								<a href="./called_distribute.html" data-value="2121211" class="prop22 left_a sw_url dn">被叫分布</a>
+								<a href="./client_type.html" data-value="2121212" class="prop33 left_a dn sw_url">客户订单类型</a>
+							</div>
+						</li>
+						<li class="left_a dn" data-value="21213">
+							<a href="javascript:void(0);" class="leftNav" onclick="aa(event)">
+								<span class="iconfont icon-diannao-shuju"></span> 通道管理
+								<i class="iconfont icon-iconfontfold"></i> </a>
+							<div class="prop dns">
+								<a href="./channel_new.html" data-value="2121310" class="prop20 left_a dn sw_url">通道信息</a>
+								<!--<a href="./channel_test.html" data-value="2121311" class="prop24 left_a dn">通道测试</a>-->
+								<a href="./status_report_record.html" data-value="2121312" class="prop21 left_a sw_url dn">报告状态记录</a>
+								<a href="./status_report_reset.html" data-value="2121313" class="prop23 left_a sw_url dn">报告状态重推</a>
+								<!--<a href="./channel_test.html" data-value="2121311" class="prop21 left_a sw_url dn">通道测试</a>-->
+							</div>
+						</li>
+					</ul>
+					<div class="group" onclick="flexible(event)"><span class="iconfont icon-xiangzuo" style="color: rgb(255, 255, 255); font-size: 13px;"></span></div>
+				</div>
+			</div>
+			<div id="rightTable">
+				<v-signature></v-signature>
+			</div>
+		</div>
+		<div id="shade">
+			<v-template-signature></v-template-signature>
+		</div>
+		<div id="shade1">
+			<v-rate></v-rate>
+		</div>
+		<div id="shade2">
+			<v-operator></v-operator>
+		</div>
+		<div id="shade3">
+			<v-copy></v-copy>
+		</div>
+		<div id="shade4">
+			<v-dispose></v-dispose>
+		</div>
+		<script type="text/x-template" id="signature-template">
+			<div>
+				<div class="table_tou">
+					<h6 class="fl">订单规则列表</h6>
+					<div class="fr sw_padd">
+						<span class="sw_num" v-cloak>{{totalCount}}</span>&nbsp; &nbsp;<span style="color:#738495">条记录</span>
+						<span class="Gradual" @click="shade()">
+              <span class="iconfont icon-jiekuanshenqing" >&nbsp;新增</span>
+						</span>
+
+					</div>
+				</div>
+				<div class="table_nav">
+					<form class="layui-form layui-form-pane" action="">
+						<div class="layui-inline">
+							<label class="">规则名称</label><br />
+							<div class="layui-input-inline">
+								<input type="text" name="orderRuleName" placeholder="请输入" class="layui-input" />
+							</div>
+						</div>
+						<div class="layui-inline dropdown unlike1">
+							<label class="">规则用户</label><br />
+							<input type="text" class="dropdown-selected1" name="userId" autocomplete="off" placeholder="请输入">
+							<ul class="dns">
+								<li v-for="(li, index) in userData">
+									<a href="javaScript:" :data="li.userId">{{li.loginName}}</a>
+								</li>
+							</ul>
+						</div>
+						<div class="layui-input-inline">
+							<button class="sw_btn1" lay-submit="" lay-filter="demo5">
+                        查询
+                    </button>
+               <span class="sw_btn1 " @click="dispose()">全局配置</span>
+               <span class="sw_btn1 " @click="copy()">用户级复制</span>
+						</div>
+					</form>
+					<div class="sw_row">
+						<table style="margin-top: 15px;min-width: 1750px;">
+							<tr>
+								<th>规则名称</th>
+								<th>启用规则</th>
+								<th>订单类型</th>
+								<th>匹配顺序</th>
+								<th>数量起始量</th>
+								<th>数量终止量</th>
+								<th>价格Z类系数</th>
+								<th>匹配类型</th>
+								<th>启用Z类</th>
+								<th>Z类百分比最大值</th>
+								<th>Z类百分比最小值</th>
+								<th style="width:145px;">包含</th>
+								<th style="width:145px;">排除</th>
+								<th>启用发现危险字词暂停</th>
+								<th>启用先验证再发送</th>
+								<th style="width:180px;text-align: center;">操作</th>
+							</tr>
+							<tr v-cloak v-for="(li, index) in allData">
+								<td>{{li.orderRuleName}}</td>
+								<td>
+									<span v-if="li.isEnabled == '0'">否</span>
+                  <span v-if="li.isEnabled == '1'">是</span>
+								</td>
+								<td>
+									<span v-if="li.orderType == '1000'">短信订单</span>
+                  <span v-if="li.orderType == '1001'">通知类订单</span>
+								</td>
+								<td>{{li.matchProirity}}</td>
+								<td> {{li.amountBetween}}</td>
+								<td>
+									{{li.amountAnd}}
+								</td>
+								<td>{{li.zByPrice}}</td>
+								<td>
+									<div>{{li.sendType}}</div>
+								</td>
+								<td>
+									<span v-if="li.enableMtZ == '0'">不启用</span>
+                  <span v-if="li.enableMtZ == '1'">启用</span>
+								</td>
+								<td>{{li.mtZPctMax}}</td>
+								<td>{{li.mtZPctMin}}</td>
+								<td>
+									<span class="sw_btn2 marb_5" @click="include_home(li.orderRuleId,li.userId)">包含归属地</span>
+									<span class="sw_btn2" @click="include_keywords(li.orderRuleId)">包含的关键字组</span>
+								</td>
+								<td>
+									<span class="sw_btn2 marb_5" @click="un_include_home(li.orderRuleId,li.userId)">排除归属地</span>
+									<span class="sw_btn2" @click="un_include_keywords(li.orderRuleId)">排除的关键字组</span>
+								</td>
+								<td>
+									<span v-if="li.enableBadWordPause == '0'">不启用</span>
+                  <span v-if="li.enableBadWordPause == '1'">启用</span>
+								</td>
+								<td>
+									<span v-if="li.enableNeedValidate == '0'">不启用</span>
+                  <span v-if="li.enableNeedValidate == '1'">启用</span>
+								</td>
+								<td>
+									<div style="width:180px;">
+										<span class="sw_btn2" @click="amend(li)">修改</span>
+										<span class="sw_btn2" @click="duplicate(li)">复制</span>
+										<span class="sw_btn3" @click="del(li.orderRuleId,li.orderRuleName)">删除</span>
+									</div>
+								</td>
+							</tr>
+						</table>
+						<div class="sw_pad8" v-show="showNo == true">暂无数据</div>
+					</div>
+					<div id="page"></div>
+				</div>
+			</div>
+		</script>
+		<script type="text/x-template" id="shade-template">
+			<div>
+				<div class="shade_con">
+					<div class="tongji">
+						<h3 v-if="code == 0">新增规则</h3>
+						<h3 v-if="code == 1">修改规则</h3>
+						<span class="iconfont icon-shanchu" @click="shanchu()"></span>
+					</div>
+					<div class="temp">
+						<form class="layui-form layui-form-pane" action="">
+							<div class="layui-inline">
+								<label class=""><span style="color:#FE2121;font-weight:600;">*</span> 规则名称</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input type="text" name="orderRuleName" v-model="info.orderRuleName" placeholder="请输入" class="layui-input" />
+								</div>
+							</div>
+							<div class="layui-inline">
+					      <label class=""><span style="color:#FE2121;font-weight:600;">*</span> 用户名</label><br />
+					      <div class="layui-input-inline" style="width:300px">
+					        <select name="userId" lay-verify="required" lay-filter="modules" lay-search="" id="userId">
+					        	<option value="" >请输入或选择</option>
+					          <option :value="li.userId" v-for="(li, index) in userData1">{{li.loginName}}</option>
+					        </select>
+					      </div>
+					    </div>
+							<div class="layui-inline">
+								<label class=""><span style="color:#FE2121;font-weight:600;">*</span> 订单类型</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<select name="orderType" id="orderType">
+										<option value="1000" selected>短信订单</option>
+										<option value="1001">通知类订单</option>
+									</select>
+								</div>
+							</div>
+							<div class="layui-inline">
+              <label class="">发送类型</label><br />
+              <div class="layui-input-inline" style="width:300px">
+                <select name="typeId"   id="typeId">
+                  <option value="">请选择</option>
+                  <option v-cloak
+                          v-for="(li, index) in content"
+                          :value="index + 1"
+                          >{{li}}</option>
+                </select>
+              </div>
+            </div>
+							<div class="layui-inline">
+								<label class=""><span style="color:#FE2121;font-weight:600;">*</span> 匹配顺序</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input type="text" name="matchProirity" v-model="info.matchProirity" autocomplete="off" placeholder="请输入" class="layui-input" />
+								</div>
+							</div>		
+							<div class="layui-inline">
+								<label class=""><span style="color:#FE2121;font-weight:600;">*</span> 数量起始量</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input type="text" name="amountBetween" v-model="info.amountBetween" autocomplete="off" placeholder="请输入" class="layui-input" />
+								</div>
+							</div>	
+							<div class="layui-inline">
+								<label class=""><span style="color:#FE2121;font-weight:600;">*</span> 数量终止量</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input type="text" name="amountAnd" v-model="info.amountAnd" autocomplete="off" placeholder="请输入" class="layui-input" />
+								</div>
+							</div>	
+							<div class="layui-inline">
+								<label class=""> 价格计算Z类系数</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input type="text" name="zByPrice" v-model="info.zByPrice" autocomplete="off" placeholder="请输入" class="layui-input" />
+								</div>
+							</div>							
+            <div class="layui-inline">
+								<label class=""><span style="color:#FE2121;font-weight:600;">*</span> Z类百分比最大值</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input type="text" name="mtZPctMax" v-model="info.mtZPctMax" autocomplete="off" placeholder="请输入" class="layui-input" />
+								</div>
+							</div>	
+							<div class="layui-inline">
+								<label class=""><span style="color:#FE2121;font-weight:600;">*</span> Z类百分比最小值</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<input type="text" name="mtZPctMin" v-model="info.mtZPctMin" autocomplete="off" placeholder="请输入" class="layui-input" />
+								</div>
+							</div>	
+							<div class="layui-inline">
+								<label class="">启用该规则</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<select name="isEnabled" id="isEnabled">
+										<option value="1" selected>是</option>
+										<option value="0">否</option>
+									</select>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">启用Z类</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<select name="enableMtZ" id="enableMtZ">
+										<option value="1">启用</option>
+										<option value="0">不启用</option>
+									</select>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">发现危险字词暂停</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<select name="enableBadWordPause" id="enableBadWordPause">
+										<option value="1">启用</option>
+										<option value="0">不启用</option>
+									</select>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">先验证再发送</label><br />
+								<div class="layui-input-inline" style="width:300px">
+									<select name="enableNeedValidate" id="enableNeedValidate">
+										<option value="1">启用</option>
+										<option value="0">不启用</option>
+									</select>
+								</div>
+							</div>
+							<div class="layui-input-inline">
+								<button class="sw_btn1" style="margin: 25px 10px 25px 410px;" lay-submit="" lay-filter="demo8" v-if="code == 0&&node == 0">
+                            确认新增
+                        </button>
+								<span class="sw_btn1" style="margin: 25px 10px 25px 410px;" lay-submit="" lay-filter="demo9" v-if="code == 1&&node == 0">修改</span>
+								<span class="sw_btn1" style="margin: 25px 10px 25px 410px;" lay-submit="" lay-filter="demo12" v-if="code == 1&&node == 1">确定复制</span>
+								<span class="sw_btnwrong" @click="close()">关闭</span>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</script>
+		<script type="text/x-template" id="rate-template">
+		    <div class="shade_con1">
+		        <div class="tongji">
+		            <h3 v-if="code == 0">添加归属地</h3>
+		            <h3 v-if="code == 1">排除归属地</h3>
+		            <span class="iconfont icon-shanchu" @click="shanchu()"></span>
+		        </div>
+		        <form class="layui-form layui-form-pane" action="" >
+		          <div class="border">
+							<div class="layui-inline">
+					      <label class="lable">省份</label><br />
+					      <div class="layui-input-inline">
+					        <select name="province" lay-verify="required" lay-filter="province" id="province" lay-search="">
+					          <option value="" >请输入或选择</option>
+					          <option :value="li" v-for="(li, index) in userData1">{{li}}</option>
+					        </select>
+					      </div>
+					    </div>
+							<div class="layui-inline">
+					      <label class="lable">运营商</label><br />
+					      <div class="layui-input-inline">
+					        <select name="operator" lay-verify="required"  id="operator" lay-search="">
+					          <option value="" >请输入或选择</option>
+					          <option :value="li" v-for="(li, index) in operatorData">{{li}}</option>
+					        </select>
+					      </div>
+					    </div>
+							<div class="layui-inline">
+								<button class="sw_btn1"  lay-submit="" lay-filter="demo6" >
+                            新增
+                        </button>
+								<span class="sw_btn1" @click="shanchu()">关闭</span>
+							</div>
+						</div>
+		        </form>
+		        <div class="table_tou" style="margin:10px 20px -1px 22px;">
+		            <h6 class="fl" v-if="code == 0">已添加包含归属地列表 </h6>
+		             <h6 class="fl" v-if="code == 1">已添加排除归属地列表  </h6>
+		            <div class="fr sw_padd">
+		                <!--<span class="Gradual" @click="importFileT()">
+		                  <span class="iconfont icon-export" >&nbsp;导出</span>
+		                </span>-->
+		            </div>
+		        </div>
+		        <div class="sw_row heightScroll" style="margin:0 20px 0 22px;background: #fff;">
+		            <table style="margin-top: 15px;width: 100%;">
+		                <tr>
+		                    <th style="text-align: center;">省份</th>
+		                    <th style="text-align: center;">运营商</th>
+		                    <th style="text-align: center;">操作</th>
+		                </tr>
+		                <tr  v-for="(li, index) in allData1">
+		                    <td style="text-align: center;">{{li.province}}</td>
+		                    <td style="text-align: center;">{{li.operator}}</td>
+		                    <td style="text-align: center;">
+		                    	<span class="sw_btn3" @click="delProvince(li.locationRuleId)">删除</span>
+		                    </td>
+		                </tr>
+		            </table>
+		            <div class="sw_pad8" v-show="mapShow1 == true">暂无数据</div>
+		        </div>
+		        <div id="aa"></div>
+		        <div  style="text-align: center;">
+		            <span class="sw_btn1" style="margin: 0px;" @click="shanchu()">
+		                关闭
+		            </span>
+		        </div>
+		    </div>
+		</script>
+		<script type="text/x-template" id="operator-template">
+		    <div class="shade_con2">
+		        <div class="tongji">
+		            <h3 v-if="code == 0">添加规则字词参数</h3>
+		            <h3 v-if="code == 1">排除规则字词参数</h3>
+		            <span class="iconfont icon-shanchu" @click="shanchu()"></span>
+		        </div>
+		        <form class="layui-form layui-form-pane" action="" >
+		          <div class="border">
+							
+							<div class="layui-inline">
+								<label class="lable">规则字词</label><br />
+								<div class="layui-input-inline" >
+									<input type="text" name="word" v-model="data3.word" placeholder="请输入" class="layui-input " />
+								</div>
+							</div>
+							<div class="layui-inline">
+								<button class="sw_btn1"  lay-submit="" lay-filter="demo10" >
+                            新增
+                        </button>
+								<span class="sw_btn1" @click="shanchu()">关闭</span>
+							</div>
+						</div>
+		        </form>
+		        <div class="table_tou" style="margin:10px 20px -1px 22px;">
+		            <h6 class="fl" v-if="code == 0">已添加规则字词列表 </h6>
+		             <h6 class="fl" v-if="code == 1">已移除规则字词列表   </h6>
+		            <div class="fr sw_padd">
+		                <!--<span class="Gradual" @click="importFileT()">
+		                  <span class="iconfont icon-export" >&nbsp;导出</span>
+		                </span>-->
+		            </div>
+		        </div>
+		        <div class="sw_row heightScroll" style="margin:0 20px 0 22px;background: #fff;">
+		            <table style="margin-top: 15px;width: 100%;">
+		                <tr>
+		                    <th style="text-align: center;">规则字词</th>
+		                    <th style="text-align: center;">操作</th>
+		                </tr>
+		                <tr  v-for="(li, index) in allData1">
+		                    <td style="text-align: center;">{{li.word}}</td>
+		                    <td style="text-align: center;">
+		                    	<span class="sw_btn3" @click="delWord(li.wordRuleId)">删除</span>
+		                    </td>
+		                </tr>
+		            </table>
+		            <div class="sw_pad8" v-show="mapShow1 == true">暂无数据</div>
+		        </div>
+		        <div id="bb"></div>
+		        <div  style="text-align: center;">
+		            <span class="sw_btn1" style="margin: 0px;" @click="shanchu()">
+		                关闭
+		            </span>
+		        </div>
+		    </div>
+		</script>
+		<script type="text/x-template" id="copy-template">
+		    <div class="shade_con3">
+		        <div class="tongji">
+		            <h3>批量复制规则</h3>
+		            <span class="iconfont icon-shanchu" @click="shanchu()"></span>
+		        </div>
+		        <form class="layui-form layui-form-pane" action="" >
+		          <div class="border">
+							<div class="layui-inline">
+					      <label class="lable">被复制用户</label><br />
+					      <div class="layui-input-inline">
+					        <select name="sourceUserId" lay-verify="required" lay-filter="copy_user" id="sourceUserId" lay-search="">
+					          <option value="" >请输入或选择</option>
+					          <option :value="li.userId" v-for="(li, index) in userData1">{{li.loginName}}</option>
+					        </select>
+					      </div>
+					    </div>
+					    <div class="layui-inline">
+					      <label class="lable">要添加规则用户</label><br />
+					      <div class="layui-input-inline">
+					        <select name="targetUserId" lay-verify="required"  lay-search="" id="targetUserId">
+					          <option value="" >请输入或选择</option>
+					          <option :value="li.userId" v-for="(li, index) in userData1">{{li.loginName}}</option>
+					        </select>
+					      </div>
+					    </div>
+							<div class="layui-inline">
+								<button class="sw_btn1"  lay-submit="" lay-filter="demo11" >
+                            复制
+                        </button>
+								<span class="sw_btn1" @click="shanchu()">关闭</span>
+							</div>
+						</div>
+		        </form>
+		        <div class="table_tou" style="margin:10px 20px -1px 22px;">
+		            <h6 class="fl" >复制列表 </h6>
+		            <div class="fr sw_padd">
+		                <!--<span class="Gradual" @click="importFileT()">
+		                  <span class="iconfont icon-export" >&nbsp;导出</span>
+		                </span>-->
+		            </div>
+		        </div>
+		        <div class="sw_row heightScroll" style="margin:0 20px 0 22px;background: #fff;">
+		            <table style="margin-top: 15px;width: 100%;">
+		                <tr>
+		                    <th style="">规则名</th>
+		                    <th style="">数量终止量</th>
+		                </tr>
+		                <tr  v-for="(li, index) in allData1">
+		                    <td>{{li.orderRuleName}}</td>
+		                    <td>{{li.amountAnd}}</td>
+		                </tr>
+		            </table>
+		            <div class="sw_pad8" v-show="mapShow1 == true">暂无数据</div>
+		        </div>
+		         <div id="cc"></div>
+		        <div  style="text-align: center;">
+		            <span class="sw_btn1" style="margin: 0px;" @click="shanchu()">
+		                关闭
+		            </span>
+		        </div>
+		    </div>
+		</script>
+		<script type="text/x-template" id="dispose-template">
+		    <div class="shade_con4">
+		        <div class="tongji">
+		            <h3 >全局配置</h3>		            
+		            <span class="iconfont icon-shanchu" @click="shanchu()"></span>
+		        </div>
+		        <div class="sw_row heightScroll" style="margin:0 20px 0 22px;padding:0 15px;background: #fff;border: 1px solid #E1E7EC;border-bottom:none;">
+		            <table style="margin-top: 15px;width: 100%;">
+		                <tr>
+		                    <th style="">参数名称</th>
+		                    <th style="">参数值原值</th>
+		                    <th style="">参数值说明</th>
+		                    <th style="">参数值</th>
+		                    <th style="">注释</th>
+		                    <th style="">操作</th>
+		                </tr>
+		                <tr  v-for="(li, index) in allData1">
+		                    <td>{{li.parName}}</td>
+		                    <td>{{li.parValue}}</td>
+		                    <td>{{li.parValueInstructions}}</td>
+		                    <td>{{li.parValueName}}</td>
+		                    <td>{{li.comments}}</td>
+		                    <td><span class="sw_btn2" @click="amend_dispose(li.parName)">修改</span></td>
+		                </tr>
+		            </table>
+		            <div class="sw_pad8" v-show="mapShow1 == true">暂无数据</div>
+		        </div>
+		        <div  style="text-align: center;">
+		            <span class="sw_btn1"  @click="shanchu()">
+		                关闭
+		            </span>
+		        </div>
+		    </div>
+		</script>
+		<script src="../../layui.all.js"></script>
+		<script src="../../module/order_rule.js"></script>
+		<script>
+			//头部
+			//    var operaAI = new Vue({
+			//        el: "#proMang",
+			//        data: {
+			//            topCurrent: 3
+			//        }
+			//    });
+			//    //   //左侧菜单组件实例化
+			//    var leftMenu = new Vue({
+			//        el: "#leftMenu_Box",
+			//        data: {
+			//            current: 1
+			//        }
+			//    });
+			order_manage()
+			//
+			var rightTable = new Vue({
+				el: "#rightTable"
+			});
+			//
+			var shade = new Vue({
+				el: "#shade"
+			});
+      var shade1 = new Vue({
+				el: "#shade1"
+			});
+			var shade2 = new Vue({
+				el: "#shade2"
+			});
+			var shade3 = new Vue({
+				el: "#shade3"
+			});
+			var shade4 = new Vue({
+				el: "#shade4"
+			});
+			$(function() {
+
+				$(document).ready(function() {
+				//     $('#proMang .top ul li a').mousemove(function(){
+				//         $(this).addClass('addClass').parent().siblings().find('a').removeClass('addClass')
+				//   })
+				total($(".unlike1 ul li"), $(".unlike1 .dropdown-selected1"), $(".unlike1 ul"), $(".unlike1"));
+				total($(".unlike5 ul li"), $(".unlike5 .dropdown-selected1"), $(".unlike5 ul"), $(".unlike5"));
+				total($(".unlike6 ul li"), $(".unlike6 .dropdown-selected1"), $(".unlike6 ul"), $(".unlike6"));
+			});
+			});
+		</script>
+	</body>
+
+</html>

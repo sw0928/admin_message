@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>智能通信运营管理平台</title>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../css/layui.css" />
+		<script src="../../js/api.js"></script>
+		<script src="../../js/jquery-3.0.0.min.js"></script>
+		<script src="../laydate/laydate.js"></script>
+		<script src="../../js/vue.min.js"></script>
+
+	</head>
+	<!--[if IE 9]>
+	<style>
+		#leftMenu_Box{
+			width: 15.08%;
+			height: 979px;
+			float: left;
+			background: #040b29 !important;
+			position: relative;
+			box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.5);
+		}
+	</style>
+	<![endif]-->
+	<style>
+		/*#page {*/
+			/*padding: 80px 0 46px 0;*/
+		/*}*/
+
+		#page1,#page2 {
+			padding: 10px 0px 0px;
+			text-align: center;
+		}
+
+		.shade_con {
+			width: 870px;
+			height: 540px;
+		}
+		.addClass2 {
+			border-bottom: 2px solid #3C84D2;
+			font-size: 20px !important;
+			color: #000 !important;
+		}
+		.table_tou{
+			padding-left: 22px;
+		}
+		.table_tou h6{
+			font-size: 15px;
+			color: rgba(143, 156, 170, 1);
+			cursor: pointer;
+			padding: 0px;
+			margin: 8px 25px 0px 0px;
+			padding-bottom: 6px;
+		}
+		/*.sw_row tr td {*/
+			/*padding:8px 0;*/
+			/*/!*border: none !important;*!/*/
+		/*}*/
+		.sw_row tbody tr:nth-child(1):hover{
+			background:#EBF7FF ;
+		}
+		.sw_row tr td div {
+			/*white-space: nowrap;*/
+			overflow: hidden;
+			text-overflow: ellipsis;
+			padding-right: 10px;
+			box-sizing: border-box;
+		}
+		.sw_row tr td:nth-child(9){
+			padding: 8px 0;
+		}
+		.sw_row tr td div.stop {
+			max-width: 210px;
+		}
+		div.message {
+			width: 100%;
+			height: 32px;
+			box-sizing: border-box;
+			background: rgba(244, 244, 244, 1);
+			line-height: 32px;
+			padding-left: 20px;
+			border-bottom: 1px solid #E1E7EC;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			/*white-space: nowrap;*/
+		}
+	</style>
+	<body>
+		<div id="proMang">
+			<div class="top"><img src="../../img/logo.png" alt="" class="logo">
+				<ul>
+					<li class="top-a-box" data-value="210"><a href="../workbench/order_fail.html"><span
+							class="iconfont icon-diannao" style="font-size: 22px;"></span>
+						工作台
+					</a></li>
+					<li class="top-a-box " data-value="211"><a href="../user_manage/user_manage.html">
+						<span class="iconfont icon-yonghu" style="font-size: 22px;"></span>
+						用户管理
+					</a></li>
+					<li class="top-a-box addClass" data-value="212"><a href="./order_manage.html"><span
+							class="iconfont icon-dingdanguanli" style="font-size: 22px;"></span>
+						订单管理
+					</a></li>
+					<li class="top-a-box " data-value="213"><a href="../resource/take_orders.html"><span
+							class="iconfont icon-iconfonticon-shebei" style="font-size: 22px;"></span>
+						资源配置
+					</a></li>
+				</ul>
+				<div class="sign">
+					<span class="ren"></span> <span class="type"></span>
+					<img src="../../img/退出.png" alt=""  onclick="sign()">
+				</div>
+			</div>
+		</div>
+		<div class="main-box">
+			<!-- 左侧菜单 -->
+			<div id="leftMenu_Box" class="order_manage">
+				<div class="leftMenu">
+					<ul>
+						<li class="left_a dn " data-value="21210">
+							<a href="./order_manage.html" class="leftNav" >
+								<span class="iconfont icon-guanli"></span>
+								订单管理
+							</a>
+						</li>
+						<li class="left_a dn " data-value="21210">
+                    <a href="./order_rule.html" class="leftNav sw_url" >
+                        <span class="iconfont icon-guanli"></span>
+                        订单规则
+                    </a>
+                </li>
+						<li class="left_a dn addclass_one" data-value="21211">
+							<a href="javascript:void(0);" class="leftNav" >
+								<span class="iconfont icon-liebiao"></span>
+								详单列表
+							</a>
+						</li>
+						<li class="left_a dn" data-value="21214">
+							<a href="./order_detail.html" class="leftNav" >
+								<span class="iconfont icon-liebiao"></span>
+								接单明细
+							</a>
+						</li>
+						<li class="left_a dn" data-value="21212"><a href="javascript:void(0);" class="leftNav"  onclick="aa(event)">
+							<span  class="iconfont icon-diannao-shuju" ></span>
+							客户支持
+							<i class="iconfont icon-iconfontfold"></i> </a>
+							<div class="prop dns">
+								<a href="./signature_distribute.html" data-value="2121210" class="prop13 left_a dn">签名分布</a>
+								<a href="./called_distribute.html" data-value="2121211" class="prop22 left_a dn">被叫分布</a>
+								<a href="./client_type.html" data-value="2121212" class="prop33 left_a dn">客户订单类型</a>
+							</div>
+						</li>
+						<li class="left_a dn" data-value="21213"><a href="javascript:void(0);" class="leftNav"  onclick="aa(event)">
+							<span  class="iconfont icon-diannao-shuju" ></span>
+							通道管理
+							<i class="iconfont icon-iconfontfold"></i> </a>
+							<div class="prop dns">
+								<a href="./channel_new.html" data-value="2121310" class="prop20 left_a dn">通道信息</a>
+								<!--<a href="./channel_test.html" data-value="2121311" class="prop24 left_a dn">通道测试</a>-->
+								<a href="./status_report_record.html" data-value="2121312" class="prop21 left_a  dn">报告状态记录</a>
+								<a href="./status_report_reset.html" data-value="2121313" class="prop23 left_a  dn">报告状态重推</a>
+								<!--<a href="./channel_test.html" data-value="2121311" class="prop21 left_a dn">通道测试</a>-->
+							</div>
+						</li>
+					</ul>
+					<div class="group" onclick="flexible(event)"><span class="iconfont icon-xiangzuo"style="color: rgb(255, 255, 255); font-size: 13px;"></span></div>
+				</div>
+			</div>
+			<div id="rightTable">
+				<v-order-list></v-order-list>
+			</div>
+		</div>
+		<div id="shade">
+			<v-look-reply></v-look-reply>
+		</div>
+		<script type="text/x-template" id="list-template">
+			<div>
+				<div class="table_tou">
+					<h6 class="fl addClass2">详单列表</h6>
+					<h6 class="fl">上行列表</h6>
+					<div class="fr sw_padd" v-if="code == 0">
+						<span class="sw_num"
+							  v-cloak>{{totalCount}}</span>&nbsp; &nbsp;<span style="color:#738495">条记录</span>
+						<!--<span class="Gradual" @click="shade()">-->
+						  <!--<span class="iconfont icon-huifu" style="color: #EEF0F4;-->
+						  <!--font-size: 16px;-->
+						  <!--line-height: 40px;-->
+						  <!--padding: 0px 8px 0px 15px;">&nbsp;查看回复</span>-->
+						<!--</span>-->
+						<span class="Gradual" @click="importFile()">
+						  <span class="iconfont icon-export">&nbsp;导出</span>
+						</span>
+					</div>
+					<div class="fr sw_padd"  v-if="code == 1">
+						<span class="sw_num"
+							  v-cloak>{{totalB}}</span>&nbsp; &nbsp;<span style="color:#738495">条记录</span>
+						<!--<span class="Gradual" @click="shade()">-->
+						<!--<span class="iconfont icon-huifu" style="color: #EEF0F4;-->
+						<!--font-size: 16px;-->
+						<!--line-height: 40px;-->
+						<!--padding: 0px 8px 0px 15px;">&nbsp;查看回复</span>-->
+						<!--</span>-->
+						<span class="Gradual" @click="importFileT()">
+						  <span class="iconfont icon-export" >&nbsp;导出</span>
+						</span>
+					</div>
+				</div>
+				<div class="table_nav">
+					<form class="layui-form layui-form-pane" action="">
+						<div class="list">
+							<div class="layui-inline">
+								<label class="">开始时间</label><br />
+								<div class="layui-input-inline">
+									<input type="text" name="startDate" class="layui-input" autocomplete="off" id="test"  />
+									<img src="../../img/Shape.png" alt="" />
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">结束时间</label><br />
+								<div class="layui-input-inline">
+									<input type="text" name="endDate" class="layui-input" autocomplete="off" id="test1"  />
+									<img src="../../img/Shape.png" alt="" />
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">订单号</label><br />
+								<div class="layui-input-inline">
+									<input
+											type="text"
+											name="orderSn"
+											placeholder="请输入"
+											class="layui-input"
+											/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">状态说明</label><br />
+								<div class="layui-input-inline">
+									<select name="status">
+										<option value="">请选择</option>
+										<option value="0">失败</option>
+										<option value="1">成功</option>
+										<option value="-1">未知</option>
+									</select>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">手机号码</label><br />
+								<div class="layui-input-inline">
+									<input
+											type="text"
+											name="phone"
+											v-model="data1.phone"
+											placeholder="请输入"
+											class="layui-input"
+											/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">短信内容</label><br />
+								<div class="layui-input-inline" style="width: 200px">
+									<input
+											type="text"
+											name="content"
+											placeholder="请输入"
+											class="layui-input"
+											/>
+								</div>
+							</div>
+							<div class="layui-input-inline">
+								<button type="button" class="sw_btn1" lay-submit="" lay-filter="demo13">
+									查询
+								</button>
+							</div>
+						</div>
+						<div class="list2 dn">
+							<div class="layui-inline">
+								<label class="">开始时间</label><br/>
+
+								<div class="layui-input-inline">
+									<input type="text" name="startTime" class="layui-input" id="test2"/>
+									<img src="../../img/Shape.png" alt=""/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">结束时间</label><br/>
+
+								<div class="layui-input-inline">
+									<input type="text" name="endTime" class="layui-input" id="test3"/>
+									<img src="../../img/Shape.png" alt=""/>
+								</div>
+							</div>
+							<div class="layui-inline dropdown unlike2" v-if="loginType != '通道管理员'">
+								<label class="">用户</label><br/>
+								<input type="text" class="dropdown-selected"
+									   name="userId" autocomplete="off" placeholder="请输入">
+								<ul class="dns">
+									<li v-for="(li, index) in userData">
+										<a href="javaScript:" :data="li.userId">{{li.loginName}}</a>
+									</li>
+								</ul>
+							</div>
+							<div class="layui-inline">
+								<label class="">手机号码</label><br/>
+
+								<div class="layui-input-inline">
+									<input
+											type="text"
+											name="phone1"
+											placeholder="请输入"
+											class="layui-input"
+											/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="">回复内容</label><br/>
+
+								<div class="layui-input-inline">
+									<input
+											type="text"
+											name="receiptText"
+											placeholder="请输入"
+											class="layui-input"
+											/>
+								</div>
+							</div>
+							<div class="layui-inline dropdown1 unlike3" v-if="loginType != '通道管理员'">
+								<label class="">网关</label><br />
+								<input type="text" class="dropdown-selected1"
+									   name="ismgId" autocomplete="off" placeholder="请输入">
+								<ul class="dns">
+									<li v-for="(li, index) in ismgList">
+										<a href="javaScript:" :data="li.ismgId">{{li.ismgName}}</a>
+									</li>
+								</ul>
+							</div>
+							<div class="layui-input-inline">
+								<button type="button" class="sw_btn1" lay-submit="" lay-filter="demo12">
+									查询
+								</button>
+							</div>
+						</div>
+					</form>
+					<div class="sw_row "  v-if="code == 0">
+						<table style="margin-top: 15px; min-width: 1059px">
+							<thead>
+								<tr>
+									<th style="width:193px">订单号</th>
+									<th >手机号码</th>
+									<th >发送状态</th>
+									<th>发送时间</th>
+									<th >状态说明</th>
+									<th >状态报告</th>
+									<th >长短信</th>
+									<th>接收回执数</th>
+									<th>回执时间</th>
+								</tr>
+							</thead>
+							<tbody v-cloak   v-for="(li, index) in allData">
+								<tr class="">
+									<td >{{li.orderSn}}</td>
+									<td >{{li.receiverMsisdn}}</td>
+									<td>{{li.receiptDesc}}</td>
+									<td >{{li.sentTime | limitTo}}</td>
+									<td >
+										<span v-if="li.receiptType !== null">{{li.receiptType}}</span>
+										<span v-if="li.receiptType == null">未知</span>
+									</td>
+									<td style='padding-right: 10px;'>{{li.receiptText}}</td>
+									<td >{{li.msgTotal}}</td>
+									<td >{{li.receiptAmount}}</td>
+									<td >{{li.receiptTime | limitTo}}</td>
+								</tr>
+								<tr>
+									<td colspan="9" style="padding: 0px;border: none"><div class="message" :title="li.smsText">{{li.smsText}}</div></td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="sw_pad8" v-show="showNo == true">暂无数据</div>
+					</div>
+					<div class="sw_row" v-if="code == 1">
+						<table style="margin-top: 15px;min-width: 1055px;">
+							<thead>
+							<tr>
+								<th style="width:170px">订单编号</th>
+								<th v-if="loginType != '通道管理员'">用户</th>
+								<th style="width:150px">接入号</th>
+								<th >回复号码</th>
+								<th >回复内容</th>
+								<th style="width:160px">回复时间</th>
+								<th >省份</th>
+								<th>城市</th>
+								<th >运营商</th>
+								<th v-if="loginType != '通道管理员'">网关</th>
+							</tr>
+							</thead>
+							<tbody v-cloak class="" v-for="(li, index) in allDataT">
+							<tr>
+								<td >{{li.orderSn}}</td>
+								<td v-if="loginType != '通道管理员'">{{li.loginName}}</td>
+								<td><div>{{li.destId}}</div></td>
+								<td>
+									{{li.srcTerminalId}}
+								</td>
+								<td >
+									<div class="stop" :title="li.receiptText">
+										{{li.receiptText}}
+									</div>
+								</td>
+								<td >{{li.receiptTime | limitTo}}</td>
+								<td >{{li.province}}</td>
+								<td>{{li.city}}</td>
+								<td >{{li.operator}}</td>
+								<td v-if="loginType != '通道管理员'">{{li.ismgName}}</td>
+							</tr>
+							</tbody>
+						</table>
+						<div class="sw_pad8" v-show="mapShow == true">暂无数据</div>
+					</div>
+					<div id="page"></div>
+				</div>
+			</div>
+		</script>
+		<!--<script type="text/x-template" id="reply-template">-->
+			<!--<div class="shade_con">-->
+				<!--<div class="tongji">-->
+					<!--<h3>查看回复</h3>-->
+					<!--<span class="iconfont icon-shanchu" @click="shanchu()"></span>-->
+				<!--</div>-->
+				<!--<form class="layui-form layui-form-pane" action="" style="margin:20px 20px 0px 22px;border: 1px solid #F0F4F8;background: #FBFBFB">-->
+					<!--<div class="layui-inline dropdown unlike2">-->
+						<!--<label class="">用户</label><br/>-->
+						<!--<input type="text" class="dropdown-selected"-->
+							   <!--name="loginName" v-model="data1.loginName" autocomplete="off" placeholder="请输入">-->
+						<!--<ul class="dns">-->
+							<!--<li v-for="(li, index) in userData">-->
+								<!--<a href="javaScript:" :data="li.userId">{{li.loginName}}</a>-->
+							<!--</li>-->
+						<!--</ul>-->
+					<!--</div>-->
+					<!--<div class="layui-inline">-->
+						<!--<label class="">手机号码</label><br />-->
+						<!--<div class="layui-input-inline">-->
+							<!--<input-->
+									<!--type="text"-->
+									<!--name="phone"-->
+									<!--v-model="data1.phone"-->
+									<!--placeholder="请输入"-->
+									<!--class="layui-input"-->
+									<!--/>-->
+						<!--</div>-->
+					<!--</div>-->
+					<!--<div class="layui-input-inline">-->
+						<!--<button class="sw_btn1" lay-submit="" lay-filter="demo14">-->
+							<!--查询-->
+						<!--</button>-->
+					<!--</div>-->
+				<!--</form>-->
+				<!--<div class="table_tou" style="margin:19px 20px -1px 22px;">-->
+					<!--<h6 class="fl">回复列表</h6>-->
+					<!--<div class="fr" style="padding:20px 30px">-->
+        <!--<span style="font-size: 26px;color:#494949;vertical-align: middle;"-->
+			  <!--v-cloak>{{totalCount}}</span>&nbsp; &nbsp;<span style="color:#738495">条记录</span>-->
+        <!--<span class="Gradual" @click="importFileT()">-->
+          <!--<span class="iconfont icon-export" style="color: #EEF0F4;-->
+          <!--font-size: 16px;-->
+          <!--line-height: 40px;-->
+          <!--padding: 0px 8px 0px 15px;">&nbsp;导出</span>-->
+        <!--</span>-->
+					<!--</div>-->
+				<!--</div>-->
+				<!--<div class="sw_row" style="margin:0 20px 0 22px;padding:0 15px;background: #fff;border: 1px solid #E1E7EC;border-bottom:none;max-height: 260px;">-->
+					<!--<table style="margin-top: 15px;width: 100%">-->
+						<!--<tr>-->
+							<!--<th style="">用户名</th>-->
+							<!--<th style="">回复时间</th>-->
+							<!--<th style="">回复内容</th>-->
+							<!--<th style="">回复号码</th>-->
+							<!--<th style="">省份</th>-->
+							<!--<th style="">城市</th>-->
+							<!--<th style="">运营商</th>-->
+						<!--</tr>-->
+						<!--<tr v-cloak v-for="(li, index) in allData">-->
+							<!--<td>{{li.loginName}}</td>-->
+							<!--<td>{{li.receiptTime | limitTo}}</td>-->
+							<!--<td>-->
+								<!--<div :title="li.receiptText" >{{li.receiptText}}</div>-->
+							<!--</td>-->
+							<!--<td>{{li.srcTerminalId}}</td>-->
+							<!--<td>{{li.province}}</td>-->
+							<!--<td>{{li.city}}</td>-->
+							<!--<td>{{li.operator}}</td>-->
+						<!--</tr>-->
+
+					<!--</table>-->
+					<!--<div id="page1"></div>-->
+				<!--</div>-->
+			<!--</div>-->
+		<!--</script>-->
+		<script src="../../layui.all.js"></script>
+		<script src="../../module/order_list.js"></script>
+		<script>
+			//头部
+//			var operaAI = new Vue({
+//				el: "#proMang",
+//				data: {
+//					topCurrent: 2
+//				}
+//			});
+//			//   //左侧菜单组件实例化
+//			var leftMenu = new Vue({
+//				el: "#leftMenu_Box",
+//				data: {
+//					current: 1
+//				}
+//			});
+			order_manage()
+			var rightTable = new Vue({
+				el: "#rightTable"
+			});
+			// 
+			var shade = new Vue({
+				el: "#shade"
+			});
+			$(function() {
+				laydate.render({
+					elem: "#test", //指定元素
+					type: 'datetime',
+					value: getDay(0)+' 00:00:00',
+				});
+				laydate.render({
+					elem: "#test1", //指定元素
+					type: 'datetime',
+					value: getDay(0)+' 23:59:59',
+				});
+				laydate.render({
+					elem: "#test2", //指定元素
+				//	type: 'datetime',
+					showBottom: false,
+					value: getDay(0),
+				});
+				laydate.render({
+					elem: "#test3", //指定元素
+						//type: 'datetime',
+					showBottom: false,
+					value: getDay(0),
+				});
+				$(document).ready(function(){
+					//$('#leftMenu_Box').css('background', '#040b29');
+					//$('#proMang .top').css('background', '#fff')
+				});
+				total($(".unlike2 ul li"), $(".unlike2 .dropdown-selected"), $(".unlike2 ul"), $(".unlike2"));
+				total($(".unlike3 ul li"), $(".unlike3 .dropdown-selected1"), $(".unlike3 ul"), $(".unlike3"));
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+<title>授信详情</title>
+<link href="css/style.css" rel="stylesheet"/>
+<link href="css/response.css" rel="stylesheet"/>
+<link href="js/layer_mobile/need/layer.css" rel="stylesheet"/>
+</head>
+<body class="bg">
+<div class="content">
+	<div class="header">
+		<div class="header-nei">
+			<a href="credit.html" class="back-up"><i class="iconfont icon-xiangzuo"></i></a>
+			<h2 class="header-title">授信详情</h2>
+            <a href="nav.html" class="back-top"><i class="iconfont icon-daohang"></i></a>
+		</div>
+	</div>
+	<!--head/-->
+	<div class="head-height">&nbsp;</div>
+	<div class="order-info" id="info">
+
+    </div>
+</div>
+<!--content/-->
+<div class="bg100"></div>
+<script src="js/jquery.min.js"></script>
+<script src="js/style.js"></script>
+<script src="js/doT.min.js"></script>
+<script src="js/layer_mobile/layer.js"></script>
+<script id="infotmpl" type="text/x-dot-template">
+ <table>
+    <tr>
+     <th>被授信用户</th>
+     <td>{{=it.loginName}}</td>
+    </tr>
+    <tr>
+     <th>授信人</th>
+     <td>{{=it.fromUserName}}</td>
+    </tr>
+    <tr>
+     <th>授信金额</th>
+     <td>{{=it.money}}</td>
+    </tr>
+    <tr>
+     <th>公司名称</th>
+     <td>{{=it.company}}</td>
+    </tr>
+    <tr>
+     <th>付款方式</th>
+      {{? it.payType == 1}}
+        <td >预付费</td>
+        {{?? it.payType == 2}}
+        <td >后付费</td>
+        {{?? it.payType == 3}}
+        <td >其他</td>
+      {{?}}
+    </tr>
+    <tr>
+     <th>创建时间</th>
+     <td>{{=it.createTime}}</td>
+    </tr>
+    <tr>
+     <th>客户经理</th>
+     <td>{{=it.parentLoginName}}</td>
+    </tr>
+    <tr>
+     <th>审核时间</th>
+     <td>{{=it.auditTime || '-'}}</td>
+    </tr>
+    <tr>
+     <th>审核人</th>
+     <td>{{=it.auditUser || '-'}}</td>
+    </tr>
+    <tr>
+     <th>授信时间</th>
+     <td>{{=it.addmoneyTime || '-'}}</td>
+    </tr>
+    <tr>
+     <th>授信操作人</th>
+     <td>{{=it.addmoneyUser || '-'}}</td>
+    </tr>
+    <tr>
+     <th>备注</th>
+     <td>{{=it.remark || '-'}}</td>
+    </tr>
+    <tr>
+     <th>审核状态</th>
+        {{? it.status == 2 }}
+        <td style="color:#3784d2">已审核</td>
+        {{?? it.status == 1}}
+        <td style="color:#F8C411">未审核</td>
+        {{?? it.status == 3}}
+        <td style="color:#28a745">已授信</td>
+        {{?? it.status == 4}}
+        <td style="color:#ff0000">已拒绝</td>       
+        {{?}}
+    </tr>
+ </table>
+ <div class="log-reg-sub">
+     {{? it.status == 1&&it.accountType == 4 }}
+     <a href="javascript:;" class="log-reg-sw-btn order-btn marR12">审核</a>
+     <a href="javascript:;" class="log-reg-sw-btn refuse marR12">驳回</a>
+     {{?? it.status == 2&&it.accountType == 4 }}
+      <a href="javascript:;" class="log-reg-sw-btn abolish marR12">取消审核</a>
+      <a href="javascript:;" class="log-reg-sw-btn promptly marR12">立即授信</a>
+      <a href="javascript:;" class="log-reg-sw-btn decline marR12">拒绝授信</a>            
+     {{?}}
+     {{? it.createUser == it.current }}
+     		<a href="javascript:;" class="log-reg-sw-btn delete">删除</a>
+     {{?}}
+ </div>
+ <!--错误提示-->
+<div class="tip-errors-bg">
+	<div class="tip-tip-box-nei">
+		<strong><i class="iconfont icon-shanchu"></i><em class="errors">错误提示</em></strong>
+	</div>
+	<!--tip-tip-box/-->
+</div>
+
+<!--tip-success-bg/-->
+<!--正确提示-->
+<div class="tip-success-bg">
+	<div class="tip-tip-box-nei">
+		<strong><i class="iconfont icon-smile" style="color:#0F0;"></i><em class="success">正确提示</em></strong>
+	</div>
+	<!--tip-tip-box/-->
+</div>
+<!--tip-success-bg/-->
+</script>
+<script>
+  $(function(){
+   var info = JSON.parse(sessionStorage.getItem('infoObj'));
+   var current = sessionStorage.getItem('current');
+   var accountType = sessionStorage.getItem('accountType');
+      var allData;
+      $.ajax({
+          url : '/iccs/extension/queryExtensionInfo',
+          type : 'post',
+          async: false,
+          data :{
+              'seqId':info.seqId
+          },
+          headers : {
+              "Authorization":sessionStorage.getItem('id'),
+          },
+          success : function(data){
+              //console.log(data.data);             
+              allData = data.data;
+              allData.current = current;
+              allData.accountType = accountType;
+             // console.log(allData)
+             // sessionStorage.setItem('infoObj', JSON.stringify(data.data));
+               var interText = doT.template($("#infotmpl").text());
+               $("#info").html(interText(allData));
+          },
+          error : function(err){
+              location.href = "index.html";
+              sessionStorage.clear();
+          }
+      });
+    function getUrl(val) {
+				//从这里 开始
+				$.ajax({
+              url : '/iccs/extension/auditExtension',
+              type : 'post',
+              async: false,
+              dataType: "json",
+              contentType : 'application/json',//添加这句话
+              data :JSON.stringify({
+                  "seqId": info.seqId,
+  				        "status": val
+              }),
+              headers : {
+                  "Authorization":sessionStorage.getItem('id'),
+              },
+              success : function(data){
+                //console.log(data);
+                if(data.statusCode == 200){					
+									 success();
+										$(".success").text(data.message);
+										setTimeout(function(){
+											location.href = "credit_info.html"
+										},1000)  
+								}else{
+									errors();
+									$(".errors").text(data.message);									
+									return false;			
+								}               
+              },
+              error : function(err){
+                  location.href = "index.html";
+                  sessionStorage.clear();
+              }
+          });
+				//到这里 结束	
+			}
+      //定单校验
+      $(".order-btn").on('click',function() {
+          getUrl(2)
+      });
+      $(".abolish").on('click',function() {
+          getUrl(1)
+      });
+      $(".decline").on('click',function() {
+          getUrl(4)
+      });
+      $(".promptly").on('click',function() {
+      	//询问框
+			  layer.open({
+			    content: '是否确认授信？'
+			    ,btn: ['确定', '不要']
+			    ,yes: function(index){
+			       getUrl(3)
+			      layer.close(index);
+			    }
+			  });
+         
+      });
+      $(".refuse").on('click',function() {
+         //页面层
+         var html = "<div class='sw_credit log-reg-sub'>" +
+         "<span class=" + 'sw_reject' + ">驳回原因</span>"+
+         "<textarea class="+'sw_textarea'+"></textarea>" +
+         "<a href='javascript:;' class='log-reg-sw-btn reject marR15'>确定</a>" +
+         "<a href='javascript:;' class='log-reg-sw-btn clear_reject'>取消</a>" +
+         "</div>"
+			  layer.open({
+			    type: 1
+			    ,content: html
+			    ,anim: 'up'
+			    ,style: 'position:fixed; bottom:0; left:0; width: 100%; height: 200px; padding:10px 0; border:none;'
+			  });
+      });
+      $(document).on('click','.reject',function() {
+      	var reject = $('.sw_textarea').val()
+			  		$.ajax({
+              url : '/iccs/extension/auditExtension',
+              type : 'post',
+              async: false,
+              dataType: "json",
+              contentType : 'application/json',//添加这句话
+              data :JSON.stringify({
+                  "seqId": info.seqId,
+  				        "status": 4,
+  				        "remark":reject
+              }),
+              headers : {
+                  "Authorization":sessionStorage.getItem('id'),
+              },
+              success : function(data){
+                //console.log(data);
+                if(data.statusCode == 200){					
+									 //信息框
+								  layer.open({
+								    content: data.message
+								    ,btn: '我知道了'
+								    ,yes: function(index){								     
+								      layer.close(index);		
+								      location.href = "credit_info.html"
+								    }
+								  });
+//										setTimeout(function(){
+//											location.href = "credit_info.html"
+//										},1000)  
+								}else{
+									 //信息框
+								  layer.open({
+								    content: data.message
+								    ,btn: '我知道了'
+								    ,yes: function(index){								     
+								      layer.close(index);		
+								      location.href = "credit_info.html"
+								    }
+								  });		
+								}               
+              },
+              error : function(err){
+                  location.href = "index.html";
+                  sessionStorage.clear();
+              }
+          });
+      });
+      $(document).on('click','.clear_reject',function() {
+      	layer.closeAll()
+      });
+      $(".delete").on('click',function() {
+        //询问框
+			  layer.open({
+			    content: '您确认要删除该授信流程么？'
+			    ,btn: ['确定', '不要']
+			    ,skin: 'footer'
+			    ,yes: function(index){
+			      //location.reload();
+			      layer.close(index);
+			      $.ajax({
+              url : '/iccs/extension/removeExtension',
+              type : 'post',
+              async: false,
+              data :{
+                  "seqId": info.seqId,
+              },
+              headers : {
+                  "Authorization":sessionStorage.getItem('id'),
+              },
+              success : function(data){
+                //console.log(data);
+                if(data.statusCode == 200){					
+									 success();
+										$(".success").text(data.message);
+										setTimeout(function(){
+											location.href = "credit.html"
+										},1000)  
+								}else{
+									errors();
+									$(".errors").text(data.message);									
+									return false;			
+								}               
+              },
+              error : function(err){
+                  location.href = "index.html";
+                  sessionStorage.clear();
+              }
+          });
+			    }
+			  });
+      });
+  })
+</script>
+</body>
+</html>

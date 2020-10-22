@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	<title>新增授信</title>
+	<link href="css/style.css" rel="stylesheet"/>
+	<link href="css/response.css" rel="stylesheet"/>
+</head>
+<body class="bg">
+<div class="content">
+	<div class="header">
+		<div class="header-nei">
+			<a href="inputCredit.html" class="back-up"><i class="iconfont icon-xiangzuo"></i></a>
+			<h2 class="header-title">新增授信</h2>
+			<a href="nav.html" class="back-top"><i class="iconfont icon-daohang"></i></a>
+		</div>
+	</div>
+	<!--head/-->
+	<div class="head-height">&nbsp;</div>
+	<!--录入校验在style.js  搜order-btn-->
+	<div class="login-reg" style="padding-top:16px;">
+		<div class="log-reg-list" id="interpolation"></div>
+		<div class="log-reg-list"><input type="tel" class="log-reg-text2 money" placeholder="授信金额"/></div>
+		<div class="log-reg-list"><input type="text" class="log-reg-text2 company" placeholder="公司"/></div>
+		<div class="log-reg-list" id="payType">			
+			<select>
+				<option value="" selected>请选择</option>
+				<option value="1" >预付费</option>
+				<option value="2">后付费</option>
+				<option value="3">其他</option>
+			</select>
+		</div>	
+		<div class="log-reg-list">
+			<textarea style="height: 50px;" class="remark" placeholder="备注"></textarea>
+		</div>			
+		<div class="log-reg-sub">
+			<a href="javascript:;" class="log-reg-btn order-btn">新增</a>
+		</div>
+	</div>
+</div>
+<!--content/-->
+<div class="bg100"></div>
+<!--错误提示-->
+<div class="tip-errors-bg">
+	<div class="tip-tip-box-nei">
+		<strong><i class="iconfont icon-shanchu"></i><em class="errors">错误提示</em></strong>
+	</div>
+	<!--tip-tip-box/-->
+</div>
+<!--tip-success-bg/-->
+<!--正确提示-->
+<div class="tip-success-bg">
+	<div class="tip-tip-box-nei">
+		<strong><i class="iconfont icon-smile" style="color:#0F0;"></i><em class="success">正确提示</em></strong>
+	</div>
+	<!--tip-tip-box/-->
+</div>
+<!--tip-success-bg/-->
+<script src="js/jquery.min.js"></script>
+<script src="js/style.js"></script>
+<script src="js/doT.min.js"></script>
+<script id="interpolationtmpl" type="text/x-dot-template">
+	<div class="layui-inline dropdown unlike1">
+		<input type="text" class="dropdown-selected1"
+			   name="userId" autocomplete="off" placeholder="请输入用户">
+		<ul class="dns">
+			{{~it:value:index}}
+			<li>
+				<a href="javaScript:" data="{{=value.userId}}">{{=value.loginName}}</a>
+			</li>
+			{{~}}
+		</ul>
+	</div>
+</script>
+<script type="text/javascript">
+	$(function(){
+		var userName;
+		$.ajax({
+				url : '/iccs/extension/queryUserName',
+				type : 'post',
+				async: false,
+				data :{
+					'userName':""
+				},
+				headers : {
+					"Authorization":sessionStorage.getItem('id'),
+				},
+				success : function(data){
+					 userName = data.data.data;
+				},
+				error : function(err){
+					location.href = "index.html";
+					sessionStorage.clear();
+				}
+			});
+		var UserName = userName;
+		var interText = doT.template($("#interpolationtmpl").text());
+		$("#interpolation").html(interText(UserName));
+//		$("#interpolation ul").on("click","li",function(){
+//			var name = $(this).find('a').text()
+//			$.ajax({
+//				url : '/iccs/addMoney/queryUserName',
+//				type : 'post',
+//				async: false,
+//				data :{
+//					'userName':name
+//				},
+//				headers : {
+//					"Authorization":sessionStorage.getItem('id'),
+//				},
+//				success : function(data){
+//					// console.log(data)
+//				},
+//				error : function(err){
+//					location.href = "index.html";
+//					sessionStorage.clear();
+//				}
+//			});
+//		})
+		//定单校验
+		$(".order-btn").on('click',function() {
+			var text = $(".unlike1 .dropdown-selected1").val();
+			var extensionName = null;
+			if(text == ''){
+				userId = ''
+			}else{
+				if(verify_user(UserName,$(".unlike1 .dropdown-selected1"),text)){
+					extensionName = $(".unlike1 .dropdown-selected1").val()
+				}else{
+					errors();
+					$(".errors").text('请选择下拉框内容！');
+					return false;
+				}
+			}
+			var money = $(".money").val();
+			var company = $(".company").val().trim();
+			var remark = $(".remark").val().trim();
+			var payType = $("#payType  option:selected").val();
+			var orderObj = {
+				"money": money,
+				"company": company,
+				"extensionId": 1,
+				"fromUserName": sessionStorage.getItem('current'),
+				"payType": payType,
+				"extensionName": extensionName,
+				"remark": remark
+			};
+			$.ajax({
+				url : '/iccs/extension/createExtension',
+				type : 'post',
+				dataType : 'json',
+				contentType: 'application/json',
+				async: false,
+				data : JSON.stringify(orderObj),
+				headers : {
+					"Authorization":sessionStorage.getItem('id'),
+				},
+				success : function(data){
+					//console.log(data);
+					if(data.data == true){
+						success();
+						$(".success").text(data.message);
+						setTimeout(function(){
+							location.href = "credit.html"
+						},1000)
+					}else{
+						errors();
+						$(".errors").text(data.message);
+					}
+					if(data.statusCode == '401'){
+						location.href = "index.html";
+						sessionStorage.clear();
+					}
+				},
+				error : function(err){
+					location.href = "index.html";
+					sessionStorage.clear();
+				}
+			});
+		});
+		
+		total($(".unlike1 ul li"),$(".unlike1 .dropdown-selected1"),$(".unlike1 ul"),$(".unlike1"));
+	})
+
+</script>
+</body>
+</html>

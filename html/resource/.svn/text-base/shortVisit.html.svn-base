@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>智能通信运营管理平台</title>
+  <link rel="stylesheet" href="../../css/style.css" />
+  <link rel="stylesheet" href="../../css/layui.css" />
+  <script src="../../js/api.js"></script>
+  <script src="../../js/jquery-3.0.0.min.js"></script>
+  <script src="../laydate/laydate.js"></script>
+  <script src="../../js/kindeditor-all-min.js"></script>
+  <script src="../../js/zh-CN.js"></script>
+  <script src="../../js/vue.min.js"></script>
+</head>
+<!--[if IE 9]>
+<style>
+    #leftMenu_Box{
+        width: 15.08%;
+        height: 979px;
+        float: left;
+        background: #040b29;
+        position: relative;
+        box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.5);
+    }
+</style>
+<![endif]-->
+<style>
+  /*#page {*/
+  /*padding: 62px 0 50px 0;*/
+  /*}*/
+
+  /*.shade_con {
+    height: auto;
+    width: 60%;
+    padding-bottom: 20px;
+  }
+
+  .shade_con1 {
+    width: 1000px;
+    height: auto;
+  }*/
+    #leftMenu_Box .leftMenu ul li div.prop a.prop18{
+        background-color: #1890FF !important;
+        color: #fff !important;
+    }
+  /*.shade_con1 .temp {
+    height: auto;
+  }*/
+
+  .sw_row tr td:nth-child(9) {
+    padding: 8px 0;
+  }
+
+  .sw_row tr td div {
+    word-break:break-all;
+    /* padding-right: 10px;*/
+    box-sizing: border-box;
+  }
+
+  .sw_row tr td:nth-child(1) div {
+    max-width: 110px;
+  }
+  .envent_no input {
+			background: rgb(236, 236, 236);
+		}
+	.shade_con3 {
+			width: 680px;
+			height: auto;
+		}
+		
+		.shade_con3 .temp {
+			height: auto;
+			width: auto;
+			border: none;
+			margin: 10px 22px 0 22px;
+		}
+		
+		#shade3 .shade_con3 .layui-inline label {
+			padding: 8px 0;
+		}	
+  /*.sw_row tr td:nth-child(4) div {
+    max-width: 360px;
+  }*/
+  /*.heightScroll {
+    max-height: 300px;
+  }*/
+
+  /*@media screen and (max-width: 1600px) {
+    .sw_row tr td:nth-child(4) div {
+      max-width: 150px;
+    }
+    .heightScroll {
+      max-height: 160px;
+    }
+    .shade_con1 {
+      width: 1020px;
+      max-height: 660px;
+    }
+    .shade_con1 .temp {
+      height: 400px;
+      width: 985px;
+      overflow-y: auto;
+    }
+  }*/
+
+  /*#text2 {
+    width: 912px;
+    height: 67px;
+    margin: 10px 18px 0 0px;
+    border: 1px solid #e2e2e2;
+    box-sizing: border-box;
+    padding: 7px;
+  }
+
+  .ke-container {
+    margin: 10px 0 0 0px !important;
+  }
+
+  .ke-statusbar {
+    display: none;
+  }
+
+  .ke-colorpicker-cell-top {
+    display: none !important;
+  }
+
+  .addClass4 {
+    background: #E1EFFF;
+  }*/
+</style>
+
+<body>
+  <!--<div id="sw_load">
+    <img src="../../img/load.gif">
+  </div>-->
+<div id="proMang">
+  <div class="top"><img src="../../img/logo.png" alt="" class="logo">
+    <ul>
+      <li class="top-a-box" data-value="210"><a href="../workbench/order_fail.html"><span
+                    class="iconfont icon-diannao" style="font-size: 22px;"></span>
+                工作台
+            </a></li>
+      <li class="top-a-box " data-value="211"><a href="../user_manage/user_manage.html">
+                <span class="iconfont icon-yonghu" style="font-size: 22px;"></span>
+                用户管理
+            </a></li>
+      <li class="top-a-box " data-value="212"><a href="../order_manage/order_manage.html"><span
+                    class="iconfont icon-dingdanguanli" style="font-size: 22px;"></span>
+                订单管理
+            </a></li>
+      <li class="top-a-box addClass" data-value="213"><a href="./take_orders.html"><span
+                    class="iconfont icon-iconfonticon-shebei" style="font-size: 22px;"></span>
+                资源配置
+            </a></li>
+    </ul>
+    <div class="sign">
+      <span class="ren"></span> <span class="type"></span>
+      <img src="../../img/退出.png" alt="" onclick="sign()">
+    </div>
+  </div>
+</div>
+<div class="main-box">
+  <!-- 左侧菜单 -->
+  <div id="leftMenu_Box" class="resource">
+    <div class="leftMenu">
+      <ul>
+        <li class="left_a dn addclass_one" data-value="21313"><a href="javascript:void(0);" class="leftNav" onclick="aa(event)">
+                    <span class="iconfont icon-iconfonticon-baobia"></span>
+                    接单模板配置
+                    <i class="iconfont icon-icon11 "></i></a>
+
+          <div class="prop dbs">
+            <a href="./take_orders.html" data-value="2131310" class="prop7 left_a dn sw_url">接单模板</a>
+            <a href="./signature_manage.html" data-value="2131311" class="prop8 left_a dn sw_url">签名管理</a>
+            <a href="./template_manage.html" data-value="2131312" class="prop9 left_a dn sw_url">模板管理</a>
+            <a href="./gateway.html" data-value="2131313" class="prop10 left_a dn sw_url">网关签名</a>
+            <a href="javascript:void(0);" data-value="2131314" class="prop18 left_a dn sw_url">智能短链</a>
+          </div>
+        </li>
+        <li class="left_a dn " data-value="21315">
+          <a href="./test_send.html" class="leftNav sw_url" >
+                        <span class="iconfont icon-fasong"></span>
+                        测试发送
+                    </a>
+        </li>
+        <li class="left_a dn" data-value="21310"><a href="javascript:void(0);" class="leftNav" onclick="aa(event)">
+                    <span  class="iconfont icon-diannao-shuju" ></span>
+                    基础数据配置
+                    <i class="iconfont icon-iconfontfold"></i> </a>
+          <div class="prop dns">
+            <a href="./sensitive_word.html" data-value="2131010" class="prop1 left_a dn sw_url">敏感词部署</a>
+            <a href="./rate_limiting.html" data-value="2131011" class="prop2 left_a dn sw_url">下单限速</a>
+            <a href="./risk_list.html" data-value="2131012" class="prop3 left_a dn sw_url">危险词</a>
+            <a href="./home_location.html" data-value="2131013" class="prop24 left_a dn">归属地维护</a>
+            <a href="./home_protect.html" data-value="2131013" class="prop25 left_a dn">归属地保护</a>
+          </div>
+        </li>
+        <li class="left_a  dn" data-value="21311"><a href="javascript:void(0);" class="leftNav" onclick="aa(event)">
+                    <span class="iconfont icon-peizhishujuyuan"></span>
+                    网关配置
+                    <i class="iconfont icon-iconfontfold"></i></a>
+
+          <div class="prop dns">
+            <a href="./definition_gate.html" data-value="2131110" class="prop4 left_a dn sw_url">定义网关</a>
+            <a href="./route_manage.html" data-value="2131111" class="prop5 left_a dn sw_url">配置路由</a>
+            <a href="./route_list.html" data-value="2131112" class="prop6 left_a dn sw_url">通路选择</a>
+            <a href="./gateway_send.html" data-value="2131113" class="prop16 left_a dn sw_url">网关发送</a>
+            <a href="./user_data.html" data-value="2131114" class="prop17 left_a dn sw_url">用户数据统计</a>
+          </div>
+        </li>
+        <!--<li class="left_a  " data-value="21312">-->
+        <!--<a href="javascript:void(0);" class="leftNav" style="padding: 20px;">-->
+        <!--<span class="iconfont icon-guanli"></span>-->
+        <!--通路配置-->
+        <!--</a>-->
+        <!--</li>-->
+
+        <li class="left_a dn " data-value="21314"><a href="javascript:void(0);" class="leftNav" onclick="aa(event)">
+                    <span class="iconfont icon-moban"></span>
+                    被叫配置
+                    <i class="iconfont icon-iconfontfold"></i></a>
+
+          <div class="prop dns">
+            <a href="./list_set.html" data-value="2131410" class="prop11 left_a dn sw_url">黑名单</a>
+            <a href="./vip_list.html" data-value="2131411" class="prop12 left_a dn sw_url">VIP白名单</a>
+            <a href="./unsubscribe.html" data-value="2131412" class="prop13 left_a dn sw_url">退订名单</a>
+          </div>
+        </li>
+        <li class="left_a dn " data-value="21316"><a href="javascript:void(0);" class="leftNav" onclick="aa(event)">
+                    <span class="iconfont icon-peizhishujuyuan"></span>
+                    风险控制
+                    <i class="iconfont icon-iconfontfold"></i></a>
+          <div class="prop dns">
+            <a href="./risk_rule.html" data-value="2131610" class="prop21 left_a dn sw_url">风控规则</a>
+            <a href="./risk_result.html" data-value="2131611" class="prop22 left_a dn sw_url">风控结果</a>
+            <a href="./report_take.html" data-value="2131612" class="prop23 left_a dn sw_url">告警订阅</a>
+          </div>
+        </li>
+      </ul>
+      <div class="group" onclick="flexible(event)"><span class="iconfont icon-xiangzuo" style="color: rgb(255, 255, 255); font-size: 13px;"></span></div>
+    </div>
+  </div>
+  <div id="rightTable">
+    <v-order-fail></v-order-fail>
+  </div>
+</div>
+ <div id="shade3">
+			<v-rate></v-rate>
+</div>
+  <div id="shade1">
+    <v-template></v-template>
+  </div>
+  <script type="text/x-template" id="right-template">
+    <div>
+      <div class="table_tou">
+        <h6 class="fl"><a href="javascript:history.back(-1)" class="iconfont icon-fanhui"></a>短链访问详情</h6>
+
+        <div class="fr sw_padd">
+          <span class="sw_num" v-cloak>{{totalCount}}</span
+                    >&nbsp; &nbsp;<span style="color:#738495">条记录</span>
+          <!--<span class="Gradual" @click="shade()">
+              <span class="iconfont icon-tongji">&nbsp;添加短链</span>
+          </span>-->
+          <span class="Gradual" @click="importFile()">
+              <span
+                      class="iconfont icon-export"
+                      >&nbsp;导出</span
+                      >
+            </span>
+        </div>
+      </div>
+      <div class="table_nav">
+        <form class="layui-form layui-form-pane" action="">
+          <div class="layui-inline">
+            <label class="">开始时间</label><br />
+            <div class="layui-input-inline">
+              <input type="text" name="startTime" class="layui-input" autocomplete="off" id="test"  />
+              <img src="../../img/Shape.png" alt="" />
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="">结束时间</label><br />
+            <div class="layui-input-inline">
+              <input type="text" name="endTime" class="layui-input" autocomplete="off" id="test1"  />
+              <img src="../../img/Shape.png" alt="" />
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="">任务号ID</label><br/>
+
+            <div class="layui-input-inline">
+              <input type="text" name="logId" placeholder="请输入" class="layui-input" />
+            </div>
+          </div> 
+          <div class="layui-inline">
+            <label class="">IP</label><br/>
+
+            <div class="layui-input-inline">
+              <input type="text" name="ip" placeholder="请输入" class="layui-input" />
+            </div>
+          </div>      
+          <div class="layui-inline">
+            <label class="">手机号</label><br/>
+            <div class="layui-input-inline">
+              <input type="text" name="receiverMsisdn" placeholder="请输入" class="layui-input" />
+            </div>
+          </div>
+          <div class="layui-inline">
+							<label class="">是否有效</label><br/>
+							<div class="layui-input-inline">
+								<select name="isValid">
+									<option value="">请选择</option>
+									<option value="1">有效</option>
+									<option value="0">无效</option>
+								</select>
+							</div>
+						</div>
+						<div class="layui-inline dropdown unlike3">
+							<label class="">品牌名</label><br/>
+							<input type="text" class="dropdown-selected" @input="inputFun" name="deviceVendor" autocomplete="off" placeholder="请输入">
+							<ul class="dns">
+								<li v-for="(li, index) in vendor">
+									<a href="javaScript:" :data="li">{{li}}</a>
+								</li>
+							</ul>
+						</div>
+						<div class="layui-inline" :class="{envent_no:isShow}">
+              <label class="">发送类型</label><br />
+              <div class="layui-input-inline">
+                <select name="deviceName" id="deviceName" :disabled="isShow">
+                  <option value="">请选择</option>
+                  <option v-cloak
+                          v-for="(li, index) in deviceName"
+                          :value="li"
+                          >{{li}}</option>
+                </select>
+              </div>
+            </div>
+          <div class="layui-inline">
+            <label class="">操作系统</label><br/>
+            <div class="layui-input-inline">
+              <input type="text" name="clientOs" placeholder="请输入" class="layui-input" />
+            </div>
+          </div>
+          <div class="layui-input-inline">
+            <button class="sw_btn1" lay-submit="" lay-filter="demo">
+                        查询
+                    </button>
+          </div>
+        </form>
+        <div class="sw_row">
+          <table style="margin-top: 15px;min-width: 1650px;">
+            <tr>
+              <th>任务号ID</th>
+              <th>手机号</th>
+              <th>归属地</th>
+              <th>操作系统</th>
+              <th>浏览器</th>
+              <th>是否有效</th>
+              <th>IP</th>
+              <th>IP归属地</th>
+              <th>访问时间</th>
+              <th>设备号</th>                           
+              <th>设备品牌</th>
+							<th>设备型号</th>							
+              <th>屏幕分辨率</th>
+              <th>操作</th>
+            </tr>
+            <tr v-for="(li, index) in allData" v-cloak>
+              <td>
+                {{li.logId}}
+              </td>
+              <td> {{li.receiverMsisdn}}</td>
+              <td>
+                 {{li.location}}
+              </td>
+              <td> {{li.clientOs}}</td>
+              <td> {{li.browser}}</td>
+              <td> 
+								<span v-if="li.isValid == '0'">无效</span>
+								<span v-if="li.isValid == '1'">有效</span>
+							</td>
+              <td> 
+              	 {{li.ip}}
+              </td>
+              <td> {{li.operate}}</td>
+              <td> {{li.visitTime}}</td>
+              <td> 
+              	<div :title="li.userAgent">
+              		{{li.equipmentNo}}
+              	</div>             	
+              </td>                           
+              <td> {{li.deviceVendor == null?'-':li.deviceVendor}}</td>
+							<td> {{li.deviceName == null?'-':li.deviceName}}</td>
+							
+              <td>
+                 {{li.resolvingPower}}
+              </td>    
+              <td >
+									<div >
+										<span v-if="li.deviceVendor == '-'" class="sw_btn2" @click="newDevice(li.userAgent)">添加设备</span>
+									</div>
+								</td>
+            </tr>
+          </table>
+          <div class="sw_pad8" v-show="mapShow == true">暂无数据</div>
+        </div>
+        <div id="page"></div>
+      </div>
+    </div>
+  </script>
+  		<script type="text/x-template" id="rate-template">
+			<div class="shade_con3">
+				<div class="tongji">
+					<h3>添加设备</h3>
+					<span class="iconfont icon-shanchu" @click="shanchu()"></span>
+				</div>
+				<div class="temp">
+					<form class="layui-form layui-form-pane" action="" style="padding: 0px 0px 25px 20px">
+						<div class="layui-inline">
+							<label class="">user-agent</label><br />
+							<div class="layui-input-inline" style="width:605px;height: 100px;">
+								<textarea name="userAgent" v-model="showData.userAgent"  class="layui-textarea"></textarea>
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="">品牌名</label><br />
+							<div class="layui-input-inline" style="width:300px">
+								<input type="text" name="deviceVendor" v-model="showData.deviceVendor" placeholder="请输入" class="layui-input" />
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="">设备型号</label><br />
+							<div class="layui-input-inline" style="width:300px">
+								<input type="text" name="deviceName" v-model="showData.deviceName" placeholder="请输入" class="layui-input" />
+							</div>
+						</div>
+						<div class="layui-input-inline" style="width: 98%;text-align: center;">
+							<button class="sw_btn1" lay-submit="" lay-filter="demo6">
+                        添加
+                    </button>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</script>
+  <script src="../../layui.all.js"></script>
+  <script src="../../module/shortVisit.js"></script>
+  <script>
+    //头部
+    //    var operaAI = new Vue({
+    //        el: "#proMang",
+    //        data: {
+    //            topCurrent: 0
+    //        }
+    //    });
+    resource()
+    var rightTable = new Vue({
+      el: "#rightTable"
+    });
+    var shade = new Vue({
+      el: "#shade"
+    });
+    var shade3 = new Vue({
+				el: "#shade3"
+			});
+    $(function () {
+      
+       laydate.render({
+         elem: "#test", //指定元素
+         type: 'datetime',
+         value: '',
+
+       });
+       laydate.render({
+         elem: "#test1", //指定元素
+         type: 'datetime',
+         value: '',
+
+       });
+      $(document).ready(function () {
+    
+      });
+      total($(".unlike3 ul li"), $(".unlike3 .dropdown-selected"), $(".unlike3 ul"), $(".unlike3"));
+    });
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <title>黑白名单</title>
+    <link rel="stylesheet" type="text/css" href="css/date.css">
+    <link href="css/style.css" rel="stylesheet"/>
+    <link href="css/response.css" rel="stylesheet"/>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/style.js"></script>
+    <script src="js/doT.min.js"></script>
+    <script type="text/javascript" src="js/date.js"></script>
+    <script type="text/javascript" src="js/iscroll_date.js"></script>
+</head>
+<body class="bg">
+<div class="content">
+    <div class="header">
+        <div class="header-nei">
+            <a href="nav.html" class="back-up"><i class="iconfont icon-xiangzuo"></i></a>
+            <h2 class="header-title">黑白名单</h2>
+        </div>
+    </div>
+    <!--head/-->
+    <div class="head-height">&nbsp;</div>
+    <!--录入校验在style.js  搜order-btn-->
+    <div id="datePlugin"></div>
+    <div class="login-reg" style="padding-top:16px;">
+        <div class="log-reg-list"><input type="tel" class="log-reg-text2 phone" placeholder="手机号码"/></div>
+        <div class="log-reg-sub">
+            <a href="javascript:;" class="log-reg-btn order-btn" style="margin-bottom:20px">查询</a>
+            <a href="javascript:;" class="log-reg-btn createBlack">新增</a>
+        </div>
+    </div>
+</div>
+<!--content/-->
+<div class="bg100"></div>
+<!--错误提示-->
+<div class="tip-errors-bg">
+    <div class="tip-tip-box-nei">
+        <strong><i class="iconfont icon-shanchu"></i><em class="errors">错误提示</em></strong>
+    </div>
+    <!--tip-tip-box/-->
+</div>
+<!--tip-success-bg/-->
+<!--正确提示-->
+<div class="tip-success-bg">
+    <div class="tip-tip-box-nei">
+        <strong><i class="iconfont icon-shanchu" style="color:#0F0;"></i><em class="success">正确提示</em></strong>
+    </div>
+    <!--tip-tip-box/-->
+</div>
+<!--tip-success-bg/-->
+<script type="text/javascript">
+    $(function(){
+        //定单校验
+        $(".order-btn").on('click',function() {
+            var phone = $(".phone").val().trim();
+            var orderObj = {
+                "offset": 1,
+                "pageSize": 10,
+                "phone": phone,
+            };
+            sessionStorage.setItem('inputObj', JSON.stringify(orderObj));
+            location.href = "list_set.html"
+        });
+        $(".createBlack").on('click',function() {
+            location.href = "createBlack.html";
+            sessionStorage.removeItem('black_while');
+        });
+    })
+
+</script>
+</body>
+</html>

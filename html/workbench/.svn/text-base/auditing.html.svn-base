@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>智能通信运营管理平台</title>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../css/layui.css" />
+		<script src="../../js/api.js"></script>
+		<script src="../../js/jquery-3.0.0.min.js"></script>
+		<script src="../laydate/laydate.js"></script>
+		<script src="../../js/vue.min.js"></script>
+	</head>
+	<!--[if IE 9]>
+<style>
+    #leftMenu_Box {
+        width: 15.08%;
+        height: 979px;
+        float: left;
+        background: #040b29 !important;
+        position: relative;
+        box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.5);
+    }
+</style>
+<![endif]-->
+	<style>
+		.sw_row tr td:nth-child(3) div {
+			width: 150px;
+		}
+		
+		.sw_row tr td:nth-child(4) div {
+			width: 150px;
+		}
+		.sw_row tr td:nth-child(9){
+			padding: 8px 0;
+		}
+		.sw_row tr td div {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			padding-right: 10px;
+			box-sizing: border-box;
+		}
+		
+		.sw_row tr td:nth-child(8) div {
+			width: 250px;
+		}
+		
+		.sw_row tr td:nth-child(1) div {
+			width: 160px;
+		}
+		
+		.sw_row tr td:nth-child(2) a:hover {
+			color: #7DAFE2;
+		}
+		
+		#text6,
+		#text7 {
+			width: 912px;
+			height: 100px;
+			border: 1px solid #e2e2e2;
+			box-sizing: border-box;
+			padding: 7px;
+		}
+		
+		.shade_con3 {
+			width: 980px;
+			height: auto;
+		}
+		
+		.shade_con3 .temp {
+			height: 525px;
+			/* width: auto; */
+			border: none;
+			/* margin: 20px 20px 0 20px; */
+			overflow-y: auto;
+		}
+		/*#page {*/
+		/*padding: 53px 0 40px 0;*/
+		/*}*/
+		
+		.layui-form-select dl {
+			top: -100px !important;
+		}
+	</style>
+
+	<body>
+		<div id="proMang">
+			<div class="top"><img src="../../img/logo.png" alt="" class="logo">
+				<ul>
+					<li class="top-a-box addClass" data-value="210">
+						<a href="./order_fail.html"><span class="iconfont icon-diannao" style="font-size: 22px;"></span> 工作台
+						</a>
+					</li>
+					<li class="top-a-box " data-value="211">
+						<a href="../user_manage/user_manage.html">
+							<span class="iconfont icon-yonghu" style="font-size: 22px;"></span> 用户管理
+						</a>
+					</li>
+					<li class="top-a-box " data-value="212">
+						<a href="../order_manage/order_manage.html"><span class="iconfont icon-dingdanguanli" style="font-size: 22px;"></span> 订单管理
+						</a>
+					</li>
+					<li class="top-a-box " data-value="213">
+						<a href="../resource/take_orders.html"><span class="iconfont icon-iconfonticon-shebei" style="font-size: 22px;"></span> 资源配置
+						</a>
+					</li>
+				</ul>
+				<div class="sign">
+					<span class="ren"></span> <span class="type"></span>
+					<img src="../../img/退出.png" alt="" onclick="sign()">
+				</div>
+			</div>
+		</div>
+		<div class="main-box">
+			<!-- 左侧菜单 -->
+			<div id="leftMenu_Box" class="work_left">
+				<div class="leftMenu">
+					<ul class="prop">
+						<li class="left_a dn" data-value="21010">
+							<a href="./order_fail.html"><span class="iconfont icon-xiadanshibai"></span> 下单失败
+							</a>
+						</li>
+						<li class="left_a dn addclass_one " data-value="21011">
+							<a href="javascript:void(0);"><span class="iconfont icon-shenhe"></span> 审核发送
+							</a>
+						</li>
+						<li class="left_a dn" data-value="21012">
+							<a href="./detail.html"><span class="iconfont icon-mingxi"></span> 用户发送明细
+							</a>
+						</li>
+						<li class="left_a dn" data-value="21013">
+							<a href="./user_count.html"><span class="iconfont icon-tongji1"></span> 用户发送统计
+							</a>
+						</li>
+						<li class="left_a dn" data-value="21014">
+							<a href="./template.html"><span class="iconfont icon-moban"></span> 模板申请
+							</a>
+						</li>
+						<li class="left_a dn" data-value="21015">
+							<a href="./signature.html"><span class="iconfont icon-moban"></span> 签名申请
+							</a>
+						</li>
+						<li class="left_a dn" data-value="21016">
+							<a href="./complain.html"><span class="iconfont icon-daoru1"></span> 投诉导入
+							</a>
+						</li>
+						<li class="left_a dn" data-value="21017">
+							<a href="./complain_manage.html"><span class="iconfont icon-guanli"></span> 投诉管理
+							</a>
+						</li>
+					</ul>
+					<div class="group" onclick="flexible(event)">
+						<span class="iconfont icon-xiangzuo" style="color: rgb(255, 255, 255); font-size: 13px;"></span>
+					</div>
+				</div>
+			</div>
+			<div id="rightTable">
+				<v-auditing-send></v-auditing-send>
+			</div>
+			<div id="shade3">
+				<v-rate></v-rate>
+			</div>
+		</div>
+		<script type="text/x-template" id="right-template">
+			<div>
+				<div class="table_tou">
+					<h6 class="fl">审核发送</h6>
+
+					<div class="fr sw_padd">
+						<span class="sw_num" v-cloak>{{totalCount}}</span>&nbsp; &nbsp;<span style="color:#738495">条记录</span>
+						<span class="Gradual" @click="refresh()">
+              <span
+                      class="iconfont icon-shuaxin"
+                      >&nbsp;刷新</span
+                      >
+            </span>
+					</div>
+				</div>
+				<div class="table_nav">
+					<form class="layui-form layui-form-pane" action="">
+						<div class="layui-inline">
+							<label class="">查询方式</label><br>
+
+							<div class="layui-input-inline" style="width: 250px !important;">
+								<input type="radio" name="type" value="0" title="全部" checked>
+								<input type="radio" name="type" value="1" title="先审后发">
+								<input type="radio" name="type" value="2" title="先发后审">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="">开始时间</label><br/>
+
+							<div class="layui-input-inline">
+								<input type="text" name="startDate" class="layui-input" autocomplete="off" id="test" />
+								<img src="../../img/Shape.png" alt="" />
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="">结束时间</label><br/>
+
+							<div class="layui-input-inline">
+								<input type="text" name="endDate" class="layui-input" autocomplete="off" id="test1" />
+								<img src="../../img/Shape.png" alt="" />
+							</div>
+						</div>
+						<div class="layui-inline dropdown">
+							<label class="">用户</label><br/>
+							<input type="text" class="dropdown-selected" name="userId" autocomplete="off" placeholder="请输入">
+							<ul class="dns">
+								<li v-for="(li, index) in userData">
+									<a href="javaScript:" :data="li.userId">{{li.loginName}}</a>
+								</li>
+							</ul>
+						</div>
+						<div class="layui-inline">
+							<label class="">关键字</label><br/>
+
+							<div class="layui-input-inline">
+								<input type="text" name="msgContent" placeholder="请输入" class="layui-input" />
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="">是否放行</label><br/>
+
+							<div class="layui-input-inline">
+								<select>
+									<option value="">请选择</option>
+									<option value="0">是</option>
+									<option value="1">否</option>
+								</select>
+							</div>
+						</div>
+						<div class="layui-input-inline">
+							<button class="sw_btn1" lay-submit="" lay-filter="demo2">
+                        查询
+                    </button>
+						</div>
+					</form>
+					<div class="sw_row">
+						<table style="margin-top: 15px;min-width:1450px">
+							<tr>
+								<th>任务号</th>
+								<th>模板ID</th>
+								<th style="width:155px">用户名</th>
+								<th style="width:160px">客户来源</th>
+								<th>发送时间</th>
+								<th>被叫号码</th>
+								<th>合并数量</th>
+								<th>短信内容</th>
+								<th>是否有营业执照</th>
+								<th>匹配动作</th>
+								<th style="width:130px;text-align: center;">操作</th>
+							</tr>
+							<tr v-for="(li, index) in allData" v-cloak>
+								<td>
+									<div :title="li.taskSn">{{li.taskSn}}</div>
+								</td>
+								<td>
+									<a href="javascript:void(0);" @click="templateId(li.templateId)">{{li.templateId}}</a>
+								</td>
+								<td class="we" @mouseover="artle($event)" @mouseout="out($event)">
+									<div style="height: 22px;line-height: 22px;">
+										<span>{{li.loginName}}</span>
+										<span class="none">{{li.loginName}}</span>
+									</div>
+								</td>
+								<td class="we" @mouseover="artle($event)" @mouseout="out($event)">
+									<div style="height: 22px;line-height: 22px;">
+										<span>{{li.ismgName}}</span>
+										<sapn class="none">{{li.ismgName}}</sapn>
+									</div>
+								</td>
+								<td>{{li.vestDate}}</td>
+								<td>{{li.receiverMsisdn}}</td>
+								<td>{{li.num}}</td>
+								<td>
+									<div :title="li.msgContent">{{li.msgContent}}</div>
+								</td>
+								<td>
+									是
+								</td>
+								<td>{{li.type}}</td>
+								<td style="text-align: center;">
+									<div style="width:130px;padding-right: 0px;">
+										<span class="sw_btn2" @click="discharged(li.taskSn,li.type,li.msgContent,li.loginName,li.templateId)">放行</span>
+										<span class="sw_btn2" @click="refuse(li.taskSn,li.type,li.msgContent,li.loginName)">拒绝</span>
+									</div>
+								</td>
+							</tr>
+
+						</table>
+						<div class="sw_pad8" v-show="showNo == true">暂无数据</div>
+					</div>
+					<div id="page"></div>
+					<div id="shade2">
+						<div class="tips2">
+							<div class="weizhi">
+								<img src="../../img/success.png" alt="">
+							</div>
+							<div class="tc">
+								加速完成！
+							</div>
+							<div class="tc">
+								<button class="sw_btnsuss" @click="sw_btnsuss()">查询</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</script>
+		<script type="text/x-template" id="rate-template">
+			<div class="shade_con3">
+				<div class="tongji">
+					<h3>查看信息</h3>
+					<span class="iconfont icon-shanchu" @click="shanchu()"></span>
+				</div>
+				<div class="temp">
+					<form class="layui-form layui-form-pane" action="" style="padding: 0px 0px 25px 15px;">
+						<div class="layui-inline">
+							<label class="">用户名</label><br />
+							<div class="layui-input-inline" style="width:300px">
+								<input type="text" name="name" v-model="name" class="layui-input phone" disabled style="background: #ECECEC;" />
+							</div>
+						</div><br>
+						<em style="margin: 10px 0px;display: inline-block;"><span
+                        style="color:#FE2121;font-weight:600;">*</span> 原内容 <span style="color: #ff0000" v-cloak>当前内容数字：{{length}}</span></em>
+						<textarea name="msgContent" v-model="msgContent" id="text6" placeholder="请输入"></textarea>
+						<em style="margin: 10px 0px;display: inline-block;"><span style="color:#FE2121;font-weight:600;">*</span> 模板匹配</em>
+						<span class="sw_btn1" style="margin: 0 0 0 8px" lay-submit="">
+                    匹配中文
+                </span>
+						<span class="sw_btn1" style="margin: 0 0 0 8px" lay-submit="">
+                    匹配非中文
+                </span>
+						<span class="sw_btn1" style="margin: 0 0 0 8px" lay-submit="">
+                    还原
+                </span>
+            <div class="layui-inline" style="margin-left: 10px;width: 50%;" v-if="code == 0">
+							<label class="">是否替换内容</label>
+							<div class="layui-input-inline" style="width: 150px;box-sizing: border-box;padding-left: 10px;">
+								<input type="radio" lay-filter="exchange" name="exchange" value="1" title="是">
+								<input type="radio" lay-filter="exchange" name="exchange" value="0" title="否" checked>
+							</div>
+						</div>    
+						<textarea name="expression" v-model="expression" id="text7" placeholder="请输入"></textarea>
+
+						<div class="layui-inline">
+							<label class=""><span style="color:#FE2121;font-weight:600;">*</span> 优先级</label><br/>
+
+							<div class="layui-input-inline" style="width:300px">
+								<select name="priority" id="priority">
+									<option value="0" selected>高</option>
+									<option value="1">中</option>
+									<option value="2">低</option>
+								</select>
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class=""><span style="color:#FE2121;font-weight:600;">*</span> 内容分类</label><br/>
+
+							<div class="layui-input-inline" style="width:300px">
+								<select name="bizType" id="bizType">
+									<option value="">请选择</option>
+									<option v-for="(li, index) in content" :value="li.bizTypeId" v-cloak>{{li.bizTypeName}}
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="">放行数量</label><br/>
+							<div class="layui-input-inline" style="width:300px">
+								<select name="num" id="num" lay-filter="num">
+									<option value="0" selected>不限</option>
+									<option value="1">1条</option>
+									<option value="10000">10000条</option>
+									<option value="50000">50000条</option>
+									<option value="100000">100000条</option>
+								</select>
+							</div>
+						</div><br />												
+						<div class="layui-inline" style="margin-top: 10px" >
+							<label class="padR_10">有效期</label>
+							<div class="layui-input-inline" style="width: auto;">
+								<input type="radio" name="expireTime" value="" title="永久有效" checked>
+								<input type="radio" name="expireTime" value="1" title="一次有效">
+								<input type="radio" name="expireTime" value="2" title="当天有效">
+							</div>
+						</div>
+						<br>
+						<div class="layui-input-inline" style="width: 98%;text-align: center;">
+							<button class="sw_btn1" lay-submit="" lay-filter="demo11" v-if="code == 0">
+                        确定放行
+                    </button>
+							<span class="sw_btn1 " lay-submit="" lay-filter="demo12" v-if="code == 1">
+                          确定拒绝
+                        </span>
+							<span class="sw_btnwrong marl_15" @click="close()">
+                          关闭
+                        </span>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</script>
+		<script src="../../layui.all.js"></script>
+		<script src="../../module/auditing.js"></script>
+
+		<script>
+			//头部
+			//    var operaAI = new Vue({
+			//        el: "#proMang",
+			//        data: {
+			//            topCurrent: 0
+			//        }
+			//    });
+			workbench()
+			var rightTable = new Vue({
+				el: "#rightTable"
+			});
+			//
+			var shade3 = new Vue({
+				el: "#shade3"
+			});
+
+			$(function() {
+				$(document).ready(function() {
+					// $('#leftMenu_Box').css('background', '#040b29');
+					// $('#proMang .top').css('background', '#fff');
+
+				});
+				laydate.render({
+					elem: "#test", //指定元素
+					// type: 'datetime',
+					showBottom: false,
+					value: getDay(0),
+
+				});
+				laydate.render({
+					elem: "#test1", //指定元素
+					// type: 'datetime',
+					showBottom: false,
+					value: getDay(0),
+
+				});
+				total($(".dropdown ul li"), $(".dropdown .dropdown-selected"), $(".dropdown ul"), $(".dropdown"));
+
+			});
+		</script>
+	</body>
+
+</html>

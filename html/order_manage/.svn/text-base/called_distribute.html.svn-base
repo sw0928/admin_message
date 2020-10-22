@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>智能通信运营管理平台</title>
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/layui.css" />
+    <script src="../../js/api.js"></script>
+    <script src="../../js/jquery-3.0.0.min.js"></script>
+    <script src="../laydate/laydate.js"></script>
+    <script src="../../js/vue.min.js"></script>
+
+</head>
+<!--[if IE 9]>
+<style>
+    #leftMenu_Box{
+        width: 15.08%;
+        height: 979px;
+        float: left;
+        background: #040b29 !important;
+        position: relative;
+        box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.5);
+    }
+</style>
+<![endif]-->
+<style>
+    /*#page {*/
+    /*padding: 80px 0 46px 0;*/
+    /*}*/
+    #leftMenu_Box .leftMenu ul li div.prop a.prop22{
+        background-color: #1890FF !important;
+        color: #fff !important;
+    }
+    /*.sw_row tr td {*/
+        /*/!*padding: 10px 0;*!/*/
+        /*border: none !important;*/
+    /*}*/
+    .sw_row tbody tr:nth-child(1):hover{
+        background:#EBF7FF ;
+    }
+
+</style>
+<body>
+<div id="proMang">
+    <div class="top"><img src="../../img/logo.png" alt="" class="logo">
+        <ul>
+            <li class="top-a-box" data-value="210"><a href="../workbench/order_fail.html"><span
+                    class="iconfont icon-diannao" style="font-size: 22px;"></span>
+                工作台
+            </a></li>
+            <li class="top-a-box " data-value="211"><a href="../user_manage/user_manage.html">
+                <span class="iconfont icon-yonghu" style="font-size: 22px;"></span>
+                用户管理
+            </a></li>
+            <li class="top-a-box addClass" data-value="212"><a href="./order_manage.html"><span
+                    class="iconfont icon-dingdanguanli" style="font-size: 22px;"></span>
+                订单管理
+            </a></li>
+            <li class="top-a-box " data-value="213"><a href="../resource/take_orders.html"><span
+                    class="iconfont icon-iconfonticon-shebei" style="font-size: 22px;"></span>
+                资源配置
+            </a></li>
+        </ul>
+        <div class="sign">
+            <span class="ren"></span> <span class="type"></span>
+            <img src="../../img/退出.png" alt=""  onclick="sign()">
+        </div>
+    </div>
+</div>
+<div class="main-box">
+    <!-- 左侧菜单 -->
+    <div id="leftMenu_Box" class="order_manage">
+        <div class="leftMenu">
+            <ul>
+                <li class="left_a  dn" data-value="21210">
+                    <a href="./order_manage.html" class="leftNav">
+                        <span class="iconfont icon-guanli"></span>
+                        订单管理
+                    </a>
+                </li>
+                <li class="left_a dn " data-value="21210">
+                    <a href="./order_rule.html" class="leftNav sw_url" >
+                        <span class="iconfont icon-guanli"></span>
+                        订单规则
+                    </a>
+                </li>
+                <li class="left_a  dn" data-value="21211">
+                    <a href="./order_list.html" class="leftNav" >
+                        <span class="iconfont icon-liebiao"></span>
+                        详单列表
+                    </a>
+                </li>
+                <li class="left_a dn" data-value="21214">
+                    <a href="./order_detail.html" class="leftNav">
+                        <span class="iconfont icon-liebiao"></span>
+                        接单明细
+                    </a>
+                </li>
+                <li class="left_a addclass_one dn" data-value="21212"><a href="javascript:void(0);" class="leftNav" onclick="aa(event)">
+                    <span  class="iconfont icon-diannao-shuju" ></span>
+                    客户支持
+                    <i class="iconfont icon-icon11"></i> </a>
+                    <div class="prop dbs">
+                        <a href="./signature_distribute.html" data-value="2121210" class="prop13 left_a dn">签名分布</a>
+                        <a href="javascript:void(0);" data-value="2121211" class="prop22 left_a dn">被叫分布</a>
+                        <a href="./client_type.html" data-value="2121212" class="prop33 left_a dn">客户订单类型</a>
+                    </div>
+                </li>
+                <li class="left_a dn" data-value="21213"><a href="javascript:void(0);" class="leftNav"  onclick="aa(event)">
+                    <span  class="iconfont icon-diannao-shuju" ></span>
+                    通道管理
+                    <i class="iconfont icon-iconfontfold"></i> </a>
+                    <div class="prop dns">
+                        <a href="./channel_new.html" data-value="2121310" class="prop20 left_a dn">通道信息</a>
+                        <!--<a href="./channel_test.html" data-value="2121311" class="prop24 left_a dn">通道测试</a>-->
+                        <a href="./status_report_record.html" data-value="2121312" class="prop21 left_a  dn">报告状态记录</a>
+                        <a href="./status_report_reset.html" data-value="2121313" class="prop23 left_a  dn">报告状态重推</a>                        
+                    </div>
+                </li>
+            </ul>
+            <div class="group" onclick="flexible(event)"><span class="iconfont icon-xiangzuo"style="color: rgb(255, 255, 255); font-size: 13px;"></span></div>
+        </div>
+    </div>
+    <div id="rightTable">
+        <v-order-list></v-order-list>
+    </div>
+</div>
+<div id="shade">
+    <v-look-reply></v-look-reply>
+</div>
+<script type="text/x-template" id="list-template">
+    <div>
+        <div class="table_tou">
+            <h6 class="fl">被叫分布列表</h6>
+            <div class="fr sw_padd">
+						<span class="sw_num"
+                              v-cloak>{{totalCount}}</span>&nbsp; &nbsp;<span style="color:#738495">条记录</span>
+                <!--<span class="Gradual" @click="shade()">-->
+                <!--<span class="iconfont icon-huifu" style="color: #EEF0F4;-->
+                <!--font-size: 16px;-->
+                <!--line-height: 40px;-->
+                <!--padding: 0px 8px 0px 15px;">&nbsp;查看回复</span>-->
+                <!--</span>-->
+                <span class="Gradual" @click="importFile()">
+                <span class="iconfont icon-export" >&nbsp;导出</span>
+                </span>
+            </div>
+        </div>
+        <div class="table_nav">
+            <form class="layui-form layui-form-pane" action="">
+                <div class="">
+                    <div class="layui-inline">
+                        <label class="">开始时间</label><br/>
+
+                        <div class="layui-input-inline">
+                            <input type="text" name="startDate" class="layui-input" id="test2"/>
+                            <img src="../../img/Shape.png" alt=""/>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="">结束时间</label><br/>
+
+                        <div class="layui-input-inline">
+                            <input type="text" name="endDate" class="layui-input" id="test3"/>
+                            <img src="../../img/Shape.png" alt=""/>
+                        </div>
+                    </div>
+                    <div class="layui-inline dropdown unlike2">
+                        <label class="">用户名</label><br />
+                        <input type="text" class="dropdown-selected"
+                               name="userName" autocomplete="off" placeholder="请输入">
+                        <ul class="dns">
+                            <li v-for="(li, index) in userData">
+                                <a href="javaScript:" :data="li.userId">{{li.loginName}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="layui-inline dropdown1 unlike3">
+                        <label class="">网关</label><br />
+                        <input type="text" class="dropdown-selected1"
+                               name="ismgId" autocomplete="off" placeholder="请输入">
+                        <ul class="dns">
+                            <li v-for="(li, index) in userData1">
+                                <a href="javaScript:" :data="li.ismgId">{{li.ismgName}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="layui-inline" >
+                        <label class="">省份</label><br />
+                        <div class="layui-input-inline">
+                            <select name="province" >
+                                <option value="">请选择</option>
+                                <option
+                                        v-for="(item,i)  in pro"
+                                        :key="i"
+                                        :value="item"
+                                        >{{item}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-input-inline">
+                        <button class="sw_btn1" lay-submit="" lay-filter="demo12">
+                            查询
+                        </button>
+                    </div>
+                    <div class="layui-inline" style="width: 50%;padding-top: 10px;">
+                        <label class="" style="width: 60px;">统计方式</label>
+                        <div class="layui-input-inline"  style="width:auto;height: 29px;">
+                            <input type="checkbox" lay-filter="sw_show_A" name="网关统计" value="1" title="网关统计" lay-skin="primary">
+                            <input type="checkbox" lay-filter="sw_show_B" name="账号统计" value="2" title="账号统计" lay-skin="primary">
+                            <input type="checkbox" lay-filter="sw_show_C" name="按天统计" value="3" title="按天统计" lay-skin="primary">
+                            <input type="checkbox" lay-filter="sw_show_D" name="运营商统计" value="4" title="运营商统计" lay-skin="primary">
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="sw_row" style="overflow-x: initial;">
+                <table style="margin-top: 15px; width: 100%">
+                    <thead>
+                    <tr>
+                        <th  v-if="sw_show_C">日期</th>
+                        <th >省份</th>
+                        <th >被叫总量</th>
+                        <th>结算总量</th>
+                        <th  v-if="sw_show_A">网关名</th>
+                        <th  v-if="sw_show_B">登录名</th>
+                        <th  v-if="sw_show_D">移动被叫数</th>
+                        <th  v-if="sw_show_D">移动结算量</th>
+                        <th v-if="sw_show_D">联通被叫数</th>
+                        <th  v-if="sw_show_D">联通结算量</th>
+                        <th  v-if="sw_show_D">电信被叫数</th>
+                        <th  v-if="sw_show_D">电信结算量</th>
+                    </tr>
+                    </thead>
+                    <tbody v-cloak class="" v-for="(li, index) in allData">
+                    <tr>
+                        <td  v-if="sw_show_C">{{li.vestDate}}</td>
+                        <td >{{li.province}}</td>
+                        <td >{{li.total}}</td>
+                        <td >{{li.sent_all}}</td>
+                        <td  v-if="sw_show_A">{{li.ismgName}}</td>
+                        <td  v-if="sw_show_B">{{li.loginName}}</td>
+                        <td  v-if="sw_show_D">{{li.cmcc_sent}}</td>
+                        <td  v-if="sw_show_D">{{li.cmcc_delv}}</td>
+                        <td  v-if="sw_show_D">{{li.cu_sent}}</td>
+                        <td  v-if="sw_show_D">{{li.cu_delv}}</td>
+                        <td  v-if="sw_show_D">{{li.ct_sent}}</td>
+                        <td  v-if="sw_show_D">{{li.ct_delv}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="sw_pad8" v-show="mapShow == true">暂无数据</div>
+            </div>
+            <div id="page"></div>
+        </div>
+    </div>
+</script>
+<script src="../../layui.all.js"></script>
+<script src="../../module/called_distribute.js"></script>
+<script>
+    //头部
+    //			var operaAI = new Vue({
+    //				el: "#proMang",
+    //				data: {
+    //					topCurrent: 2
+    //				}
+    //			});
+    //			//   //左侧菜单组件实例化
+    //			var leftMenu = new Vue({
+    //				el: "#leftMenu_Box",
+    //				data: {
+    //					current: 1
+    //				}
+    //			});
+    order_manage()
+    var rightTable = new Vue({
+        el: "#rightTable"
+    });
+    //
+    var shade = new Vue({
+        el: "#shade"
+    });
+    $(function() {
+        laydate.render({
+            elem: "#test2", //指定元素
+           // type: 'datetime',
+            showBottom: false,
+            value: getDay(0),
+        });
+        laydate.render({
+            elem: "#test3", //指定元素
+           // type: 'datetime',
+            showBottom: false,
+            value: getDay(0),
+        });
+        $(document).ready(function(){
+            total($(".unlike2 ul li"),$(".unlike2 .dropdown-selected"),$(".unlike2 ul"),$(".unlike2"));
+            total($(".unlike3 ul li"),$(".unlike3 .dropdown-selected1"),$(".unlike3 ul"),$(".unlike3"));
+            //$('#leftMenu_Box').css('background', '#040b29');
+            //$('#proMang .top').css('background', '#fff')
+        });
+       // total($(".unlike2 ul li"), $(".unlike2 .dropdown-selected"), $(".unlike2 ul"), $(".unlike2"));
+      //  total($(".unlike3 ul li"), $(".unlike3 .dropdown-selected1"), $(".unlike3 ul"), $(".unlike3"));
+    });
+</script>
+</body>
+</html>

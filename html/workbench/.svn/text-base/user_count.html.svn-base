@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>智能通信运营管理平台</title>
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/layui.css" />
+    <script src="../../js/jquery-3.0.0.min.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../laydate/laydate.js"></script>
+    <script src="../../js/vue.min.js"></script>
+  </head>
+  <!--[if IE 9]>
+  <style>
+    #leftMenu_Box{
+      width: 15.08%;
+      height: 979px;
+      float: left;
+      background: #040b29 !important;
+      position: relative;
+      box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.5);
+    }
+  </style>
+  <![endif]-->
+  <style>
+    /*#page{*/
+      /*padding: 44px 0 50px 0;*/
+    /*}*/
+		.sw_row tr td:nth-child(9){
+					padding: 8px 0;
+				}
+  </style>
+  <body >
+    <div id="proMang">
+      <div class="top"><img src="../../img/logo.png" alt="" class="logo">
+        <ul>
+          <li class="top-a-box addClass" data-value="210"><a href="./order_fail.html"><span
+                  class="iconfont icon-diannao" style="font-size: 22px;"></span>
+            工作台
+          </a></li>
+          <li class="top-a-box " data-value="211"><a href="../user_manage/user_manage.html">
+            <span class="iconfont icon-yonghu" style="font-size: 22px;"></span>
+            用户管理
+          </a></li>
+          <li class="top-a-box " data-value="212"><a href="../order_manage/order_manage.html"><span
+                  class="iconfont icon-dingdanguanli" style="font-size: 22px;"></span>
+            订单管理
+          </a></li>
+          <li class="top-a-box " data-value="213"><a href="../resource/take_orders.html"><span
+                  class="iconfont icon-iconfonticon-shebei" style="font-size: 22px;"></span>
+            资源配置
+          </a></li>
+        </ul>
+        <div class="sign">
+          <span class="ren"></span> <span class="type"></span>
+          <img src="../../img/退出.png" alt=""  onclick="sign()">
+        </div>
+      </div>
+    </div>
+    <div class="main-box">
+      <!-- 左侧菜单 -->
+      <div id="leftMenu_Box" class="work_left">
+        <div class="leftMenu">
+          <ul class="prop">
+            <li class="left_a dn " data-value="21010"><a href="./order_fail.html" ><span
+                    class="iconfont icon-xiadanshibai"></span>
+              下单失败
+            </a></li>
+            <li class="left_a dn" data-value="21011"><a href="./auditing.html" ><span class="iconfont icon-shenhe"></span>
+              审核发送
+            </a></li>
+            <li class="left_a dn" data-value="21012"><a href="./detail.html"><span class="iconfont icon-mingxi"></span>
+              用户发送明细
+            </a></li>
+            <li class="left_a dn addclass_one " data-value="21013"><a href="javascript:void(0);" ><span class="iconfont icon-tongji1"></span>
+              用户发送统计
+            </a></li>
+            <li class="left_a dn" data-value="21014"><a href="./template.html" ><span class="iconfont icon-moban"></span>
+              模板申请
+            </a></li>
+            <li class="left_a dn" data-value="21015"><a href="./signature.html" ><span class="iconfont icon-moban"></span>
+              签名申请
+            </a></li>
+            <li class="left_a dn" data-value="21016"><a href="./complain.html"><span class="iconfont icon-daoru1"></span>
+              投诉导入
+            </a></li>
+            <li class="left_a dn" data-value="21017"><a href="./complain_manage.html" ><span
+                    class="iconfont icon-guanli"></span>
+              投诉管理
+            </a></li>
+          </ul>
+          <div class="group" onclick="flexible(event)">
+            <span class="iconfont icon-xiangzuo" style="color: rgb(255, 255, 255); font-size: 13px;"></span>
+          </div>
+        </div>
+      </div>
+      <div id="rightTable">
+        <v-user-count></v-user-count>
+      </div>
+    </div>
+    <script type="text/x-template" id="count-template">
+      <div>
+        <div class="table_tou">
+          <h6 class="fl">用户发送统计</h6>
+          <div class="fr sw_padd">
+            <span class="sw_num"
+                  v-cloak >{{totalCount}}</span
+                    >&nbsp; &nbsp;<span style="color:#738495">条记录</span>
+            <span class="Gradual" @click="importFile()">
+              <span
+                      class="iconfont icon-export"
+                      >&nbsp;导出</span
+                      >
+            </span>
+          </div>
+        </div>
+        <div class="table_nav">
+          <form class="layui-form layui-form-pane" action="">
+            <div class="layui-inline">
+              <label class="">开始时间</label><br />
+              <div class="layui-input-inline">
+                <input type="text" name="startDate" class="layui-input" autocomplete="off" id="test" />
+                <img src="../../img/Shape.png" alt="" />
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="">结束时间</label><br />
+              <div class="layui-input-inline">
+                <input type="text" name="endDate" class="layui-input" autocomplete="off" id="test1"  />
+                <img src="../../img/Shape.png" alt="" />
+              </div>
+            </div>
+            <div class="layui-inline dropdown">
+              <label class="">用户</label><br />
+              <input type="text" class="dropdown-selected"
+                     name="userName" autocomplete="off" placeholder="请输入">
+              <ul class="dns">
+                <li v-for="(li, index) in userData">
+                  <a href="javaScript:" :data="li.userId">{{li.loginName}}</a>
+                </li>
+              </ul>
+            </div>
+            <div class="layui-input-inline">
+              <button class="sw_btn1" lay-submit="" lay-filter="demo">
+                查询
+              </button>
+            </div>
+          </form>
+          <div class="sw_row">
+            <table style="margin-top: 15px;">
+              <tr>
+                <th style="width:162px">登录名</th>
+                <th style="width:160px">提交总量</th>
+                <th style="width:180px">发送成功量</th>
+                <th style="width:173px">发送成功占比</th>
+                <th style="width:124px">回执总量</th>
+                <th style="width:197px">回执成功总量</th>
+                <th style="width:185px">回执成功占比</th>
+                <th style="width:180px">回执失败总量</th>
+                <th style="width:170px">回执未知数量</th>
+              </tr>
+              <tr v-cloak  v-for="(li, index) in allData">
+                <td>{{li.loginName}}</td>
+                <td>{{li.mtAmount}}</td>
+                <td>{{li.mtSend}}</td>
+                <td>{{li.sentPct}}</td>
+                <td>{{li.receiptCnt}}</td>
+                <td>{{li.mtReceiptSuccess}}</td>
+                <td>{{li.recvPct}}</td>
+                <td>{{li.mtReceiptFail}}</td>
+                <td>{{li.mtReceiptUnknow}}</td>
+              </tr>
+            </table>
+            <div class="sw_pad8" v-show="mapShow == true">暂无数据</div>
+          </div>
+          <div id="page"></div>
+
+        </div>
+      </div>
+    </script>
+    <script src="../../layui.all.js"></script>
+    <script src="../../module/user_count.js"></script>
+
+    <script>
+      //头部
+//      var operaAI = new Vue({
+//        el: "#proMang",
+//        data: {
+//          topCurrent: 0
+//        }
+//      });
+//      //   //左侧菜单组件实例化
+//      var leftMenu = new Vue({
+//        el: "#leftMenu_Box",
+//        data: {
+//          current: 3
+//        }
+//      });
+      workbench()
+      //   //左侧菜单组件实例化
+      var rightTable = new Vue({
+        el: "#rightTable"
+      });
+
+      $(function() {
+        $(document).ready(function(){
+          $('#leftMenu_Box').css('background', '#040b29');
+          $('#proMang .top').css('background', '#fff')
+        });
+        //     $('#proMang .top ul li a').mousemove(function(){
+        //         $(this).addClass('addClass').parent().siblings().find('a').removeClass('addClass')
+        //   })
+        laydate.render({
+          elem: "#test", //指定元素
+          type: 'datetime',
+          value: getDay(0)+' 00:00:00',
+
+        });
+        laydate.render({
+          elem: "#test1", //指定元素
+          type: 'datetime',
+          value: getDay(0)+' 23:59:59',
+        });
+        total($(".dropdown ul li"),$(".dropdown .dropdown-selected"),$(".dropdown ul"),$(".dropdown"));
+      });
+    </script>
+  </body>
+</html>

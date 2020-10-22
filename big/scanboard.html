@@ -1,0 +1,270 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+		<title>大数据分析报表</title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/scanboard.css" />
+		<link rel="stylesheet" type="text/css" href="css/animsition.css" />
+		<link rel="stylesheet" type="text/css" href="css/jquery.shCircleLoader.css" />
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.shCircleLoader-min.js"></script>
+		<script type="text/javascript" src="js/animateBackground-plugin.js"></script>
+	</head>
+
+	<body>
+		<div id="loader"></div>
+		<script type="text/javascript">
+			$('#loader').shCircleLoader({
+				color: "#00deff"
+			});
+		</script>
+		<!--Top Start!-->
+		<div class="scanboardWp animsition">
+			<div id="top">
+				<div class="wp clearfix">
+					<div class="left pageTit">
+						<!--<a class="summaryBtn" href="javascript:;">大数据CPU占比</a>-->
+					</div>
+					<div class="center topLogo">
+						<a href="#"><img src="images/logo.png"></a>
+					</div>
+					<div class="right topBar">
+						<div class="topTime">时间加载中...</div>
+						<div class="clearfix">
+							<a href="javascript:;" class="signOut fr">退出</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Top End!-->
+
+			<!--Main Start!-->
+			<div id="main" class="wp clearfix">
+				<div class="left">
+					<!--各阶段平均用时统计-->
+					<div class="item boxall">
+						<div class="itemTit">
+							<span class="border-blue">用户发送统计</span>
+							<img src="images/ksh33.png" />
+						</div>
+						<div id="myChart3"></div>
+						<div class="boxfoot"></div>
+					</div>
+					<!--月运单量统计图-->
+					<div class="item boxall">
+						<div class="itemTit">
+							<span class="border-blue">通道发送统计</span>
+							<img src="images/ksh33.png" />
+						</div>
+						<div id="myChart1"></div>
+						<div class="boxfoot"></div>
+					</div>
+					<!--人员信息-->
+					<div class="item boxall">
+						<div class="itemTit">
+							<span class="border-blue">全平台发送统计</span>
+							<img src="images/ksh33.png" />
+						</div>
+						<div id="myChart4"></div>
+						<div class="boxfoot"></div>
+					</div>
+				</div>
+
+				<div class="center">
+					<div class="centerWp">
+						<!--总计运单数-->
+						<div class="item total" style="height: 26%;margin-bottom: 1rem;">
+							<!--<div class="itemTit">
+						<span class="border-yellow">年计成功数</span>
+					</div>-->
+							<div class="itemCon">
+								<div class="totalNum">
+									<span>
+								累计发送量：
+							</span>
+									<span id="sw-num1" class="t_num"></span>
+									<div class="sw_padding"></div>
+									<div class="totalNum_two">
+										<span>
+								提交量：
+								</span>
+										<span id="sw-num2" class="t_num2"></span>
+										<div class="sw_padding"></div>
+										<span>
+									成功量：
+								</span>
+										<span id="sw-num3" class="t_num3"></span>
+										<div class="sw_padding"></div>
+										<span>
+									失败量：
+								</span>
+										<span id="sw-num4" class="t_num4"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--中间大地图-->
+						<div class="mapContainer" style="margin-bottom: 1rem;">
+							<!--<div class="itemTit">
+							<span class="border-blue">没有速度占比</span>
+						</div>-->
+							<div id="myChart2" class="item">
+
+							</div>
+							<span class="sw_user">上行速率</span>
+							<span class="sw_order">接单速率</span>
+							<span class="sw_client">下行速率</span>
+						</div>
+						<div class="item billState boxall">
+							<div class="itemTit" style="background-position: 7% 85%;">
+								<span class="border-green">网关运行状态</span>
+								<img src="images/ksh33.png" />
+							</div>
+							<div class="itemCon">
+								<div class="StateBox sw_box">
+									<div class="StateTit">
+										<span>通道名称</span>
+										<span>连接状态</span>
+										<span>发送数量</span>
+										<span>成功率</span>
+										<span>发送速率</span>
+										<span>活跃时间</span>
+									</div>
+									<div id="FontScrollTwo">
+									</div>
+								</div>
+							</div>
+							<div class="boxfoot"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="right">
+					<!--运单状态-->
+					<div class="item billState boxall">
+						<div class="itemTit">
+							<span class="border-green">告警通知</span>
+							<img src="images/ksh33.png" />
+						</div>
+						<div class="itemCon">
+							<div class="StateBox">
+								<div class="StateTit">
+									<span>内容</span>
+									<span>状态</span>
+								</div>
+								<div id="FontScroll">
+
+								</div>
+							</div>
+						</div>
+						<div class="boxfoot"></div>
+					</div>
+					<!--今日运单数量-->
+					<div class="item waybill boxall">
+						<div class="itemTit">
+							<span class="border-yellow">数据库使用率</span>
+							<img src="images/ksh33.png" />
+						</div>
+						<div class="itemCon itembg sw_interspace">
+
+						</div>
+						<div class="boxfoot"></div>
+					</div>
+					<!--人员信息-->
+					<div class="item boxall">
+						<div class="itemTit">
+							<span class="border-blue">运营商占比</span>
+							<img src="images/ksh33.png" />
+						</div>
+						<div id="myChart5"></div>
+						<div class="boxfoot"></div>
+					</div>
+				</div>
+			</div>
+			<!--Main End!-->
+		</div>
+
+		<div class="filterbg"></div>
+		<!--<canvas id="canvas" style="position: absolute;top: 0;left: 0;"></canvas> -->
+	</body>
+	<script type="text/javascript" src="js/doT.min.js"></script>
+	<script type="text/javascript" src="js/scanboard.js"></script>
+	<script type="text/javascript" src="js/fontscroll.js"></script>
+	<script type="text/javascript" src="js/jquery.animsition.js"></script>
+	<script type="text/javascript" src="js/jquery.nicescroll.js"></script>
+	<script type="text/javascript" src="js/echarts.min.js"></script>
+	<!--<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.3&key=f8ffe058b8e6f5b05e8ff43ca4207393"></script>
+-->
+	<script id="alarm" type="text/x-dot-template">
+		<ul>
+			{{~it:value:index}}
+			<li>
+				<div class="fontInner clearfix">
+					<span>{{=value.monitorContent}}</span>
+					<span>
+						<div class="progress">
+							<div class="progressBar" progress="50%">
+								{{? value.type == 1}}
+									<p class="bg-red" style="width: 100%;"></p>
+                  <!--<span class="bg-red" style="width: 100%;"></span>--> {{?? value.type == 2}}
+					<p class="bg-yellow" style="width: 100%;"></p>
+					{{?}}
+				</div>
+				</div>
+				</span>
+				</div>
+			</li>
+			{{~}}
+		</ul>
+	</script>
+	<script id="emphasisAisle" type="text/x-dot-template">
+		<ul>
+			{{~it:value:index}}
+			<li>
+				<div class="fontInner clearfix">
+					<span>{{=value.ismgName}}</span> 
+					{{? value.status == 'true'}}
+					<span class="color-green">正常</span> 
+					{{?? value.status != 'true'}}
+					<span class="color-red">断开</span>
+					{{?}}
+					<span>{{=parseInt(value.sendCount)}}</span>
+					<span>{{=value.successRate}}%</span>
+					<!--<span>
+						<div style="width: 50%;" class="progress" progress="{{=parseInt(value.sendSpeed/value.speed*100) + '%'}}">
+							<div class="progressBar">
+								<span></span>
+							</div>
+							<h3><i><h4></h4></i></h3>
+					  </div>
+				  </span>-->
+				  <span>{{=parseInt(value.sendSpeed)}} / {{=value.speed}}</span>
+				  <span>{{=value.activeTime || '-'}}</span>
+				</div>
+			</li>
+			{{~}}
+		</ul>
+	</script>
+	<script id="interspace" type="text/x-dot-template">
+		{{~it:value:index}}
+		<div class="progress" progress="{{=parseInt(value.usedSize == null? '0':value.usedSize/value.maxSize*100) + '%'}}">
+			<h3 class="clearfix"><span>{{=value.title}}</span>
+				{{? value.title.indexOf("空间") == -1}}
+					<i>{{=value.usedSize}} / {{=value.maxSize}} <strong>GB</strong></i>
+					{{??}}
+					<i>{{=value.usedSize}} / {{=value.maxSize}} <strong>GB</strong></i>
+					{{?}}
+				<!--<i>{{=value.usedSize}} - {{=value.maxSize}}MB</i>-->
+			</h3>
+			<div class="progressBar">
+				<span></span>
+			</div>
+			<h4>0%</h4>
+		</div>
+		{{~}}
+	</script>
+
+</html>

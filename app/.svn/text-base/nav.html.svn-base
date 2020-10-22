@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+<title>智能通信运营管理平台</title>
+<link href="css/style.css" rel="stylesheet"/>
+<link href="css/response.css" rel="stylesheet"/>
+</head>
+<body class="bg">
+<div class="content">
+	<div class="header">
+		<div class="header-nei">
+			<!--<a href="index.html" class="back-up"><i class="iconfont icon-guanji"></i></a>-->
+			<h2 class="header-title">智能通信运营管理平台</h2>
+			<a href="index.html" class="back-top"><i class="iconfont icon-guanji"></i></a>
+		</div>
+	</div>
+	<!--head/-->
+	<div class="head-height">&nbsp;</div>
+	<ul class="nav">
+     <li class="left_a" data-value="21010"><a href="inputOrder.html"><i class="iconfont icon-xiadanshibai"></i>下单失败</a></li>
+     <li class="left_a" data-value="21011"><a href="inputAudit.html"><i class="iconfont icon-tubiaolunkuo-"></i>审核发送</a></li>
+     <li class="left_a" data-value="21012"><a href="inputDetil.html"><i class="iconfont icon-mingxi"></i>发送明细</a></li>
+	   <li class="left_a" data-value="21014"><a href="inputTemp.html"><i class="iconfont icon-mobanguanli"></i>审核模板</a></li>
+	   <li class="left_a" data-value="21012"><a href="inputList.html"><i class="iconfont icon-mingxi"></i>黑白名单</a></li>
+	   <li class="left_a" data-value="21011"><a href="inputCredit.html"><i class="iconfont icon-tubiaolunkuo-"></i>授信流程</a></li>
+  </ul>
+</div>
+<!--content/-->
+<div class="bg100"></div>
+<script src="js/jquery.min.js"></script>
+<script src="js/style.js"></script>
+<script>
+	workbench()
+</script>
+</body>
+</html>

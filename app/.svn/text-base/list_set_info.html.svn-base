@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <title>黑白名单详情</title>
+    <link href="css/style.css" rel="stylesheet"/>
+    <link href="css/response.css" rel="stylesheet"/>
+</head>
+<body class="bg">
+<div class="content">
+    <div class="header">
+        <div class="header-nei">
+            <a href="list_set.html" class="back-up"><i class="iconfont icon-xiangzuo"></i></a>
+            <h2 class="header-title">黑白名单详情</h2>
+            <a href="nav.html" class="back-top"><i class="iconfont icon-daohang"></i></a>
+        </div>
+    </div>
+    <!--head/-->
+    <div class="head-height">&nbsp;</div>
+    <div class="order-info" id="info">
+
+    </div>
+</div>
+<!--content/-->
+<div class="bg100"></div>
+<script src="js/jquery.min.js"></script>
+<script src="js/style.js"></script>
+<script src="js/doT.min.js"></script>
+<script id="infotmpl" type="text/x-dot-template">
+    <table>
+        <tr>
+            <th>被叫手机号码</th>
+            <td>{{=it.msisdn}}</td>
+        </tr>
+        <tr>
+            <th>A级别</th>
+            <td>{{=it.whiteLevel}}</td>
+        </tr>
+        <tr>
+            <th>A</th>
+            <td>{{=it.whiteDesc}}</td>
+        </tr>
+        <tr>
+            <th>黑名单级别</th>
+            <td>{{=it.blackLevel}}</td>
+        </tr>
+        <tr>
+            <th>黑名单</th>
+            {{? it.blackDesc == 'null'}}
+            <td>-</td>
+            {{??}}
+            <td>{{=it.blackDesc}}</td>
+            {{?}}
+        </tr>
+        <tr>
+            <th>空号级别</th>
+            <td>{{=it.notIsLevel}}</td>
+        </tr>
+        <tr>
+            <th>空号</th>
+            {{? it.notIsDesc == 'null'}}
+            <td>-</td>
+            {{??}}
+            <td>{{=it.notIsDesc}}</td>
+            {{?}}
+        </tr>
+        <tr>
+            <th>加入时间</th>
+            <td>{{=it.createTime}}</td>
+        </tr>
+        <tr>
+            <th>备注</th>
+            <td>{{=it.remark}}</td>
+        </tr>
+    </table>
+    <div class="log-reg-sub">
+        <a href="javascript:;" class="log-reg-sw-btn order-btn marR15">修改</a>
+    </div>
+</script>
+<script>
+    $(function(){
+        var info = JSON.parse(sessionStorage.getItem('infoObj'));
+       // console.log(info)
+        var interText = doT.template($("#infotmpl").text());
+        $("#info").html(interText(info));
+        //定单校验
+        $("#info").on('click','.order-btn',function() {
+            $.ajax({
+                url : '/icos/blacklist/queryBlackInfo',
+                type : 'post',
+                async: false,
+                data :{
+                    'phone':info.msisdn,
+                },
+                headers : {
+                    "Authorization":sessionStorage.getItem('id'),
+                },
+                success : function(data){
+                    sessionStorage.setItem('tempObj', JSON.stringify(data.data));
+                    location.href = "editBlack.html"
+                },
+                error : function(err){
+                    location.href = "index.html";
+                    sessionStorage.clear();
+                }
+            });
+        })
+    })
+</script>
+</body>
+</html>
